@@ -95,4 +95,16 @@ public abstract class Personagem {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    @Override
+    public String toString() {
+        return  "vida=" + vida +
+                ", dano=" + dano +
+                ", mana=" + mana +
+                ", defesa=" + defesa +
+                ", chanceCrit=" + chanceCrit +
+                ", chanceEsq=" + chanceEsq +
+                ", nome='" + nome + '\'' +
+                '}';
+    }
 }
