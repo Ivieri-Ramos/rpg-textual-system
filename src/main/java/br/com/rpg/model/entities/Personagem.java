@@ -1,5 +1,7 @@
 package br.com.rpg.model.entities;
 
+import br.com.rpg.util.Dado;
+
 public abstract class Personagem {
     /**
      * Classe abstrata herdada por Heroi e Inimigo.
@@ -106,5 +108,9 @@ public abstract class Personagem {
                 ", chanceEsq=" + chanceEsq +
                 ", nome='" + nome + '\'' +
                 '}';
+    }
+
+    public void atacar(Personagem alvo, Habilidade habilidade) {
+
     }
 }
