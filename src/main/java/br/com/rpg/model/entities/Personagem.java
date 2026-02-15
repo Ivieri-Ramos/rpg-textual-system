@@ -1,5 +1,6 @@
 package br.com.rpg.model.entities;
 
+import br.com.rpg.model.services.BatalhaService;
 import br.com.rpg.util.Dado;
 
 public abstract class Personagem {
@@ -115,7 +116,31 @@ public abstract class Personagem {
                 '}';
     }
 
+    /**
+     * Método usado pelo {@link Personagem} atacante para causar dano no {@link Personagem} alvo.
+     * <p>
+     * Primeiro chama {@link BatalhaService#calcularDano(Personagem, Personagem, Habilidade)} e por fim
+     * o método {@link Personagem#receberDano(int)} para atualizar a vida do alvo.
+     * @param alvo {@link Personagem} que é atacado.
+     * @param habilidade Poder usado para causar dano.
+     */
     public void atacar(Personagem alvo, Habilidade habilidade) {
+        int danoCausado = BatalhaService.calcularDano(this, alvo, habilidade);
+        alvo.receberDano(danoCausado);
+    }
 
+    /**
+     * Método que atualiza a nova vida do {@link Personagem}.
+     * <p>
+     * Atualiza a vida com base na relação {@code vida - dano} e caso
+     * a vida se torne 0, mude o estado {@code isVivo} para {@code false}.
+     * @param danoRecebido Valor que diminui da {@code vida} atual do {@link Personagem}. <b>Obs.:</b> pode ser 0.
+     */
+    public void receberDano(int danoRecebido) {
+        int novaVida = getVida() - danoRecebido;
+        setVida(novaVida);
+        if (getVida() == 0) {
+            setVivo(false);
+        }
     }
 }

@@ -16,8 +16,8 @@ public class Heroi extends Personagem {
      * Utiliza a {@link ClasseHeroi} a partir das suas constantes Enum
      * e define os atributos-base (vida, dano, chanceCrit, etc.) usados pelo construtor
      * em {@link Personagem}, para criar a entidade Heroi.
-     * @param tipoClasse Tipos de classes pré-definidas ({@code Guerreiro}, {@code Mago}, etc.) que atribui valores base.
      * @param nome Identificação do jogador única (não pode ser {@code null}).
+     * @param tipoClasse Tipos de classes pré-definidas ({@code Guerreiro}, {@code Mago}, etc.) que atribui valores base.
      */
     public Heroi(String nome, ClasseHeroi tipoClasse) {
         super(nome, tipoClasse.getVidaBase(), tipoClasse.getDanoBase(),
