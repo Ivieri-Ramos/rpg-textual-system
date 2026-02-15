@@ -1,14 +1,17 @@
 package br.com.rpg.model.entities;
 
 import br.com.rpg.model.services.BatalhaService;
-import br.com.rpg.util.Dado;
 
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Classe abstrata herdada por {@link Heroi} e {@link Inimigo}.
+ * <p>
+ * Define os atributos-base de {@link Heroi} e {@link Inimigo}.
+ */
 public abstract class Personagem {
-    /**
-     * Classe abstrata herdada por {@link Heroi} e {@link Inimigo}.
-     * <p>
-     * Define os atributos-base de {@link Heroi} e {@link Inimigo}.
-     */
+
     private final String nome;
     private int vida;
     private int dano;
@@ -17,7 +20,7 @@ public abstract class Personagem {
     private double chanceCrit;
     private double chanceEsq;
     private boolean isVivo = true;
-
+    private List<Habilidade> menuHabilidades =  new ArrayList<Habilidade>();
     /**
      * Construtor padrão de Personagem.
      * <p>
@@ -104,6 +107,10 @@ public abstract class Personagem {
         isVivo = vivo;
     }
 
+    public List<Habilidade> getMenuHabilidades() {
+        return menuHabilidades;
+    }
+
     @Override
     public String toString() {
         return  "vida=" + vida +
@@ -127,6 +134,8 @@ public abstract class Personagem {
     public void atacar(Personagem alvo, Habilidade habilidade) {
         int danoCausado = BatalhaService.calcularDano(this, alvo, habilidade);
         alvo.receberDano(danoCausado);
+        // Depois será necessário retirar o BatalhaService, mas manteremos aqui por
+        // conveniência de testes.
     }
 
     /**
@@ -142,5 +151,13 @@ public abstract class Personagem {
         if (getVida() == 0) {
             setVivo(false);
         }
+    }
+
+    /**
+     * Adiciona uma nova habilidade para a entidade.
+     * @param novaHabilidade habilidade advinda do {@link CatalogoHabilidades}.
+     */
+    public void aprenderHabilidade(Habilidade novaHabilidade) {
+        menuHabilidades.add(novaHabilidade);
     }
 }

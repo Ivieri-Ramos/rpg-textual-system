@@ -8,6 +8,10 @@ package br.com.rpg.model.enums;
 
 public enum TipoElemento {
     /**
+     * Elemento majoritariamente físico, geralmente usado em habilidades de corte.
+     */
+    NEUTRO,
+    /**
      * Elemento usado em magias ou ataques como ...
      */
     FOGO,
