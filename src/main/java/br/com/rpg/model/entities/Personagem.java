@@ -4,23 +4,24 @@ import br.com.rpg.util.Dado;
 
 public abstract class Personagem {
     /**
-     * Classe abstrata herdada por Heroi e Inimigo.
+     * Classe abstrata herdada por {@link Heroi} e {@link Inimigo}.
      * <p>
-     * Define os atributos-base para Heroi e Inimigo.
+     * Define os atributos-base de {@link Heroi} e {@link Inimigo}.
      */
+    private final String nome;
     private int vida;
     private int dano;
     private int mana;
     private double defesa;
     private double chanceCrit;
     private double chanceEsq;
-    private String nome;
+    private boolean isVivo = true;
 
     /**
      * Construtor padrão de Personagem.
+     * <p>
      * A depender do tipo de Heroi ou Inimigo,
      * a quantidade de um certo atributo pode variar.
-     * <p>
      * @param vida Máximo de dano que a entidade pode receber.
      * @param dano Quanto de vida ele pode tirar de outra entidade.
      * @param mana Atributo que permite usar magias.
@@ -29,14 +30,18 @@ public abstract class Personagem {
      * @param chanceEsq Probabilidade (0-100) para que a entidade esquive e anule completamente o dano.
      * @param nome Define o nome da entidade para identificação.
      */
-    public Personagem(int vida, int dano, int mana, double defesa, double chanceCrit, double chanceEsq, String nome) {
+    public Personagem(String nome, int vida, int dano, int mana, double defesa, double chanceCrit, double chanceEsq) {
+        this.nome = nome;
         this.vida = vida;
         this.dano = dano;
         this.mana = mana;
         this.defesa = defesa;
         this.chanceCrit = chanceCrit;
         this.chanceEsq = chanceEsq;
-        this.nome = nome;
+    }
+
+    public String getNome() {
+        return nome;
     }
 
     public int getVida() {
@@ -90,12 +95,12 @@ public abstract class Personagem {
         this.chanceEsq = chanceEsq;
     }
 
-    public String getNome() {
-        return nome;
+    public boolean isVivo() {
+        return isVivo;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setVivo(boolean vivo) {
+        isVivo = vivo;
     }
 
     @Override

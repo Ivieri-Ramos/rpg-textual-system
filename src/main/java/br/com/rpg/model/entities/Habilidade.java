@@ -3,13 +3,23 @@ package br.com.rpg.model.entities;
 import br.com.rpg.model.enums.TipoElemento;
 
 public class Habilidade {
-    private String nome;
-    private int danoBase;
-    TipoElemento elemento;
+    private final String nome;
+    private final double razaoDano;
+    private final TipoElemento elemento;
 
-    public Habilidade(String nome, int danoBase, TipoElemento elemento) {
+    /**
+     * Construtor padrão de Habilidade.
+     * <p>
+     * Ela define as habilidades que serão usadas por {@link Heroi} e {@link Inimigo}.
+     * Usa o {@link TipoElemento} para definir os elementos das habilidades, e uma
+     * {@code razaoDano} para multiplicar em relação ao {@link Personagem#getDano()}.
+     * @param nome Identificação única.
+     * @param razaoDano Aumenta ou diminui o {@link Personagem#getDano()}.
+     * @param elemento Incrementa o poder da habilidade.
+     */
+    public Habilidade(String nome, double razaoDano, TipoElemento elemento) {
         this.nome = nome;
-        this.danoBase = danoBase;
+        this.razaoDano = razaoDano;
         this.elemento = elemento;
     }
 
@@ -17,8 +27,8 @@ public class Habilidade {
         return nome;
     }
 
-    public int getDanoBase() {
-        return danoBase;
+    public double getDanoBase() {
+        return razaoDano;
     }
 
     public TipoElemento getElemento() {

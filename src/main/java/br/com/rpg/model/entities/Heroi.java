@@ -19,10 +19,10 @@ public class Heroi extends Personagem {
      * @param tipoClasse Tipos de classes pré-definidas ({@code Guerreiro}, {@code Mago}, etc.) que atribui valores base.
      * @param nome Identificação do jogador única (não pode ser {@code null}).
      */
-    public Heroi(ClasseHeroi tipoClasse, String nome) {
-        super(tipoClasse.getVidaBase(), tipoClasse.getDanoBase(), tipoClasse.getManaBase(),
-                tipoClasse.getDefesaBase(), tipoClasse.getChanceCritBase(),
-                tipoClasse.getChanceEsqBase(), nome);
+    public Heroi(String nome, ClasseHeroi tipoClasse) {
+        super(nome, tipoClasse.getVidaBase(), tipoClasse.getDanoBase(),
+                tipoClasse.getManaBase(), tipoClasse.getDefesaBase(),
+                tipoClasse.getChanceCritBase(), tipoClasse.getChanceEsqBase());
     }
 
     @Override
