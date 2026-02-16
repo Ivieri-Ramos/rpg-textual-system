@@ -1,9 +1,17 @@
 package br.com.rpg.view;
 
+import br.com.rpg.controller.BatalhaController;
+
 import java.util.Scanner;
 
+/**
+ * Classe {@code final} responsável pela leitura de dados.
+ * <p>
+ * Possui métodos estáticos para validação de dados do tipo {@code int},
+ * usados em classes do pacote {@link br.com.rpg.controller controller}.
+ */
 public final class Teclado {
-    private static final Scanner teclado =  new Scanner(System.in);
+    private static final Scanner teclado = new Scanner(System.in);
 
     /**
      * Método para ler um inteiro no stdin (teclado do jogador).
