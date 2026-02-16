@@ -20,6 +20,9 @@ public final class CatalogoHabilidades {
 
     /**
      * Método que instancia com todas as habilidades criadas.
+     * <p>
+     * <b>Importante:</b> É necessário chamar esse método uma vez para que
+     * as habilidades criadas possam ser usadas.
      */
     public static void iniciarCatalogo() {
         mapaHabilidades.put("ATAQUE_NORMAL", new Habilidade("Ataque Normal", 0, 1.0, TipoElemento.NEUTRO));

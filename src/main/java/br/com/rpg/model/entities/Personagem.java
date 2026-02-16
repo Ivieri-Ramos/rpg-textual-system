@@ -64,6 +64,9 @@ public abstract class Personagem {
     }
 
     public void setMana(int mana) {
+        if (mana < 0) {
+            mana = 0;
+        }
         this.mana = mana;
     }
 
@@ -103,7 +106,7 @@ public abstract class Personagem {
         return isVivo;
     }
 
-    public void setVivo(boolean vivo) {
+    private void setVivo(boolean vivo) {
         isVivo = vivo;
     }
 
@@ -132,6 +135,8 @@ public abstract class Personagem {
      * @param habilidade Poder usado para causar dano.
      */
     public void atacar(Personagem alvo, Habilidade habilidade) {
+        int manaGasta = getMana() - habilidade.custoMana();
+        setMana(manaGasta);
         int danoCausado = BatalhaService.calcularDano(this, alvo, habilidade);
         alvo.receberDano(danoCausado);
         // Depois será necessário retirar o BatalhaService, mas manteremos aqui por
