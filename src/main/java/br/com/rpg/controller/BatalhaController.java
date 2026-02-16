@@ -15,6 +15,5 @@ public class BatalhaController {
 
     private void turnoJogador(Heroi jogador, Inimigo alvo) {
         // Pedir ação do jogador, como defender, atacar, fugir, etc.
-        jogador.atacar(alvo, );
     }
 }
