@@ -18,3 +18,11 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+tasks.withType<JavaExec> {
+    jvmArgs = listOf("-Dfile.encoding=UTF-8", "-Dsun.stdout.encoding=UTF-8", "-Dsun.stderr.encoding=UTF-8")
+}
+
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
+}
