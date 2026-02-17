@@ -18,6 +18,10 @@ import java.util.Map;
 public final class CatalogoHabilidades {
     private static final Map<String, Habilidade> mapaHabilidades = new HashMap<>();
 
+    static {
+        iniciarCatalogo();
+    }
+
     /**
      * Método que instancia com todas as habilidades criadas.
      * <p>

@@ -5,12 +5,13 @@ import br.com.rpg.controller.BatalhaController;
 import java.util.Scanner;
 
 /**
- * Classe {@code final} responsável pela leitura de dados.
+ * Classe responsável pela leitura de dados.
  * <p>
  * Possui métodos estáticos para validação de dados do tipo {@code int},
  * usados em classes do pacote {@link br.com.rpg.controller controller}.
  */
-public final class Teclado {
+public class Teclado {
+
     private static final Scanner teclado = new Scanner(System.in);
 
     /**
@@ -20,7 +21,7 @@ public final class Teclado {
      * @param mensagem Texto a ser impresso.
      * @return O valor convertido para inteiro escrito pelo jogador.
      */
-    public static int lerInteiro(String mensagem) {
+    public int lerInteiro(String mensagem) {
         while (true) {
             try {
                 System.out.println(mensagem + ": ");
@@ -43,7 +44,7 @@ public final class Teclado {
      * @param max Maior inteiro que o usuário pode digitar.
      * @return Valor dentro dos limites estabelecidos.
      */
-    public static int lerInteiro(String mensagem, int min, int max) {
+    public int lerInteiro(String mensagem, int min, int max) {
         while (true) {
             int numero = lerInteiro(mensagem);
             if (numero < min || numero > max) {
@@ -60,7 +61,7 @@ public final class Teclado {
      * no final da execução do programa, para impedir bugs na
      * entrada de dados.
      */
-    public static void fecharTeclado() {
+    public void fecharTeclado() {
         teclado.close();
     }
 }

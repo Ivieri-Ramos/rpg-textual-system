@@ -5,15 +5,15 @@ import br.com.rpg.model.entities.Habilidade;
 import java.util.List;
 
 /**
- * Classe {@code final} que contém métodos {@code static} que imprimem {@code List<>}.
+ * Classe que contém métodos que imprimem {@code List<>}.
  */
-public final class ListagemView {
+public class ListagemView {
 
     /**
-     * Método {@code static} responsável por imprimir uma {@code List<Habilidade>}.
+     * Método responsável por imprimir uma {@code List<Habilidade>}.
      * @param lista Contém as habilidades a serem impressa (Pode ser vazia).
      */
-    public static void mostrarHabilidades(List<Habilidade> lista) {
+    public void mostrarHabilidades(List<Habilidade> lista) {
         if (lista.isEmpty()) {
             System.out.println("Sem habilidades disponíveis!");
             return;
@@ -32,7 +32,7 @@ public final class ListagemView {
      * @param lista Todas as habilidades armazenadas em {@link br.com.rpg.model.entities.Personagem Personagem}
      * @param manaAtual MP que o {@link br.com.rpg.model.entities.Personagem Personagem} tem atualmente.
      */
-    public static void mostrarHabilidades(List<Habilidade> lista, int manaAtual) {
+    public void mostrarHabilidades(List<Habilidade> lista, int manaAtual) {
         if (lista.isEmpty()) {
             System.out.println("Sem habilidades disponíveis!");
             return;

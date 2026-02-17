@@ -2,13 +2,13 @@ package br.com.rpg.view;
 
 import br.com.rpg.model.entities.Heroi;
 
-public final class BatalhaView {
+public class BatalhaView {
 
     /**
-     * Método {@code static} que imprime todas as informações contidas no {@link Heroi}.
+     * Método que imprime todas as informações contidas no {@link Heroi}.
      * @param jogador Entidade que será imprimida.
      */
-    public static void mostrarInfoCompletaHeroi(Heroi jogador) {
+    public void mostrarInfoCompletaHeroi(Heroi jogador) {
         String formato = "│ %-25s %15s │%n";
         System.out.println("┌───────────────────────────────────────────┐");
         System.out.printf("│ NOME: %-35s │%n", jogador.getNome());
@@ -22,7 +22,8 @@ public final class BatalhaView {
         System.out.println("└───────────────────────────────────────────┘");
     }
 
-    public static void mostrarInfoBatalhaJogador(Heroi jogador) {
+
+    public void mostrarInfoBatalhaJogador(Heroi jogador) {
         System.out.println("[1] Use uma habilidade aprendida");
         System.out.println("[2] Defenda-se");
         System.out.println("[3] Use algum item");
