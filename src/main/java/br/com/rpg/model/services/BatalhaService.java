@@ -5,9 +5,9 @@ import br.com.rpg.model.entities.Personagem;
 import br.com.rpg.util.Dado;
 
 /**
- * Classe service para cálculos de dano e lógica de batalha.
+ * Realiza cálculos de dano.
  */
-public final class BatalhaService {
+public class BatalhaService {
 
     /**
      * Método para retornar o dano que um {@link Personagem} cause a outra.
@@ -20,7 +20,7 @@ public final class BatalhaService {
      * @param ataque Poder escolhido que pode aplicar efeitos ou incrementar o dano total.
      * @return O dano total causado (Pode ser 0 caso o alvo esquive).
      */
-    public static int calcularDano(Personagem atacante, Personagem alvo, Habilidade ataque) {
+    public int calcularDano(Personagem atacante, Personagem alvo, Habilidade ataque) {
         if (Dado.testarSorte(alvo.getChanceEsq())) { // Testa a esquiva do alvo, se for bem-sucedida o alvo não recebe dano.
             return 0;
         }

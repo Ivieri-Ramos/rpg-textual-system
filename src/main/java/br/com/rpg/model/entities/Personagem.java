@@ -52,7 +52,7 @@ public abstract class Personagem {
         return vida;
     }
 
-    public void setVida(int vida) {
+    private void setVida(int vida) {
         if (vida < 0) {
             vida = 0;
         }
@@ -63,7 +63,7 @@ public abstract class Personagem {
         return mana;
     }
 
-    public void setMana(int mana) {
+    private void setMana(int mana) {
         if (mana < 0) {
             mana = 0;
         }
@@ -74,7 +74,7 @@ public abstract class Personagem {
         return dano;
     }
 
-    public void setDano(int dano) {
+    private void setDano(int dano) {
         this.dano = dano;
     }
 
@@ -82,7 +82,7 @@ public abstract class Personagem {
         return defesa;
     }
 
-    public void setDefesa(double defesa) {
+    private void setDefesa(double defesa) {
         this.defesa = defesa;
     }
 
@@ -90,7 +90,7 @@ public abstract class Personagem {
         return chanceCrit;
     }
 
-    public void setChanceCrit(double chanceCrit) {
+    private void setChanceCrit(double chanceCrit) {
         this.chanceCrit = chanceCrit;
     }
 
@@ -98,7 +98,7 @@ public abstract class Personagem {
         return chanceEsq;
     }
 
-    public void setChanceEsq(double chanceEsq) {
+    private void setChanceEsq(double chanceEsq) {
         this.chanceEsq = chanceEsq;
     }
 
@@ -127,20 +127,11 @@ public abstract class Personagem {
     }
 
     /**
-     * Método usado pelo {@link Personagem} atacante para causar dano no {@link Personagem} alvo.
-     * <p>
-     * Primeiro chama {@link BatalhaService#calcularDano(Personagem, Personagem, Habilidade)} e por fim
-     * o método {@link Personagem#receberDano(int)} para atualizar a vida do alvo.
-     * @param alvo {@link Personagem} que é atacado.
-     * @param habilidade Poder usado para causar dano.
+     * Consome mana da entidade na relação {@code manaAtual - manaGasta}.
+     * @param manaGasta Quantidade de {@code} a ser diminuída.
      */
-    public void atacar(Personagem alvo, Habilidade habilidade) {
-        int manaGasta = getMana() - habilidade.custoMana();
-        setMana(manaGasta);
-        int danoCausado = BatalhaService.calcularDano(this, alvo, habilidade);
-        alvo.receberDano(danoCausado);
-        // Depois será necessário retirar o BatalhaService, mas manteremos aqui por
-        // conveniência de testes.
+    public void consumirMana(int manaGasta) {
+        setMana((getMana() - manaGasta));
     }
 
     /**
@@ -151,8 +142,7 @@ public abstract class Personagem {
      * @param danoRecebido Valor que diminui da {@code vida} atual do {@link Personagem}. <b>Obs.:</b> pode ser 0.
      */
     public void receberDano(int danoRecebido) {
-        int novaVida = getVida() - danoRecebido;
-        setVida(novaVida);
+        setVida((getVida() - danoRecebido));
         if (getVida() == 0) {
             setVivo(false);
         }
