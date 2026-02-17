@@ -18,12 +18,31 @@ public final class ListagemView {
             System.out.println("Sem habilidades disponíveis!");
             return;
         }
-        System.out.println("┌── Habilidades ───────────────────────┐");
+        System.out.println("┌─────── Habilidades ────────────────────────┐");
         for (int i = 0; i < lista.size(); i++) {
             Habilidade habAtual = lista.get(i);
-            System.out.printf("│ [%d] %-15s | MP: %-3d      │%n",
-                    (i + 1), habAtual.nome(), habAtual.custoMana());
+            System.out.printf("│ [%d] %-15s | Custo de mana: %-3d %-2s│%n",
+                    (i + 1), habAtual.nome(), habAtual.custoMana(), " ");
         }
-        System.out.println("└──────────────────────────────────────┘");
+        System.out.println("└────────────────────────────────────────────┘");
+    }
+
+    /**
+     * Método usado em
+     * @param lista Todas as habilidades armazenadas em {@link br.com.rpg.model.entities.Personagem Personagem}
+     * @param manaAtual MP que o {@link br.com.rpg.model.entities.Personagem Personagem} tem atualmente.
+     */
+    public static void mostrarHabilidades(List<Habilidade> lista, int manaAtual) {
+        if (lista.isEmpty()) {
+            System.out.println("Sem habilidades disponíveis!");
+            return;
+        }
+        System.out.printf("┌──────── Habilidades | Mana atual: %-3d ─────┐%n", manaAtual);
+        for (int i = 0; i < lista.size(); i++) {
+            Habilidade habAtual = lista.get(i);
+            System.out.printf("│ [%d] %-15s | Custo de mana: %-3d %-2s│%n",
+                    (i + 1), habAtual.nome(), habAtual.custoMana(), " ");
+        }
+        System.out.println("└────────────────────────────────────────────┘");
     }
 }

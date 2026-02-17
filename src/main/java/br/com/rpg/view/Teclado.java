@@ -20,7 +20,7 @@ public final class Teclado {
      * @param mensagem Texto a ser impresso.
      * @return O valor convertido para inteiro escrito pelo jogador.
      */
-    public int lerInteiro(String mensagem) {
+    public static int lerInteiro(String mensagem) {
         while (true) {
             try {
                 System.out.println(mensagem + ": ");
@@ -43,7 +43,7 @@ public final class Teclado {
      * @param max Maior inteiro que o usuário pode digitar.
      * @return Valor dentro dos limites estabelecidos.
      */
-    public int lerInteiro(String mensagem, int min, int max) {
+    public static int lerInteiro(String mensagem, int min, int max) {
         while (true) {
             int numero = lerInteiro(mensagem);
             if (numero < min || numero > max) {
