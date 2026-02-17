@@ -1,5 +1,6 @@
 package br.com.rpg.view;
 
+import br.com.rpg.model.dto.ResultadoAtaque;
 import br.com.rpg.model.entities.Heroi;
 
 public class BatalhaView {
@@ -29,5 +30,41 @@ public class BatalhaView {
         System.out.println("[3] Use algum item");
         System.out.println("[4] Analise seu inimigo");
         System.out.println("[5] Fuja");
+    }
+
+    /**
+     * Imprime um {@link ResultadoAtaque} no terminal usando {@link StringBuilder}.
+     * @param result Informação a ser impressa.
+     */
+    public void mostrarResultadoAtaque(ResultadoAtaque result) {
+        StringBuilder imprimir = new StringBuilder();
+        imprimir.append(result.nomeAtacante());
+        imprimir.append(" usou ");
+        imprimir.append(result.nomeHabilidade());
+        imprimir.append(" contra ");
+        imprimir.append(result.nomeAlvo());
+        imprimir.append(" ");
+        if (result.esquivou()) {
+            imprimir.append("mas ele esquivou.");
+        }
+        else {
+            imprimir.append("causando ");
+            imprimir.append(result.danoCausado());
+            imprimir.append(" de dano");
+            if (result.critico()) {
+                imprimir.append(" e ainda deu crítico");
+            }
+            if (result.alvoMorreu()) {
+                imprimir.append(" matando-o!");
+            }
+            else {
+                imprimir.append("!");
+            }
+        }
+        System.out.println();
+        System.out.println("────────────────────────────────────────");
+        System.out.println(imprimir);
+        System.out.println("────────────────────────────────────────");
+        System.out.println();
     }
 }
