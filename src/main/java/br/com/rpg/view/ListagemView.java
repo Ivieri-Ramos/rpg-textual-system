@@ -5,7 +5,7 @@ import br.com.rpg.model.entities.Habilidade;
 import java.util.List;
 
 /**
- * Classe que contém métodos que imprimem {@code List<>}.
+ * Classe que contém métodos que imprimem uma {@code List<>}.
  */
 public class ListagemView {
 

@@ -1,7 +1,5 @@
 package br.com.rpg.view;
 
-import br.com.rpg.controller.BatalhaController;
-
 import java.util.Scanner;
 
 /**
@@ -24,7 +22,7 @@ public class Teclado {
     public int lerInteiro(String mensagem) {
         while (true) {
             try {
-                System.out.println(mensagem + ": ");
+                System.out.println(mensagem);
                 String valor = teclado.nextLine();
                 return Integer.parseInt(valor);
             }

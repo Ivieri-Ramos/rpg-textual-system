@@ -1,12 +1,10 @@
 package br.com.rpg.model.entities;
 
-import br.com.rpg.model.services.BatalhaService;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Classe abstrata herdada por {@link Heroi} e {@link Inimigo}.
+ * Herdada por {@link Heroi} e {@link Inimigo}.
  * <p>
  * Define os atributos-base de {@link Heroi} e {@link Inimigo}.
  */
@@ -20,19 +18,19 @@ public abstract class Personagem {
     private double chanceCrit;
     private double chanceEsq;
     private boolean isVivo = true;
-    private List<Habilidade> menuHabilidades =  new ArrayList<Habilidade>();
+    private final List<Habilidade> menuHabilidades = new ArrayList<Habilidade>();
     /**
      * Construtor padrão de Personagem.
      * <p>
      * A depender do tipo de Heroi ou Inimigo,
      * a quantidade de um certo atributo pode variar.
+     * @param nome Define o nome da entidade para identificação.
      * @param vida Máximo de dano que a entidade pode receber.
      * @param dano Quanto de vida ele pode tirar de outra entidade.
      * @param mana Atributo que permite usar magias.
      * @param defesa Quanto de dano pode anular por porcentagem.
      * @param chanceCrit Probabilidade (0-100) para que o dano da entidade aumente.
      * @param chanceEsq Probabilidade (0-100) para que a entidade esquive e anule completamente o dano.
-     * @param nome Define o nome da entidade para identificação.
      */
     public Personagem(String nome, int vida, int dano, int mana, double defesa, double chanceCrit, double chanceEsq) {
         this.nome = nome;

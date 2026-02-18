@@ -3,6 +3,11 @@ package br.com.rpg.view;
 import br.com.rpg.model.dto.ResultadoAtaque;
 import br.com.rpg.model.entities.Heroi;
 
+/**
+ * Possui métodos usados unicamente para a impressão de informações em batalha
+ * necessárias para que o jogador consiga jogar, imprimindo informações do mesmo,
+ * ações disponíveis, etc.
+ */
 public class BatalhaView {
 
     /**
@@ -23,8 +28,10 @@ public class BatalhaView {
         System.out.println("└───────────────────────────────────────────┘");
     }
 
-
-    public void mostrarInfoBatalhaJogador(Heroi jogador) {
+    /**
+     * Imprime um menu para que o usuário veja as ações que ele pode realizar durante o combate.
+     */
+    public void mostrarOpcoesBatalhaJogador() {
         System.out.println("[1] Use uma habilidade aprendida");
         System.out.println("[2] Defenda-se");
         System.out.println("[3] Use algum item");

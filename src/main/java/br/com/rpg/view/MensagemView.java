@@ -1,7 +1,10 @@
 package br.com.rpg.view;
 
+/**
+ * Possui métodos que imprimem mensagens de aviso para o usuário,
+ * possuindo cores diferentes a depender do tipo de aviso.
+ */
 public class MensagemView {
-
     // Constantes que mudam a cor do texto, servem apenas para imprimir mensagens de feedback.
     private static final String RESET = "\u001B[0m";
     private static final String VERMELHO = "\u001B[31m";
@@ -45,11 +48,15 @@ public class MensagemView {
         aguardarLer();
     }
 
+    /**
+     * Serve apenas para parar o programa por alguns segundos.
+     */
     private void aguardarLer(){
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
     }
 }
