@@ -1,5 +1,7 @@
 package br.com.rpg.view;
 
+import br.com.rpg.view.utils.ConsoleUtils;
+
 /**
  * Possui métodos que imprimem mensagens de aviso para o usuário,
  * possuindo cores diferentes a depender do tipo de aviso.
@@ -21,7 +23,7 @@ public class MensagemView {
     public void mostrarMensagemErro(String mensagem){
         System.out.println();
         System.out.println(VERMELHO + "ERRO: " + mensagem + RESET);
-        aguardarLer();
+        ConsoleUtils.aguardarSegundos(2);
     }
 
     /**
@@ -33,7 +35,7 @@ public class MensagemView {
     public void mostrarMensagemAviso(String mensagem){
         System.out.println();
         System.out.println(AMARELO + "AVISO: " + mensagem + RESET);
-        aguardarLer();
+        ConsoleUtils.aguardarSegundos(2);
     }
 
     /**
@@ -45,18 +47,6 @@ public class MensagemView {
     public void mostrarMensagemSucesso(String mensagem){
         System.out.println();
         System.out.println(VERDE + "SUCESSO: " + mensagem + RESET);
-        aguardarLer();
-    }
-
-    /**
-     * Serve apenas para parar o programa por alguns segundos.
-     */
-    private void aguardarLer(){
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            Thread.currentThread().interrupt();
-        }
+        ConsoleUtils.aguardarSegundos(2);
     }
 }

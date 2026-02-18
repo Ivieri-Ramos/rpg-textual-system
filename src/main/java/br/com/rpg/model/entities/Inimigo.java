@@ -1,6 +1,10 @@
 package br.com.rpg.model.entities;
 
 import br.com.rpg.model.enums.ClasseInimigo;
+import br.com.rpg.util.Dado;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Classe que será usada para criar inimigos no jogo.
@@ -22,6 +26,31 @@ public class Inimigo extends Personagem {
         super(nome, tipoClasse.getVidaBase(), tipoClasse.getDanoBase(), tipoClasse.getManaBase(),
                 tipoClasse.getDefesaBase(), tipoClasse.getChanceCritBase(),
                 tipoClasse.getChanceEsqBase());
+    }
+
+    /**
+     * Escolhe uma habilidade disponível do Inimigo, para ser usada contra o {@link Heroi}.
+     * @return Habilidade que será usada, pode ser {@code null} caso não tenha mana suficiente.
+     */
+    public Habilidade retornarHabilidade() {
+        List<Habilidade> habilidadesDisponiveis = new ArrayList<>();
+        for (Habilidade habAtual : getMenuHabilidades()) { // Itera sobre cada habilidade dentro da lista.
+            if (habAtual.custoMana() <= getMana()) { // Se tiver mana, adiciona nas disponíveis.
+                habilidadesDisponiveis.add(habAtual);
+            }
+        }
+        if (habilidadesDisponiveis.isEmpty()) { // Se tiver vazia (caso não tenha mana), retorna null.
+            return null;
+        }
+        int qtdHabilidades =  habilidadesDisponiveis.size();
+        int sorteio = Dado.rolar(0, (qtdHabilidades - 1)); // Escolhe uma habilidade aleatoriamente entre 0 e (total - 1), pois é um vetor.
+        return habilidadesDisponiveis.get(sorteio);
+        /*
+        TODO: Futuramente adicionar um sistema mais complexo, usando interfaces, onde o Inimigo escolha uma
+            habilidade a partir de um peso ponderado (Um "Ataque Normal" seja mais comum que "Ataque Forte"),
+            ou um algoritmo que ele ataque de forma inteligente, ficando mais agressivo quanto menos vida tiver,
+            ou usando certas habilidades a partir de condições (Caso fique muito tempo vivo).
+         */
     }
 
     @Override

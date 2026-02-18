@@ -37,7 +37,7 @@ public class BatalhaController {
     public void iniciarBatalha(Heroi jogador, Inimigo oponente) {
         while (jogador.isVivo() && oponente.isVivo()) {
             turnoJogador(jogador, oponente);
-            // TODO: Turno do inimigo
+            turnoInimigo(oponente, jogador);
             // TODO: Futuramente aplicar efeitos, como sangramento, queimadura, atordoar, etc.
         }
     }
@@ -56,7 +56,7 @@ public class BatalhaController {
             int opEscolhida = input.lerInteiro("Selecione alguma opção acima:", 1, 5);
             switch (opEscolhida) {
                 case 1 -> {
-                    Habilidade habUsar = retornarHabilidade(jogador.getMenuHabilidades(), jogador.getMana());
+                    Habilidade habUsar = retornarHabilidadeJogador(jogador.getMenuHabilidades(), jogador.getMana());
                     if (habUsar == null) {
                         continue;
                     }
@@ -99,19 +99,38 @@ public class BatalhaController {
      * @param mana Mana atual do jogador.
      * @return Uma habilidade do jogador ou {@code null} caso digite 0 para voltar.
      */
-    private Habilidade retornarHabilidade(List<Habilidade> listaHab, int mana) {
+    private Habilidade retornarHabilidadeJogador(List<Habilidade> listaHab, int mana) {
         int qtdHabilidades = listaHab.size();
         while (true) {
             listaView.mostrarHabilidades(listaHab, mana);
             int usarHabilidade = input.lerInteiro("Selecione qual habilidade usar, ou digite 0 para voltar: ", 0, qtdHabilidades);
-            if (usarHabilidade == 0) {
+            if (usarHabilidade == 0) { // Se o jogador digitou '0', retorna null para depois voltar para o menu normal.
                 return null;
             }
-            if (listaHab.get(usarHabilidade - 1).custoMana() > mana) { // Se não tiver mana suficiente, cancela o uso da habilidade.
+            int indice = usarHabilidade - 1; // Menos um pois está acessando o índice de um vetor.
+            if (listaHab.get(indice).custoMana() > mana) { // Se não tiver mana suficiente, cancela o uso da habilidade.
                 avisoView.mostrarMensagemErro("Você não possui mana para usar essa habilidade!");
                 continue;
             }
-            return listaHab.get((usarHabilidade - 1)); // Menos um pois está acessando o índice de um vetor.
+            return listaHab.get(indice);
         }
+    }
+
+    /**
+     * Recebe uma habilidade de {@link Inimigo} e a usa contra {@link Heroi}.
+     * <p>
+     * Primeiro recebe a habilidade, e depois valida se pode usar, caso sim,
+     * chama a {@code fachada} para atualizar as entidades e então imprimir o resultado.
+     * @param oponente Entidade atacante.
+     * @param alvo Entidade que recebe o ataque.
+     */
+    private void turnoInimigo(Inimigo oponente, Heroi alvo) {
+        Habilidade habUsar = oponente.retornarHabilidade();
+        if (habUsar == null) {
+            avisoView.mostrarMensagemAviso("O inimigo não possui mana");
+            return;
+        }
+        ResultadoAtaque imprimir = fachada.personagemAtacar(oponente, alvo, habUsar);
+        batalhaView.mostrarResultadoAtaque(imprimir);
     }
 }

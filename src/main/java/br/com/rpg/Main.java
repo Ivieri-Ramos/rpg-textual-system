@@ -12,11 +12,13 @@ public class Main {
 
     public static void main(String[] args) {
         Teclado input = new Teclado();
+        // Esse bloco de inicializações é apenas para testes, futuramente será retirado isso.
         BatalhaController jogo  = new BatalhaController();
         Heroi meuHeroi = new Heroi("Ivieri", ClasseHeroi.GUERREIRO);
         Inimigo meuInimigo = new Inimigo("Orc", ClasseInimigo.ORC);
         meuHeroi.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("ATAQUE_NORMAL"));
         meuHeroi.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("ATAQUE_FORTE"));
+        meuInimigo.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("ATAQUE_NORMAL"));
         jogo.iniciarBatalha(meuHeroi, meuInimigo);
         input.fecharTeclado();
     }

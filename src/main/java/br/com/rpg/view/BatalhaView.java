@@ -2,6 +2,7 @@ package br.com.rpg.view;
 
 import br.com.rpg.model.dto.ResultadoAtaque;
 import br.com.rpg.model.entities.Heroi;
+import br.com.rpg.view.utils.ConsoleUtils;
 
 /**
  * Possui métodos usados unicamente para a impressão de informações em batalha
@@ -73,5 +74,6 @@ public class BatalhaView {
         System.out.println(imprimir);
         System.out.println("────────────────────────────────────────");
         System.out.println();
+        ConsoleUtils.aguardarSegundos(2);
     }
 }
