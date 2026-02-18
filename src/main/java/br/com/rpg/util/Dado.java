@@ -11,6 +11,8 @@ import java.util.Random;
 public final class Dado {
     private static final Random dado = new Random();
 
+    private Dado() {}
+
     /**
      * Método para testes de probabilidade.
      * <p>
@@ -18,7 +20,7 @@ public final class Dado {
      * @param max Maior chance possível.
      * @return Retorna o resultado entre o min e max escolhidos.
      */
-    private static int rolar(int min, int max) {
+    public static int rolar(int min, int max) {
         return dado.nextInt((max - min) + 1) + min;
     }
 
