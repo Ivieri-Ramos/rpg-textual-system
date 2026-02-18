@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("application")
 }
 
 group = "br.com.ivieri"
@@ -7,6 +8,10 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+}
+
+application {
+    mainClass.set("br.com.rpg.Main")
 }
 
 dependencies {
@@ -17,6 +22,11 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
+    systemProperty("file.encoding", "UTF-8")
 }
 
 tasks.withType<JavaExec> {

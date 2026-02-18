@@ -71,9 +71,9 @@ public class BatalhaView {
         }
         System.out.println();
         System.out.println("────────────────────────────────────────");
-        System.out.println(imprimir);
+        ConsoleUtils.digitarLento(imprimir.toString());
         System.out.println("────────────────────────────────────────");
         System.out.println();
-        ConsoleUtils.aguardarSegundos(2);
+        ConsoleUtils.aguardarSegundos(1);
     }
 }

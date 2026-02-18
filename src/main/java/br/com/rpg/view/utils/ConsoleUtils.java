@@ -56,7 +56,7 @@ public final class ConsoleUtils {
     public static void digitarLento(String mensagem) {
         for (char c : mensagem.toCharArray()) {
             System.out.print(c);
-            aguardarMs(25); // Tempo de impressão para cada letra.
+            aguardarMs(50); // Tempo de impressão para cada letra.
         }
         System.out.println();
     }
@@ -68,6 +68,7 @@ public final class ConsoleUtils {
     public static void digitarLento(String mensagem, int milissegundos) {
         for (char c : mensagem.toCharArray()) {
             System.out.print(c);
+            System.out.flush();
             aguardarMs(milissegundos); // Tempo de impressão para cada letra.
         }
         System.out.println();
