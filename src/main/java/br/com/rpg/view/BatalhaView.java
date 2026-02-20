@@ -2,6 +2,7 @@ package br.com.rpg.view;
 
 import br.com.rpg.model.dto.ResultadoAtaque;
 import br.com.rpg.model.entities.Heroi;
+import br.com.rpg.model.entities.Inimigo;
 import br.com.rpg.view.utils.ConsoleUtils;
 
 /**
@@ -75,5 +76,14 @@ public class BatalhaView {
         System.out.println("────────────────────────────────────────");
         System.out.println();
         ConsoleUtils.aguardarSegundos(1);
+    }
+
+    /**
+     * Imprime uma mensagem no console avisando ao jogador que ele se defendeu.
+     */
+    public void jogadorDefendeu() {
+        System.out.println("────────────────────────────────────────");
+        ConsoleUtils.digitarLento("Você armou sua defesa, o próximo ataque causa metade do dano!");
+        System.out.println("────────────────────────────────────────");
     }
 }

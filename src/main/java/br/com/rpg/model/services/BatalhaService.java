@@ -22,12 +22,16 @@ public class BatalhaService {
      * @return Um Record que armazena o {@code danoTotal} (que pode ser 0) e se houve {@code critico} ou {@code esquiva}.
      */
     public CalculoDano calcularDano(Personagem atacante, Personagem alvo, Habilidade ataque) {
-        if (Dado.testarSorte(alvo.getChanceEsq())) { // Testa a esquiva do alvo, se for bem-sucedida o alvo não recebe dano.
+        // Testa a esquiva do alvo (não pode se esquivar caso esteja defendendo), se for bem-sucedida o alvo não recebe dano.
+        if (Dado.testarSorte(alvo.getChanceEsq()) && !alvo.isDefendendo()) {
             return new CalculoDano(0, false, true);
         }
         boolean critico = false;
         double danoAtaque = atacante.getDano() * ataque.razaoDano();
         double danoTotal = danoAtaque - ((alvo.getDefesa() / 100.0) * danoAtaque);
+        if (alvo.isDefendendo()) { // Se o alvo estiver defendendo, recebe metade do dano.
+            danoTotal *= 0.5;
+        }
         if (Dado.testarSorte(atacante.getChanceCrit())) { // Testa o crítico do atacante, se for bem-sucedida, o dano aumenta em 50%.
             danoTotal *= 1.5;
             critico = true;

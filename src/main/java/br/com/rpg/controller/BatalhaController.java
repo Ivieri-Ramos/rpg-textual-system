@@ -37,6 +37,9 @@ public class BatalhaController {
     public void iniciarBatalha(Heroi jogador, Inimigo oponente) {
         while (jogador.isVivo() && oponente.isVivo()) {
             turnoJogador(jogador, oponente);
+            if (!oponente.isVivo()) {
+                break;
+            }
             turnoInimigo(oponente, jogador);
             // TODO: Futuramente aplicar efeitos, como sangramento, queimadura, atordoar, etc.
         }
@@ -64,6 +67,8 @@ public class BatalhaController {
                     batalhaView.mostrarResultadoAtaque(imprimir);
                 }
                 case 2 -> {
+                    jogador.setDefendendo(true);
+                    batalhaView.jogadorDefendeu();
                     //TODO: Criar estado onde o Personagem possa se defender.
                 }
                 case 3 -> {
