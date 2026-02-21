@@ -1,0 +1,48 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package br.com.rpg.model.dto {
+
+    class ResultadoAtaque <<record>> {
+        - nomeAtacante: String
+        - nomeAlvo: String
+        - nomeHabilidade: String
+        - danoCausado: int
+        - esquivou: boolean
+        - critico: boolean
+        - alvoMorreu: boolean
+    }
+}
+
+package br.com.rpg.view {
+
+    class BatalhaView {
+        + mostrarInfoCompletaHeroi(jogador: Heroi): void
+        + mostrarOpcoesBatalhaJogador(): void
+        + mostrarResultadoAtaque(result: ResultadoAtaque): void
+        + jogadorDefendeu(): void
+    }
+}
+
+package br.com.rpg.controller {
+
+    class BatalhaController {
+        - fachada: GameFachada
+        - batalhaView: BatalhaView
+        - input: Teclado
+        --
+        + iniciarBatalha(jogador: Heroi, oponente: Inimigo): void
+        - turnoJogador(jogador: Heroi, alvo: Inimigo): void
+        - retornarHabilidadeJogador(listaHab: List<Habilidade>, mana: int): Habilidade
+        - turnoInimigo(oponente: Inimigo, alvo: Heroi): void
+    }
+}
+
+' Relações estruturais
+BatalhaController *-- BatalhaView : possui e orquestra >
+
+' Relações de uso/dependência
+BatalhaController ..> ResultadoAtaque : recebe da Fachada >
+BatalhaView ..> ResultadoAtaque : lê e imprime >
+
+@enduml

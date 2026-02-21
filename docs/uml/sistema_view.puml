@@ -1,0 +1,41 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package br.com.rpg.view {
+
+    class Teclado {
+        - {static} teclado: Scanner
+        + lerInteiro(mensagem: String): int
+        + lerInteiro(mensagem: String, min: int, max: int): int
+        + fecharTeclado(): void
+    }
+
+    class MensagemView {
+        - {static} RESET: String
+        - {static} VERMELHO: String
+        - {static} AMARELO: String
+        - {static} VERDE: String
+        --
+        + mostrarMensagemErro(mensagem: String): void
+        + mostrarMensagemAviso(mensagem: String): void
+        + mostrarMensagemSucesso(mensagem: String): void
+    }
+
+    class ListagemView {
+        + mostrarHabilidades(lista: List<Habilidade>): void
+        + mostrarHabilidades(lista: List<Habilidade>, manaAtual: int): void
+    }
+
+    class BatalhaView {
+        + mostrarInfoCompletaHeroi(jogador: Heroi): void
+        + mostrarOpcoesBatalhaJogador(): void
+        + mostrarResultadoAtaque(result: ResultadoAtaque): void
+        + jogadorDefendeu(): void
+    }
+}
+
+' As classes em view dependem de ConsoleUtils
+MensagemView ..> ConsoleUtils : usa >
+BatalhaView ..> ConsoleUtils : usa >
+
+@enduml

@@ -1,0 +1,45 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package br.com.rpg.model.enums {
+
+    enum ClasseHeroi {
+        GUERREIRO
+        MAGO
+        --
+        - vidaBase: int
+        - danoBase: int
+        - manaBase: int
+        - defesaBase: double
+        - chanceCritBase: double
+        - chanceEsqBase: double
+        --
+        + getVidaBase(): int
+        + getDanoBase(): int
+        + getManaBase(): int
+        + getDefesaBase(): double
+        + getChanceCritBase(): double
+        + getChanceEsqBase(): double
+    }
+
+    enum ClasseInimigo {
+        GOBLIN
+        ORC
+        --
+        - vidaBase: int
+        - danoBase: int
+        - manaBase: int
+        - defesaBase: double
+        - chanceCritBase: double
+        - chanceEsqBase: double
+        --
+        + getVidaBase(): int
+        + getDanoBase(): int
+        + getManaBase(): int
+        + getDefesaBase(): double
+        + getChanceCritBase(): double
+        + getChanceEsqBase(): double
+    }
+}
+
+@enduml

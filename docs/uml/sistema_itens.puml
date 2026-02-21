@@ -1,0 +1,75 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package br.com.rpg.model.item {
+
+    abstract class Item {
+        - nome: String
+        - descricao: String
+        - preco: int
+        --
+        + Item(nome: String, descricao: String, preco: int)
+        + getNome(): String
+        + getDescricao(): String
+        + getPreco(): int
+    }
+
+    class Consumivel {
+        - efeito: Function<Heroi, ResultadoUsoItem>
+        --
+        + Consumivel(nome: String, desc: String, preco: int, efeito: Function)
+        + usar(heroi: Heroi): ResultadoUsoItem
+    }
+
+    class Equipamento {
+        - tipo: TipoEquipamento
+        - bonusAtaque: int
+        - bonusDefesa: int
+        - bonusVida: int
+        --
+        + Equipamento(nome: String, desc: String, preco: int, tipo: TipoEquipamento, atk: int, def: int)
+        + getTipo(): TipoEquipamento
+        + getBonusAtaque(): int
+        + getBonusDefesa(): int
+        + getBonusVida(): int
+    }
+
+    class Inventario {
+            ' Podemos usar uma Lista para itens únicos ou um Map se quiser empilhar itens repetidos
+            - itens: List<Item>
+            - capacidadeMaxima: int
+            --
+            + Inventario(capacidadeMaxima: int)
+            + adicionarItem(item: Item): boolean
+            + removerItem(item: Item): boolean
+            + getItem(indice: int): Item
+            + listarItens(): void
+            + isCheio(): boolean
+    }
+}
+
+package br.com.rpg.model.enums {
+    enum TipoEquipamento {
+        ARMA
+        ARMADURA
+        ACESSORIO
+    }
+}
+
+package br.com.rpg.model.dto {
+    class ResultadoUsoItem <<record>> {
+        - mensagem: String
+        - sucesso: boolean
+        - deveConsumir: boolean
+    }
+}
+
+' Relações de herança
+Item <|-- Consumivel
+Item <|-- Equipamento
+
+' Relações de dependência
+Equipamento --> TipoEquipamento : possui >
+Consumivel --> ResultadoUsoItem : gera >
+
+@enduml
