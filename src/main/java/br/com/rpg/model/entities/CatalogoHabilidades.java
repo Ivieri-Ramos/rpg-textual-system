@@ -31,6 +31,12 @@ public final class CatalogoHabilidades {
     public static void iniciarCatalogo() {
         mapaHabilidades.put("ATAQUE_NORMAL", new Habilidade("Ataque Normal", 0, 1.0, TipoElemento.NEUTRO));
         mapaHabilidades.put("ATAQUE_FORTE", new Habilidade("Ataque Forte", 10, 1.2, TipoElemento.NEUTRO));
+        mapaHabilidades.put("BOLA_DE_FOGO", new Habilidade("Bola de Fogo", 20, 1.5, TipoElemento.FOGO));
+        mapaHabilidades.put("RAIO_DE_GELO", new Habilidade("Raio de Gelo", 15, 1.3, TipoElemento.GELO));
+        mapaHabilidades.put("RAIO_ELETRICO", new Habilidade("Raio Elétrico", 25, 1.7, TipoElemento.ELETRICO));
+        mapaHabilidades.put("TERREMOTO", new Habilidade("Terremoto", 30, 2.0, TipoElemento.TERRA));
+        mapaHabilidades.put("DILACERAR", new Habilidade("Dilacerar", 20, 1.4, TipoElemento.NEUTRO));
+
     }
 
     /**

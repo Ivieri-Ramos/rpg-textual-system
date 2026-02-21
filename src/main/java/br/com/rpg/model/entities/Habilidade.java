@@ -14,4 +14,7 @@ import br.com.rpg.model.enums.TipoElemento;
  * @param razaoDano Aumenta ou diminui o {@link Personagem#getDano()}.
  * @param elemento  Incrementa o poder da habilidade.
  */
-public record Habilidade(String nome, int custoMana, double razaoDano, TipoElemento elemento) {}
+public record Habilidade(String nome, int custoMana, double razaoDano, TipoElemento elemento) {
+
+    
+}
