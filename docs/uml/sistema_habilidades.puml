@@ -1,0 +1,36 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package br.com.rpg.model.entities {
+
+    ' O <<record>> avisa que é uma classe Record, ou seja, imutável
+    class Habilidade <<record>> {
+        - nome: String
+        - custoMana: int
+        - razaoDano: double
+        - elemento: TipoElemento
+    }
+
+    ' O <<final>> indica que a classe não pode ser herdada
+    class CatalogoHabilidades <<final>> {
+        - {static} mapaHabilidades: Map<String, Habilidade>
+        + {static} iniciarCatalogo(): void
+        + {static} enviarHabilidade(chave: String): Habilidade
+    }
+}
+
+package br.com.rpg.model.enums {
+    enum TipoElemento {
+        NEUTRO
+        FOGO
+        GELO
+        ELETRICO
+        TERRA
+    }
+}
+
+' Relações
+CatalogoHabilidades "1" *-- "*" Habilidade : armazena e fornece >
+Habilidade --> TipoElemento : possui >
+
+@enduml
