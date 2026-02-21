@@ -53,6 +53,14 @@ public class Teclado {
     }
 
     /**
+     * Aguarda o usuário digitar enter, usado quando é uma ação demorada.
+     */
+    public void aguardarEnter() {
+        System.out.print("Digite [ENTER] para continuar: ");
+        teclado.nextLine();
+    }
+
+    /**
      * Método que fecha o Scanner.
      * <p>
      * <b>Importante:</b> Só deve ser chamada uma única vez

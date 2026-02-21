@@ -53,10 +53,10 @@ public class BatalhaController {
      * @param alvo Necessário apenas quando é atacado e ter suas informações analisadas.
      */
     private void turnoJogador(Heroi jogador, Inimigo alvo) {
-        // TODO: Pedir ação do jogador, como defender, fugir, etc.
+        // TODO: Pedir ação do jogador, fugir.
         while (true) {
             batalhaView.mostrarOpcoesBatalhaJogador();
-            int opEscolhida = input.lerInteiro("Selecione alguma opção acima:", 1, 5);
+            int opEscolhida = input.lerInteiro("Selecione alguma opção acima:", 1, 6);
             switch (opEscolhida) {
                 case 1 -> {
                     Habilidade habUsar = retornarHabilidadeJogador(jogador.getMenuHabilidades(), jogador.getMana());
@@ -69,7 +69,6 @@ public class BatalhaController {
                 case 2 -> {
                     jogador.setDefendendo(true);
                     batalhaView.jogadorDefendeu();
-                    //TODO: Criar estado onde o Personagem possa se defender.
                 }
                 case 3 -> {
                     //TODO: Criar sistema de itens, onde possua itens de cura, ataque, etc.
@@ -83,6 +82,12 @@ public class BatalhaController {
                     */
                 }
                 case 5 -> {
+                    batalhaView.mostrarInfoCompletaHeroi(jogador);
+                    input.aguardarEnter();
+                    continue;
+                    // Como não é uma ação de atacar, ou defender, não custa turnos.
+                }
+                case 6 -> {
                     /*
                     TODO: Criar um sistema que permita o jogador fugir,
                         perdendo a capacidade de ganhar XP, ouro, etc. Mas
@@ -102,7 +107,7 @@ public class BatalhaController {
      * {@link BatalhaController#turnoJogador(Heroi, Inimigo) turnoJogador}.
      * @param listaHab Acessa as habilidades do jogador.
      * @param mana Mana atual do jogador.
-     * @return Uma habilidade do jogador ou {@code null} caso digite 0 para voltar.
+     * @return Uma habilidade do jogador ou {@code null} caso ele digite 0 para voltar.
      */
     private Habilidade retornarHabilidadeJogador(List<Habilidade> listaHab, int mana) {
         int qtdHabilidades = listaHab.size();

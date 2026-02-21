@@ -38,7 +38,8 @@ public class BatalhaView {
         System.out.println("[2] Defenda-se");
         System.out.println("[3] Use algum item");
         System.out.println("[4] Analise seu inimigo");
-        System.out.println("[5] Fuja");
+        System.out.println("[5] Veja seus status");
+        System.out.println("[6] Fuja");
     }
 
     /**
@@ -57,6 +58,9 @@ public class BatalhaView {
             imprimir.append("mas ele esquivou.");
         }
         else {
+            if (result.defendeu()) {
+                imprimir.append("mas ele defendeu, ");
+            }
             imprimir.append("causando ");
             imprimir.append(result.danoCausado());
             imprimir.append(" de dano");

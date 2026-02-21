@@ -37,6 +37,7 @@ public class GameFachada {
                 resultado.danoFinal(),
                 resultado.esquivou(),
                 resultado.critico(),
+                resultado.defendeu(),
                 !alvo.isVivo()
         );
     }
