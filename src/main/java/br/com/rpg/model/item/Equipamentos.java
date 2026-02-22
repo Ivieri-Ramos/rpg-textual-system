@@ -1,9 +1,9 @@
 package br.com.rpg.model.item;
+import br.com.rpg.model.enums.TipoEquipamento;
 
 public class Equipamentos extends Item {
 
-    private final String tipoEqp; //
-    // Definir qual o tipo de equipamento para não equipar dois capacetes, mas poder equipar um capacete e uma espada//
+    private final TipoEquipamento tipoEqp;
     private final int bonusVida;
     private final int bonusDano;
     private final int bonusMana;
@@ -11,7 +11,7 @@ public class Equipamentos extends Item {
     private final double bonusCrit;
     private final double bonusEsq;
 
-    public Equipamentos (String nome, String descricao, int preco, String tipoEqp, int bonusVida, int bonusDano, int bonusMana, double bonusDefesa, double bonusCrit, double bonusEsq) {
+    public Equipamentos (String nome, String descricao, int preco, TipoEquipamento tipoEqp, int bonusVida, int bonusDano, int bonusMana, double bonusDefesa, double bonusCrit, double bonusEsq) {
         super(nome, descricao, preco);
         this.tipoEqp = tipoEqp;
         this.bonusVida = bonusVida;
@@ -22,7 +22,7 @@ public class Equipamentos extends Item {
         this.bonusEsq = bonusEsq;
     }
 
-    public String getTipoEqp() {
+    public TipoEquipamento getTipoEqp() {
         return tipoEqp;
     }
     public int getBonusVida() {
