@@ -2,7 +2,7 @@ package br.com.rpg.model.item;
 
 public class Equipamentos extends Item {
 
-    private final String tipoEqp;
+    private final String tipoEqp; //
     // Definir qual o tipo de equipamento para não equipar dois capacetes, mas poder equipar um capacete e uma espada//
     private final int bonusVida;
     private final int bonusDano;
