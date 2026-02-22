@@ -1,0 +1,45 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package br.com.rpg.model {
+
+    abstract class Personagem {
+        # nome: String
+        # vida: int
+        # vidaMaxima: int
+        # mana: int
+        # manaMaxima: int
+        # ataque: int
+        # ataqueMaximo: int
+        # defesa: double
+        # defesaMax: double
+        # chanceEsq: double
+        # chanceEsqMaxima: double
+        # chanceCrit: double
+        # chanceCritMaxima: double
+        + receberDano(dano: int): void
+        + curar(quantidade: int): void
+        + recuperarMana(quantidade: int): void
+    }
+
+    class Heroi {
+        ' As conexões entre o Inventario e Equipamento é feito depois
+        - inventario: Inventario
+        - equipamentos: Map<TipoEquipamento, Equipamento>
+
+        + equipar(equip: Equipamento): void
+        + usarItem(indice: int): ResultadoUsoItem
+    }
+
+    class Inimigo {
+        - xpDrop: int
+        - ouroDrop: int
+        + droparRecompensa(): void
+    }
+}
+
+' Relação de Herança (Heroi e Inimigo herdam de Personagem)
+Personagem <|-- Heroi
+Personagem <|-- Inimigo
+
+@enduml

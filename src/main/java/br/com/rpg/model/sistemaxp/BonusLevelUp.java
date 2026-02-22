@@ -1,4 +1,4 @@
-package br.com.rpg.model.entities;
+package br.com.rpg.model.sistemaxp;
 
 /**
  * Define os bônus aplicados ao subir de nível.

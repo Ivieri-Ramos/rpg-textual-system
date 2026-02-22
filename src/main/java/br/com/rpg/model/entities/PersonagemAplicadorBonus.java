@@ -1,5 +1,9 @@
 package br.com.rpg.model.entities;
 
+import br.com.rpg.model.sistemaxp.AplicadorBonus;
+import br.com.rpg.model.sistemaxp.BonusLevelUp;
+import br.com.rpg.model.sistemaxp.ResultadoBonus;
+
 /**
  * Implementação de {@link AplicadorBonus} para aplicar bônus a um {@link Personagem}.
  * <p>

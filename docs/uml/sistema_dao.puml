@@ -1,0 +1,28 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package br.com.rpg.dao {
+
+    ' Interface que define o contrato de salvamento
+    ' Futuramente podemos alternar a forma de salvar os arquivos
+    interface RepositorioHeroi <<interface>> {
+        + salvarEstado(heroi: Heroi): boolean
+        + carregarEstado(): Heroi
+    }
+
+    ' A classe responsável pelos métodos de csv
+    class HeroiCsvRepository {
+        - {static} CAMINHO_ARQUIVO: String
+        - {static} SEPARADOR: String
+        --
+        + salvarEstado(heroi: Heroi): boolean
+        + carregarEstado(): Heroi
+        - converterParaCsv(heroi: Heroi): String
+        - montarHeroiDeCsv(linhaCsv: String): Heroi
+    }
+}
+
+' Relação de implementação
+RepositorioHeroi <|.. HeroiCsvRepository
+
+@enduml

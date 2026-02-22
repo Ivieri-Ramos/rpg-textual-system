@@ -1,0 +1,23 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package br.com.rpg.facade {
+
+    class GameFachada {
+        - calculadoraBatalha: BatalhaService
+        --
+        + personagemAtacar(atacante: Personagem, alvo: Personagem, habUsar: Habilidade): ResultadoAtaque
+    }
+}
+
+' A GameFachada é dona do serviço de batalha
+GameFachada *-- BatalhaService : instancia e usa >
+
+' A GameFachada altera o estado das entidades e usa seus dados
+GameFachada ..> Personagem : atualiza estado de >
+GameFachada ..> Habilidade : lê dados de >
+
+' A GameFachada monta o DTO para devolver ao BatalhaController
+GameFachada ..> ResultadoAtaque : cria e retorna >
+
+@enduml

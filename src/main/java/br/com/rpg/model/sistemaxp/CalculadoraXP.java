@@ -1,4 +1,4 @@
-package br.com.rpg.model.entities;
+package br.com.rpg.model.sistemaxp;
 
 /**
  * Responsável pelos cálculos de XP necessário para cada nível.

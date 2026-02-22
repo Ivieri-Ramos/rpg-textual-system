@@ -1,0 +1,17 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package br.com.rpg.exceptions {
+
+    ' O <<exception>> indica que a classe é uma exceção
+    class HabilidadeNaoEncontradaException <<exception>> {
+        + HabilidadeNaoEncontradaException(nomeHabilidade: String)
+    }
+}
+
+' Herança entre ela e a classe original do Java
+class RuntimeException <<java.lang>>
+
+RuntimeException <|-- HabilidadeNaoEncontradaException
+
+@enduml

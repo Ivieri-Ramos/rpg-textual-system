@@ -1,4 +1,4 @@
-package br.com.rpg.model.entities;
+package br.com.rpg.model.sistemaxp;
 
 /**
  * Sistema de XP e progressão de níveis.

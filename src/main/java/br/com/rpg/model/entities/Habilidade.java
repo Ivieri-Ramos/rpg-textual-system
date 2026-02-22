@@ -15,6 +15,22 @@ import br.com.rpg.model.enums.TipoElemento;
  * @param elemento  Incrementa o poder da habilidade.
  */
 public record Habilidade(String nome, int custoMana, double razaoDano, TipoElemento elemento) {
-
-    
+	/**
+	 * Construtor compacto que valida os parâmetros da habilidade.
+	 * @throws IllegalArgumentException caso algum parâmetro seja inválido.
+	 */
+	public Habilidade {
+		if (nome == null || nome.isBlank()) {
+			throw new IllegalArgumentException("Nome da habilidade não pode ser nulo ou vazio");
+		}
+		if (custoMana < 0) {
+			throw new IllegalArgumentException("Custo de mana não pode ser negativo");
+		}
+		if (razaoDano <= 0) {
+			throw new IllegalArgumentException("Razão de dano deve ser maior que zero");
+		}
+		if (elemento == null) {
+			throw new IllegalArgumentException("Elemento da habilidade não pode ser nulo");
+		}
+	}
 }

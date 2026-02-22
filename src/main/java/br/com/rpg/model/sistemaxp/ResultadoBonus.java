@@ -1,4 +1,4 @@
-package br.com.rpg.model.entities;
+package br.com.rpg.model.sistemaxp;
 
 /**
  * DTO contendo os bônus a aplicar ao subir de nível.

@@ -1,4 +1,4 @@
-package br.com.rpg.model.entities;
+package br.com.rpg.model.sistemaxp;
 
 /**
  * Interface para aplicar efeitos de level up a uma entidade.

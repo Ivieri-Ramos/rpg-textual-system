@@ -1,0 +1,27 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+' Pacote de utilitários para regras de negócio
+package br.com.rpg.util {
+    class Dado <<utility>> {
+        - {static} dado: Random
+        - Dado()
+        + {static} rolar(min: int, max: int): int
+        + {static} rolarD100(): int
+        + {static} testarSorte(chance: double): boolean
+    }
+}
+
+' Pacote de utils para a view
+package br.com.rpg.view.utils {
+    class ConsoleUtils <<utility>> {
+        - ConsoleUtils()
+        + {static} limparTela(): void
+        + {static} aguardarSegundos(segundos: int): void
+        + {static} aguardarMs(milissegundos: int): void
+        + {static} digitarLento(mensagem: String): void
+        + {static} digitarLento(mensagem: String, milissegundos: int): void
+    }
+}
+
+@enduml

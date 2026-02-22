@@ -1,0 +1,71 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam dpi 300
+
+title Arquitetura Completa do RPG Textual - MVC, Fachada e Persistência
+
+' Importa os módulos (arquivos em .puml) já escritos
+' 1. Utils, Exceções e Classes Base
+!include sistema_utils.puml
+!include sistema_excecoes.puml
+!include sistema_classes.puml
+
+' 2. Entidades e Modelos do jogo
+!include sistema_itens.puml
+!include sistema_habilidades.puml
+!include sistema_personagem.puml
+
+' 3. Camada de Serviço e Persistência
+!include sistema_batalha.puml
+!include sistema_dao.puml
+
+' 4. Views
+!include sistema_view.puml
+
+' 5. Controle
+!include sistema_controle_batalha.puml
+
+' 6. Fachada
+!include sistema_fachada.puml
+
+' Conexões entre Controller e View
+' O Controller recebe e envia para a View
+BatalhaController *-- BatalhaView : orquestra >
+BatalhaController *-- MensagemView : orquestra >
+BatalhaController *-- ListagemView : orquestra >
+BatalhaController *-- Teclado : recebe input via >
+
+' O Controller delega a lógica pesada para a Fachada
+BatalhaController *-- GameFachada : solicita ações para >
+
+' Conexões entre Fachada e Controller
+' A Fachada gerencia os serviços, entidades e persistência
+' retornando o resultado para o Controller
+GameFachada *-- BatalhaService : delega cálculos para >
+GameFachada *-- RepositorioHeroi : salva/carrega via >
+
+' Conexões entre o Service e entidades
+' O BatalhaService usa as entidades e utilitários para calcular os resultados
+BatalhaService ..> Personagem : analisa status de >
+BatalhaService ..> Habilidade : usa multiplicadores de >
+BatalhaService ..> Dado : rola chances (esquiva/crit) em >
+
+' Conexões entre os modelos e Enums
+' Personagem é relacionado aos Enums que iniciam seu atributos-base
+Heroi "1" *-- "1" ClasseHeroi : pertence à classe >
+Inimigo "1" *-- "1" ClasseInimigo : é da raça >
+
+' Associação entre Personagem e Habilidade
+Personagem "1" o-- "*" Habilidade : possui lista de >
+
+' Associação entre o Herói e o sistema de Item
+Heroi "1" *-- "1" Inventario : carrega >
+Heroi "1" o-- "*" Equipamento : veste no corpo >
+
+' Repositório manipula o Herói
+RepositorioHeroi ..> Heroi : serializa/desserializa >
+
+' As exceções
+CatalogoHabilidades ..> HabilidadeNaoEncontradaException : lança >
+
+@enduml

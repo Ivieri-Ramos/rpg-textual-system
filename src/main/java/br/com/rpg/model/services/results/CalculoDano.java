@@ -17,5 +17,4 @@ public record CalculoDano(
         int danoFinal,
         boolean critico,
         boolean esquivou
-) {
-}
+) {}

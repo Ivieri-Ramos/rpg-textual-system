@@ -1,0 +1,25 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package br.com.rpg.model.services {
+
+    class BatalhaService {
+        --
+        + calcularDano(atacante: Personagem, alvo: Personagem, ataque: Habilidade): CalculoDano
+    }
+}
+
+package br.com.rpg.model.services.results {
+
+    ' <<record>> pois é uma classe imutável
+    class CalculoDano <<record>> {
+        - danoFinal: int
+        - critico: boolean
+        - esquivou: boolean
+    }
+}
+
+' Relação de dependência
+BatalhaService ..> CalculoDano : cria e retorna >
+
+@enduml
