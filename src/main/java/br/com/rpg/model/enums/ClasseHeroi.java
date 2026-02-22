@@ -17,7 +17,19 @@ public enum ClasseHeroi {
      * Classe Mago focada no uso de magias.
      * Dano e mana alta, vida e chanceEsq moderada, mas baixa defesa.
      */
-    MAGO(80, 20, 50, 8.0, 5.0, 10.0);
+    MAGO(80, 20, 50, 8.0, 5.0, 10.0),
+
+    /**
+     * Classe Arqueiro focada em ataques à distância.
+     * Dano e chanceEsq alta, vida e mana moderada, mas baixa defesa.
+     */
+    ARQUEIRO(70, 25, 30, 5.0, 15.0, 30.0),
+
+    /**
+     * Classe Ladino focada em ataques furtivos e agilidade.
+     * Dano e chanceCrit alta, vida e defesa moderada, mas baixa mana.
+     */
+    LADINO(60, 30, 20, 10.0, 15.0, 20.0);
 
     private final int vidaBase;
     private final int danoBase;

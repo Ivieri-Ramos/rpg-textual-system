@@ -135,7 +135,7 @@ public abstract class Personagem {
     /**
      * Método que atualiza a nova vida do {@link Personagem}.
      * <p>
-     * Atualiza a vida com base na relação {@code vida - dano} e caso
+     * Atuzzaliza a vida com base na relação {@code vida - dano} e caso
      * a vida se torne 0, mude o estado {@code isVivo} para {@code false}.
      * @param danoRecebido Valor que diminui da {@code vida} atual do {@link Personagem}. <b>Obs.:</b> pode ser 0.
      */
@@ -144,6 +144,22 @@ public abstract class Personagem {
         if (getVida() == 0) {
             setVivo(false);
         }
+    }
+
+    /**
+     * Aumenta o dano do personagem.
+     * @param quantidade Valor a ser adicionado ao dano atual
+     */
+    public void aumentarDano(int quantidade) {
+        setDano(getDano() + quantidade);
+    }
+
+    /**
+     * Aumenta a vida do personagem.
+     * @param quantidade Valor a ser adicionado à vida atual
+     */
+    public void aumentarVida(int quantidade) {
+        setVida(getVida() + quantidade);
     }
 
     /**
