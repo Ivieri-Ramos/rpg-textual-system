@@ -8,6 +8,8 @@ import br.com.rpg.model.enums.ClasseHeroi;
      */
 
 public class Heroi extends Personagem {
+    private int vidaMaxima;
+    private int manaMaxima;
 
     /**
      * Construtor especializado de Heroi que define
@@ -23,6 +25,8 @@ public class Heroi extends Personagem {
         super(nome, tipoClasse.getVidaBase(), tipoClasse.getDanoBase(),
                 tipoClasse.getManaBase(), tipoClasse.getDefesaBase(),
                 tipoClasse.getChanceCritBase(), tipoClasse.getChanceEsqBase());
+        this.vidaMaxima = tipoClasse.getVidaBase();
+        this.manaMaxima = tipoClasse.getManaBase();
     }
 
     @Override
@@ -30,4 +34,14 @@ public class Heroi extends Personagem {
         return "Heroi{" +
                 super.toString();
     }
+
+    @Override
+        protected int getVidaMaxima(){
+        return vidaMaxima;
+    }
+    @Override
+        protected int getManaMaxima(){
+        return manaMaxima;
+    }
+
 }

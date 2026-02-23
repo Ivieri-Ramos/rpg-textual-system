@@ -1,4 +1,4 @@
-package br.com.rpg.model.entities;
+package br.com.rpg.model.item;
 
 import br.com.rpg.model.item.Consumivel;
 import br.com.rpg.model.entities.Heroi;
@@ -15,7 +15,7 @@ import java.util.Map;
  * restaurar sua mana, aumentar sua força, etc.
  */
 public final class CatalogoConsumiveis{
-    private static final Map<String, br.com.rpg.model.item.Consumivel> consumiveis = new HashMap<>();
+    private static final Map<String, Consumivel> consumiveis = new HashMap<>();
 
     static{
         iniciarCatalogo();
@@ -33,9 +33,7 @@ public final class CatalogoConsumiveis{
                 "Poção de Cura Baixa",
                 10, TipoConsumivel.CURA,
                 heroi -> {
-                    int antes = heroi.getVida();
-                    heroi.receberDano(-50);
-                    int curado = heroi.getVida() - antes;
+                    int curado = heroi.curarVida(50);
                     return ResultadoUsoItem.sucesso("Você recuperou " + curado + " HP", curado, 0);
                 }
         ));
@@ -44,9 +42,7 @@ public final class CatalogoConsumiveis{
                 "Poção de Cura Média",
                 30, TipoConsumivel.CURA,
                 heroi -> {
-                    int antes = heroi.getVida();
-                    heroi.receberDano(-150);
-                    int curado = heroi.getVida() - antes;
+                    int curado = heroi.curarVida(150);
                     return ResultadoUsoItem.sucesso("Você recuperou " + curado + " HP", curado, 0);
                 }
         ));
@@ -54,13 +50,16 @@ public final class CatalogoConsumiveis{
         consumiveis.put("POCAO_MANA", new Consumivel(
                 "Poção mana",
                 15, TipoConsumivel.MANA,
-                heroi -> ResultadoUsoItem.sucesso("Poção de mana foi usada", 0, 0)
+                heroi -> {
+                    int restaurado = heroi.curarMana(50);
+                    return ResultadoUsoItem.sucesso("Você recuperou " + restaurado + "MP", 0, 0);
+                }
         ));
 
         consumiveis.put("ANTIDOTO", new Consumivel(
                 "Antidoto",
                 20, TipoConsumivel.ANTIDOTO,
-                heroi -> ResultadoUsoItem.sucesso("Antídoto foi usado", 0, 0)
+                heroi -> ResultadoUsoItem.sucesso("Antídoto usado!", 0, 0)
         ));
 
         consumiveis.put("ELIXIR_DE_FORCA", new Consumivel(
@@ -76,7 +75,7 @@ public final class CatalogoConsumiveis{
      * @return Retorna o consumível ou {@link br.com.rpg.exceptions.ConsumivelNaoEncontradoException}
      * caso a {@code chave} seja inválida.
      */
-    public static br.com.rpg.model.item.Consumivel enviarConsumivel(String chave){
+    public static Consumivel enviarConsumivel(String chave){
         br.com.rpg.model.item.Consumivel consumivel = consumiveis.get(chave);
         if(consumivel == null){
             throw new ConsumivelNaoEncontradoException(chave);

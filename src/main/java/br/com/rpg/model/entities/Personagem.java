@@ -153,4 +153,32 @@ public abstract class Personagem {
     public void aprenderHabilidade(Habilidade novaHabilidade) {
         menuHabilidades.add(novaHabilidade);
     }
+
+    /**
+     * Método abstrato que puxa a vida máxima da entidade.
+     * Deve ser usado por subclasses que possuem limite de vida
+     */
+    protected abstract int getVidaMaxima();
+
+    /**
+     * Método abstrato que puxa a mana máxima da entidade.
+     * Deve ser usado por subclasses que possuem limite de mana.
+     */
+    protected abstract int getManaMaxima();
+
+    public int curarVida(int quantidade){
+        int vidaAntes = getVida();
+        int vidaMaxima = getVidaMaxima();
+        int novaVida = Math.min(vidaAntes + quantidade, vidaMaxima);
+        setVida(novaVida);
+        return novaVida - vidaAntes;
+    }
+
+    public int curarMana(int quantidade){
+        int manaAntes = getMana();
+        int manaMaxima = getManaMaxima();
+        int novaMana = Math.min(manaAntes + quantidade, manaMaxima);
+        setMana(novaMana);
+        return novaMana - manaAntes;
+    }
 }
