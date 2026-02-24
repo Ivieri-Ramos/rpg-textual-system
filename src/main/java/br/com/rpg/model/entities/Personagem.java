@@ -174,16 +174,14 @@ public abstract class Personagem {
 
     public int curarVida(int quantidade){
         int vidaAntes = getVida();
-        int vidaMaxima = getVidaMaxima();
-        int novaVida = Math.min(vidaAntes + quantidade, vidaMaxima);
+        int novaVida = Math.min(vidaAntes + quantidade, getVidaMaxima());
         setVida(novaVida);
         return novaVida - vidaAntes;
     }
 
     public int curarMana(int quantidade){
         int manaAntes = getMana();
-        int manaMaxima = getManaMaxima();
-        int novaMana = Math.min(manaAntes + quantidade, manaMaxima);
+        int novaMana = Math.min(manaAntes + quantidade, getManaMaxima());
         setMana(novaMana);
         return novaMana - manaAntes;
     }
