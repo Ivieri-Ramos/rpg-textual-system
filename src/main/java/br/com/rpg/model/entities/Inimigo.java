@@ -1,5 +1,6 @@
 package br.com.rpg.model.entities;
 
+import br.com.rpg.model.dto.RelatorioInfoInimigo;
 import br.com.rpg.model.enums.ClasseInimigo;
 import br.com.rpg.util.Dado;
 
@@ -51,6 +52,21 @@ public class Inimigo extends Personagem {
             ou um algoritmo que ele ataque de forma inteligente, ficando mais agressivo quanto menos vida tiver,
             ou usando certas habilidades a partir de condições (Caso fique muito tempo vivo).
          */
+    }
+
+    public RelatorioInfoInimigo gerarRelatorio(int numeroTurnos) {
+        String vidaAtual = (numeroTurnos >= 1) ? String.valueOf(getVida()) : "???";
+        List<String> habilidadesVisiveis = new ArrayList<>();
+        int limite = Math.min(numeroTurnos, getMenuHabilidades().size());
+        for (int i = 0; i < getMenuHabilidades().size(); i++) {
+            if (i < limite) {
+                habilidadesVisiveis.add(getMenuHabilidades().get(i).nome());
+            }
+            else {
+                habilidadesVisiveis.add("???");
+            }
+        }
+        return new RelatorioInfoInimigo(getNome(), vidaAtual, habilidadesVisiveis);
     }
 
     @Override

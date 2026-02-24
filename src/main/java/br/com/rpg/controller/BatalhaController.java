@@ -76,8 +76,7 @@ public class BatalhaController {
                     //TODO: Criar sistema de itens, onde possua itens de cura, ataque, etc.
                 }
                 case 4 -> {
-                    boolean isPrimeiroTurno = (this.numeroTurnos == 0); // Verifica se é o primeiro tur\no (quando é '0').
-                    batalhaView.imprimirInfoInimigo(alvo, isPrimeiroTurno);
+                    batalhaView.imprimirInfoInimigo(alvo.gerarRelatorio(this.numeroTurnos));
                     input.aguardarEnter();
                     continue; // Não consome um turno.
                 }

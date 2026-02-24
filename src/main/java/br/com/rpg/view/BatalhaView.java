@@ -1,5 +1,6 @@
 package br.com.rpg.view;
 
+import br.com.rpg.model.dto.RelatorioInfoInimigo;
 import br.com.rpg.model.dto.ResultadoAtaque;
 import br.com.rpg.model.entities.Habilidade;
 import br.com.rpg.model.entities.Heroi;
@@ -49,6 +50,7 @@ public class BatalhaView {
      */
     public void mostrarResultadoAtaque(ResultadoAtaque result) {
         StringBuilder imprimir = new StringBuilder();
+        imprimir.append("│ ");
         imprimir.append(result.nomeAtacante());
         imprimir.append(" usou ");
         imprimir.append(result.nomeHabilidade());
@@ -76,9 +78,11 @@ public class BatalhaView {
             }
         }
         System.out.println();
-        System.out.println("────────────────────────────────────────");
+        int nmrChar = imprimir.length();
+        System.out.println("┌──────────────────────────────────────────────────────────────────────────────────────────┐");
         ConsoleUtils.digitarLento(imprimir.toString());
-        System.out.println("────────────────────────────────────────");
+        System.out.printf("%" + (90 - nmrChar) + "s │%n", " ");
+        System.out.println("└──────────────────────────────────────────────────────────────────────────────────────────┘");
         System.out.println();
         ConsoleUtils.aguardarSegundos(1);
     }
@@ -91,17 +95,14 @@ public class BatalhaView {
         ConsoleUtils.digitarLento("Você armou sua defesa, o próximo ataque causa metade do dano!");
         System.out.println("────────────────────────────────────────");
     }
-    public void imprimirInfoInimigo(Inimigo oponente, boolean isPrimeiroTurno) {
-        String vidaInimigo = (!isPrimeiroTurno) ? String.valueOf(oponente.getVida()) : "???";
+    public void imprimirInfoInimigo(RelatorioInfoInimigo imprimir) {
         System.out.println("┌───────────────────────────────────────────┐");
-        System.out.printf("│ NOME: %-35s │%n", oponente.getNome());
+        System.out.printf("│ NOME: %-35s │%n", imprimir.nome());
         System.out.println("├───────────────────────────────────────────┤");
-        System.out.printf("│ Vida atual do inimigo: %18s │%n", vidaInimigo);
-        if (!isPrimeiroTurno) {
-            System.out.printf("│ * Habilidades aprendidas: %16s│%n", " "); // Espaços vazios.
-            for (Habilidade habAtual : oponente.getMenuHabilidades()) {
-                System.out.printf("│ > %-39s │%n", habAtual.nome());
-            }
+        System.out.printf("│ Vida atual do inimigo: %18s │%n", imprimir.vidaAtual());
+        System.out.printf("│ * Habilidades aprendidas: %16s│%n", " "); // Espaços vazios.
+        for (String nomeHabAtual : imprimir.habilidadesVisiveis()) {
+            System.out.printf("│ > %-39s │%n", nomeHabAtual);
         }
         System.out.println("└───────────────────────────────────────────┘");
     }

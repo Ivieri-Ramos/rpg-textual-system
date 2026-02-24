@@ -19,6 +19,7 @@ public class Main {
         meuHeroi.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("ATAQUE_NORMAL"));
         meuHeroi.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("ATAQUE_FORTE"));
         meuInimigo.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("ATAQUE_NORMAL"));
+        meuInimigo.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("ATAQUE_FORTE"));
         jogo.iniciarBatalha(meuHeroi, meuInimigo);
         input.fecharTeclado();
     }
