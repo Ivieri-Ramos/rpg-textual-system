@@ -9,6 +9,7 @@ import br.com.rpg.view.BatalhaView;
 import br.com.rpg.view.ListagemView;
 import br.com.rpg.view.MensagemView;
 import br.com.rpg.view.Teclado;
+import br.com.rpg.view.utils.ConsoleUtils;
 
 import java.util.List;
 
@@ -67,10 +68,12 @@ public class BatalhaController {
                     }
                     ResultadoAtaque imprimir = fachada.personagemAtacar(jogador, alvo,  habUsar);
                     batalhaView.mostrarResultadoAtaque(imprimir);
+                    ConsoleUtils.aguardarSegundos(1);
                 }
                 case 2 -> {
                     jogador.setDefendendo(true);
                     batalhaView.jogadorDefendeu();
+                    ConsoleUtils.aguardarSegundos(1);
                 }
                 case 3 -> {
                     //TODO: Criar sistema de itens, onde possua itens de cura, ataque, etc.
