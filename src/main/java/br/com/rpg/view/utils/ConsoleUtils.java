@@ -58,7 +58,6 @@ public final class ConsoleUtils {
             System.out.print(c);
             aguardarMs(50); // Tempo de impressão para cada letra.
         }
-        System.out.println();
     }
 
     /**
@@ -71,6 +70,5 @@ public final class ConsoleUtils {
             System.out.flush();
             aguardarMs(milissegundos); // Tempo de impressão para cada letra.
         }
-        System.out.println();
     }
 }
