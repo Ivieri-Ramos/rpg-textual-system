@@ -57,4 +57,6 @@ public class Inimigo extends Personagem {
     public String toString() {
         return "Inimigo{" + super.toString() + '}';
     }
+
+
 }
