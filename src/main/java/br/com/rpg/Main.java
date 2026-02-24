@@ -1,7 +1,7 @@
 package br.com.rpg;
 
 import br.com.rpg.controller.BatalhaController;
-import br.com.rpg.model.entities.CatalogoHabilidades;
+import br.com.rpg.model.habilidade.CatalogoHabilidades;
 import br.com.rpg.model.entities.Heroi;
 import br.com.rpg.model.entities.Inimigo;
 import br.com.rpg.model.enums.ClasseHeroi;

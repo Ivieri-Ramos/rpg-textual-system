@@ -1,6 +1,9 @@
-package br.com.rpg.model.entities;
+package br.com.rpg.model.habilidade;
 
 import br.com.rpg.exceptions.HabilidadeNaoEncontradaException;
+import br.com.rpg.model.entities.Heroi;
+import br.com.rpg.model.entities.Inimigo;
+import br.com.rpg.model.entities.Personagem;
 import br.com.rpg.model.enums.TipoElemento;
 
 import java.util.HashMap;

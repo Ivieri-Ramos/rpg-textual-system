@@ -1,5 +1,8 @@
 package br.com.rpg.model.entities;
 
+import br.com.rpg.model.habilidade.CatalogoHabilidades;
+import br.com.rpg.model.habilidade.Habilidade;
+
 import java.util.ArrayList;
 import java.util.List;
 

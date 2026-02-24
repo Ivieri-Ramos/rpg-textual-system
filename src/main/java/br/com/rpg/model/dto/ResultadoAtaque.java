@@ -1,6 +1,6 @@
 package br.com.rpg.model.dto;
 
-import br.com.rpg.model.entities.Habilidade;
+import br.com.rpg.model.habilidade.Habilidade;
 import br.com.rpg.model.entities.Personagem;
 
 /**

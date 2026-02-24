@@ -1,6 +1,6 @@
 package br.com.rpg.model.services;
 
-import br.com.rpg.model.entities.Habilidade;
+import br.com.rpg.model.habilidade.Habilidade;
 import br.com.rpg.model.entities.Personagem;
 import br.com.rpg.model.services.results.CalculoDano;
 import br.com.rpg.util.Dado;

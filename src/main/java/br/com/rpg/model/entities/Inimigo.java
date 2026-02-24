@@ -2,6 +2,7 @@ package br.com.rpg.model.entities;
 
 import br.com.rpg.model.dto.RelatorioInfoInimigo;
 import br.com.rpg.model.enums.ClasseInimigo;
+import br.com.rpg.model.habilidade.Habilidade;
 import br.com.rpg.util.Dado;
 
 import java.util.ArrayList;

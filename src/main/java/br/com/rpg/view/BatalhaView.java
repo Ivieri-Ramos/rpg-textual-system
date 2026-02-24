@@ -2,7 +2,6 @@ package br.com.rpg.view;
 
 import br.com.rpg.model.dto.RelatorioInfoInimigo;
 import br.com.rpg.model.dto.ResultadoAtaque;
-import br.com.rpg.model.entities.Habilidade;
 import br.com.rpg.model.entities.Heroi;
 import br.com.rpg.model.entities.Inimigo;
 import br.com.rpg.view.utils.ConsoleUtils;

@@ -1,7 +1,7 @@
 package br.com.rpg.facade;
 
 import br.com.rpg.model.dto.ResultadoAtaque;
-import br.com.rpg.model.entities.Habilidade;
+import br.com.rpg.model.habilidade.Habilidade;
 import br.com.rpg.model.entities.Personagem;
 import br.com.rpg.model.services.BatalhaService;
 import br.com.rpg.model.services.results.CalculoDano;

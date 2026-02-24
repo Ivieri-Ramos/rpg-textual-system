@@ -2,7 +2,7 @@ package br.com.rpg.controller;
 
 import br.com.rpg.facade.GameFachada;
 import br.com.rpg.model.dto.ResultadoAtaque;
-import br.com.rpg.model.entities.Habilidade;
+import br.com.rpg.model.habilidade.Habilidade;
 import br.com.rpg.model.entities.Heroi;
 import br.com.rpg.model.entities.Inimigo;
 import br.com.rpg.view.BatalhaView;
