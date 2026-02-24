@@ -1,6 +1,7 @@
 package br.com.rpg.view;
 
 import br.com.rpg.model.dto.ResultadoAtaque;
+import br.com.rpg.model.entities.Habilidade;
 import br.com.rpg.model.entities.Heroi;
 import br.com.rpg.model.entities.Inimigo;
 import br.com.rpg.view.utils.ConsoleUtils;
@@ -89,5 +90,19 @@ public class BatalhaView {
         System.out.println("────────────────────────────────────────");
         ConsoleUtils.digitarLento("Você armou sua defesa, o próximo ataque causa metade do dano!");
         System.out.println("────────────────────────────────────────");
+    }
+    public void imprimirInfoInimigo(Inimigo oponente, boolean isPrimeiroTurno) {
+        String vidaInimigo = (!isPrimeiroTurno) ? String.valueOf(oponente.getVida()) : "???";
+        System.out.println("┌───────────────────────────────────────────┐");
+        System.out.printf("│ NOME: %-35s │%n", oponente.getNome());
+        System.out.println("├───────────────────────────────────────────┤");
+        System.out.printf("│ Vida atual do inimigo: %18s │%n", vidaInimigo);
+        if (!isPrimeiroTurno) {
+            System.out.printf("│ * Habilidades aprendidas: %16s│%n", " "); // Espaços vazios.
+            for (Habilidade habAtual : oponente.getMenuHabilidades()) {
+                System.out.printf("│ > %-39s │%n", habAtual.nome());
+            }
+        }
+        System.out.println("└───────────────────────────────────────────┘");
     }
 }

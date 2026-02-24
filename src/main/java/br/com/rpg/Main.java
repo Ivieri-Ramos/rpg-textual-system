@@ -12,7 +12,7 @@ public class Main {
 
     public static void main(String[] args) {
         Teclado input = new Teclado();
-        // Esse bloco de inicializações é apenas para testes, futuramente será retirado isso.
+        // Esse bloco de inicializações é apenas para testes, será futuramente retirado isso.
         BatalhaController jogo  = new BatalhaController();
         Heroi meuHeroi = new Heroi("Ivieri", ClasseHeroi.GUERREIRO);
         Inimigo meuInimigo = new Inimigo("Orc", ClasseInimigo.ORC);

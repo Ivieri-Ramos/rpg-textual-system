@@ -26,6 +26,7 @@ public class BatalhaController {
     private final MensagemView avisoView = new MensagemView();
     private final ListagemView listaView = new ListagemView();
     private final Teclado input = new Teclado();
+    private int numeroTurnos = 0;
 
     /**
      * Contém a lógica de batalha, fica em loop até que alguma entidade morra.
@@ -42,6 +43,7 @@ public class BatalhaController {
             }
             turnoInimigo(oponente, jogador);
             // TODO: Futuramente aplicar efeitos, como sangramento, queimadura, atordoar, etc.
+            this.numeroTurnos++;
         }
     }
 
@@ -74,18 +76,15 @@ public class BatalhaController {
                     //TODO: Criar sistema de itens, onde possua itens de cura, ataque, etc.
                 }
                 case 4 -> {
-                    /*
-                    TODO: Criar um menu onde possa ver as informações do inimigo
-                        (vida e habilidades aprendidas), mas sem amostrar informações como
-                        dano, mana, pois tem que deixar difícil para o jogador, mas certas
-                        informações só aparecerem após o primeiro turno.
-                    */
+                    boolean isPrimeiroTurno = (this.numeroTurnos == 0); // Verifica se é o primeiro tur\no (quando é '0').
+                    batalhaView.imprimirInfoInimigo(alvo, isPrimeiroTurno);
+                    input.aguardarEnter();
+                    continue; // Não consome um turno.
                 }
                 case 5 -> {
                     batalhaView.mostrarInfoCompletaHeroi(jogador);
                     input.aguardarEnter();
-                    continue;
-                    // Como não é uma ação de atacar, ou defender, não custa turnos.
+                    continue; // Como não é uma ação de atacar, ou defender, não custa turnos.
                 }
                 case 6 -> {
                     /*
