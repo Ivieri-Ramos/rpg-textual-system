@@ -15,22 +15,13 @@ public class Inventario {
     public boolean adicionarItem(Item item){
         if(items.size()<capacidade){
             items.add(item);
-            System.out.println(item.getNome() + " adicionado ao inventario.");
             return true;
         }
-        System.out.println("Inventario cheio.");
         return false;
     }
 
     public void removerItem(Item item){
         items.remove(item);
-    }
-
-    public void listarItem(){
-        System.out.println("Inventario (" + items.size() + "/" + capacidade + ")");
-        for(int i = 0; i < items.size(); i++){
-            System.out.println((i+1) + "." + items.get(i).getNome());
-        }
     }
 
     public List<Item> getItems() {
