@@ -19,19 +19,25 @@ public class BatalhaService {
      * @param atacante {@link Personagem} que executa a habilidade escolhida.
      * @param alvo {@link Personagem} que recebe o dano.
      * @param ataque Poder escolhido que pode aplicar efeitos ou incrementar o dano total.
-     * @return Um Record que armazena o {@code danoTotal} (que pode ser 0) e se houve {@code critico} ou {@code esquiva}.
+     * @return Um Record que armazena o {@code danoTotal} (que pode ser 0) e se houve {@code critico}, {@code esquiva} ou {@code defesa}.
      */
     public CalculoDano calcularDano(Personagem atacante, Personagem alvo, Habilidade ataque) {
-        if (Dado.testarSorte(alvo.getChanceEsq())) { // Testa a esquiva do alvo, se for bem-sucedida o alvo não recebe dano.
-            return new CalculoDano(0, false, true);
+        // Testa a esquiva do alvo (não pode se esquivar caso esteja defendendo), se for bem-sucedida o alvo não recebe dano.
+        if (Dado.testarSorte(alvo.getChanceEsq()) && !alvo.isDefendendo()) {
+            return new CalculoDano(0, false, true, false);
         }
         boolean critico = false;
+        boolean alvoDefendeu = false;
         double danoAtaque = atacante.getDano() * ataque.razaoDano();
         double danoTotal = danoAtaque - ((alvo.getDefesa() / 100.0) * danoAtaque);
+        if (alvo.isDefendendo()) { // Se o alvo estiver defendendo, recebe metade do dano.
+            danoTotal *= 0.5;
+            alvoDefendeu = true;
+        }
         if (Dado.testarSorte(atacante.getChanceCrit())) { // Testa o crítico do atacante, se for bem-sucedida, o dano aumenta em 50%.
             danoTotal *= 1.5;
             critico = true;
         }
-        return new CalculoDano((int) Math.floor(danoTotal), critico, false);
+        return new CalculoDano((int) Math.floor(danoTotal), critico, false, alvoDefendeu);
     }
 }
