@@ -11,8 +11,6 @@ import java.util.List;
  * <p>
  */
 public class Inimigo extends Personagem {
-    private final int vidaMaxima;
-    private final int manaMaxima;
 
     /**
      * Construtor especializado de Inimigo que define
@@ -28,8 +26,6 @@ public class Inimigo extends Personagem {
         super(nome, tipoClasse.getVidaBase(), tipoClasse.getDanoBase(), tipoClasse.getManaBase(),
                 tipoClasse.getDefesaBase(), tipoClasse.getChanceCritBase(),
                 tipoClasse.getChanceEsqBase());
-        this.vidaMaxima = tipoClasse.getVidaBase();
-        this.manaMaxima = tipoClasse.getManaBase();
     }
 
     /**
@@ -62,13 +58,5 @@ public class Inimigo extends Personagem {
         return "Inimigo{" + super.toString() + '}';
     }
 
-    @Override
-    protected int getVidaMaxima() {
-        return vidaMaxima;
-    }
 
-    @Override
-    protected int getManaMaxima() {
-        return manaMaxima;
-    }
 }

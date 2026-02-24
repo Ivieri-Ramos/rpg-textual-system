@@ -12,8 +12,10 @@ public abstract class Personagem {
 
     private final String nome;
     private int vida;
+    private int vidaMaxima;
     private int dano;
     private int mana;
+    private int manaMaxima;
     private double defesa;
     private double chanceCrit;
     private double chanceEsq;
@@ -35,8 +37,10 @@ public abstract class Personagem {
     public Personagem(String nome, int vida, int dano, int mana, double defesa, double chanceCrit, double chanceEsq) {
         this.nome = nome;
         this.vida = vida;
+        this.vidaMaxima = vida;
         this.dano = dano;
         this.mana = mana;
+        this.manaMaxima = mana;
         this.defesa = defesa;
         this.chanceCrit = chanceCrit;
         this.chanceEsq = chanceEsq;
@@ -50,6 +54,10 @@ public abstract class Personagem {
         return vida;
     }
 
+    public int getVidaMaxima() {
+        return vidaMaxima;
+    }
+
     private void setVida(int vida) {
         if (vida < 0) {
             vida = 0;
@@ -59,6 +67,10 @@ public abstract class Personagem {
 
     public int getMana() {
         return mana;
+    }
+
+    public int getManaMaxima() {
+        return manaMaxima;
     }
 
     private void setMana(int mana) {
@@ -153,18 +165,6 @@ public abstract class Personagem {
     public void aprenderHabilidade(Habilidade novaHabilidade) {
         menuHabilidades.add(novaHabilidade);
     }
-
-    /**
-     * Método abstrato que puxa a vida máxima da entidade.
-     * Deve ser usado por subclasses que possuem limite de vida
-     */
-    protected abstract int getVidaMaxima();
-
-    /**
-     * Método abstrato que puxa a mana máxima da entidade.
-     * Deve ser usado por subclasses que possuem limite de mana.
-     */
-    protected abstract int getManaMaxima();
 
     public int curarVida(int quantidade){
         int vidaAntes = getVida();
