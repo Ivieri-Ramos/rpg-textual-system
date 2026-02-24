@@ -1,5 +1,4 @@
 package br.com.rpg.model.item;
-import br.com.rpg.model.dto.ResultadoUsoItem;
 
 /**
  * Armazena os atributos gerais das classes Equipamento e
