@@ -62,6 +62,9 @@ public abstract class Personagem {
         if (vida < 0) {
             vida = 0;
         }
+        if(vida > vidaMaxima){
+            vida = getVidaMaxima();
+        }
         this.vida = vida;
     }
 
@@ -76,6 +79,9 @@ public abstract class Personagem {
     private void setMana(int mana) {
         if (mana < 0) {
             mana = 0;
+        }
+        if(mana > manaMaxima){
+            mana = getManaMaxima();
         }
         this.mana = mana;
     }
