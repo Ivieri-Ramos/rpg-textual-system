@@ -20,7 +20,8 @@ public abstract class Personagem {
     private double chanceCrit;
     private double chanceEsq;
     private boolean isVivo = true;
-    private final List<Habilidade> menuHabilidades = new ArrayList<Habilidade>();
+    private boolean isDefendendo = false;
+    private final List<Habilidade> menuHabilidades = new ArrayList<>();
     /**
      * Construtor padrão de Personagem.
      * <p>
@@ -126,6 +127,14 @@ public abstract class Personagem {
         isVivo = vivo;
     }
 
+    public boolean isDefendendo() {
+        return isDefendendo;
+    }
+
+    public void setDefendendo(boolean defendendo) {
+        isDefendendo = defendendo;
+    }
+
     public List<Habilidade> getMenuHabilidades() {
         return menuHabilidades;
     }
@@ -159,9 +168,10 @@ public abstract class Personagem {
      */
     public void receberDano(int danoRecebido) {
         setVida((getVida() - danoRecebido));
-        if (getVida() == 0) {
+        if (getVida() == 0) { // Se a vida chegou em 0, é porque morreu.
             setVivo(false);
         }
+        setDefendendo(false); // Se tomou dano, muda o estado de isDefendendo para false.
     }
 
     /**

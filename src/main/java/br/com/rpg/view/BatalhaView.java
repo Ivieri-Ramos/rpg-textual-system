@@ -1,7 +1,10 @@
 package br.com.rpg.view;
 
+import br.com.rpg.model.dto.RelatorioInfoInimigo;
 import br.com.rpg.model.dto.ResultadoAtaque;
+import br.com.rpg.model.entities.Habilidade;
 import br.com.rpg.model.entities.Heroi;
+import br.com.rpg.model.entities.Inimigo;
 import br.com.rpg.view.utils.ConsoleUtils;
 
 /**
@@ -37,7 +40,8 @@ public class BatalhaView {
         System.out.println("[2] Defenda-se");
         System.out.println("[3] Use algum item");
         System.out.println("[4] Analise seu inimigo");
-        System.out.println("[5] Fuja");
+        System.out.println("[5] Veja seus status");
+        System.out.println("[6] Fuja");
     }
 
     /**
@@ -56,6 +60,9 @@ public class BatalhaView {
             imprimir.append("mas ele esquivou.");
         }
         else {
+            if (result.defendeu()) {
+                imprimir.append("mas ele defendeu, ");
+            }
             imprimir.append("causando ");
             imprimir.append(result.danoCausado());
             imprimir.append(" de dano");
@@ -69,11 +76,47 @@ public class BatalhaView {
                 imprimir.append("!");
             }
         }
+        imprimirCaixaDialogo(imprimir.toString());
+    }
+
+    /**
+     * Imprime uma mensagem no console avisando ao jogador que ele se defendeu.
+     */
+    public void jogadorDefendeu() {
+        imprimirCaixaDialogo("Você armou sua defesa, o próximo ataque causa metade do dano!");
+    }
+
+    /**
+     * Imprime no terminal o status atual de certos atributos do {@link Inimigo},
+     * usando {@link RelatorioInfoInimigo} que armazena as informações a serem reveladas.
+     * @param imprimir Informações a serem impressas.
+     */
+    public void imprimirInfoInimigo(RelatorioInfoInimigo imprimir) {
+        System.out.println("┌───────────────────────────────────────────┐");
+        System.out.printf("│ NOME: %-35s │%n", imprimir.nome());
+        System.out.println("├───────────────────────────────────────────┤");
+        System.out.printf("│ Vida atual do inimigo: %18s │%n", imprimir.vidaAtual());
+        System.out.printf("│ * Habilidades aprendidas: %16s│%n", " "); // Espaços vazios.
+        for (String nomeHabAtual : imprimir.habilidadesVisiveis()) {
+            System.out.printf("│ > %-39s │%n", nomeHabAtual);
+        }
+        System.out.println("└───────────────────────────────────────────┘");
+    }
+
+    /**
+     * Imprime uma String no terminal formatada em uma caixa de diálogo.
+     * @param texto Mensagem a ser impressa.
+     */
+    public void imprimirCaixaDialogo(String texto) {
         System.out.println();
-        System.out.println("────────────────────────────────────────");
-        ConsoleUtils.digitarLento(imprimir.toString());
-        System.out.println("────────────────────────────────────────");
+        int tamTexto = 90;
+        int nmrChar = texto.length(); // Quantidade de caracteres presentes na String.
+        int espacosRestantes = Math.max(0, tamTexto - nmrChar); // Previne caso a String possua mais caracteres que o máximo.
+        System.out.println("┌────────────────────────────────────────────────────────────────────────────────────────────┐");
+        System.out.print("│ ");
+        ConsoleUtils.digitarLento(texto);
+        System.out.printf("%" + espacosRestantes + "s │%n", " ");
+        System.out.println("└────────────────────────────────────────────────────────────────────────────────────────────┘");
         System.out.println();
-        ConsoleUtils.aguardarSegundos(1);
     }
 }

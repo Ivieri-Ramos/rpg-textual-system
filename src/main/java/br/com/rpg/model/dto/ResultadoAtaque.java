@@ -11,6 +11,7 @@ import br.com.rpg.model.entities.Personagem;
  * @param danoCausado Dano que o atacante causou no alvo.
  * @param esquivou {@code true} caso o alvo tenha esquivado, do contrário, {@code false}.
  * @param critico {@code true} caso o atacante tenha dado crítico, do contrário, {@code false}.
+ * @param defendeu {@code true} caso o alvo defendeu antes de ser atacado, do contrário, {@code false}.
  * @param alvoMorreu {@code true} caso o alvo morreu devido ao ataque, do contrário, {@code false}.
  */
 public record ResultadoAtaque (
@@ -20,5 +21,6 @@ public record ResultadoAtaque (
     int danoCausado,
     boolean esquivou,
     boolean critico,
+    boolean defendeu,
     boolean alvoMorreu
 ) {}
