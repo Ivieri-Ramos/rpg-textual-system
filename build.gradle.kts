@@ -6,6 +6,12 @@ plugins {
 group = "br.com.ivieri"
 version = "1.0-SNAPSHOT"
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
 repositories {
     mavenCentral()
 }
@@ -35,4 +41,5 @@ tasks.withType<JavaExec> {
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
+    options.release.set(21)
 }
