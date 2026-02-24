@@ -30,4 +30,5 @@ public class Heroi extends Personagem {
         return "Heroi{" +
                 super.toString();
     }
+
 }
