@@ -1,5 +1,11 @@
 package br.com.rpg.model.enums;
 
+/**
+ * Enum para definir as constantes de Inimigo no jogo.
+ * <p>
+ * Inicia os atributos-base (vida, dano, chanceCrit, etc.),
+ */
+
 public enum ClasseInimigo {
 /**
  * Minion Guerreiro: Inimigo básico, usado para ensinar o jogador e conseguir XP. Vida baixa, dano baixo, sem mana.
@@ -39,6 +45,18 @@ public enum ClasseInimigo {
     private final double defesaBase;
     private final double chanceCritBase;
     private final double chanceEsqBase;
+
+    /**
+     * Construtor das constantes do Enum.
+     * Ela define os atributos que serão usadas por cada tipo de Inimigo ao iniciar um novo jogo.
+     * <p>
+     * @param vidaBase
+     * @param danoBase
+     * @param manaBase
+     * @param defesaBase
+     * @param chanceCritBase
+     * @param chanceEsqBase
+     */
 
     ClasseInimigo(int vidaBase, int danoBase, int manaBase, double defesaBase, double chanceCritBase, double chanceEsqBase) {
 

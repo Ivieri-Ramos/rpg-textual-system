@@ -12,13 +12,16 @@ public abstract class Personagem {
 
     private final String nome;
     private int vida;
+    private int vidaMaxima;
     private int dano;
     private int mana;
+    private int manaMaxima;
     private double defesa;
     private double chanceCrit;
     private double chanceEsq;
     private boolean isVivo = true;
-    private final List<Habilidade> menuHabilidades = new ArrayList<Habilidade>();
+    private boolean isDefendendo = false;
+    private final List<Habilidade> menuHabilidades = new ArrayList<>();
     /**
      * Construtor padrão de Personagem.
      * <p>
@@ -35,8 +38,10 @@ public abstract class Personagem {
     public Personagem(String nome, int vida, int dano, int mana, double defesa, double chanceCrit, double chanceEsq) {
         this.nome = nome;
         this.vida = vida;
+        this.vidaMaxima = vida;
         this.dano = dano;
         this.mana = mana;
+        this.manaMaxima = mana;
         this.defesa = defesa;
         this.chanceCrit = chanceCrit;
         this.chanceEsq = chanceEsq;
@@ -50,9 +55,16 @@ public abstract class Personagem {
         return vida;
     }
 
+    public int getVidaMaxima() {
+        return vidaMaxima;
+    }
+
     private void setVida(int vida) {
         if (vida < 0) {
             vida = 0;
+        }
+        if(vida > vidaMaxima){
+            vida = getVidaMaxima();
         }
         this.vida = vida;
     }
@@ -61,9 +73,16 @@ public abstract class Personagem {
         return mana;
     }
 
+    public int getManaMaxima() {
+        return manaMaxima;
+    }
+
     private void setMana(int mana) {
         if (mana < 0) {
             mana = 0;
+        }
+        if(mana > manaMaxima){
+            mana = getManaMaxima();
         }
         this.mana = mana;
     }
@@ -108,6 +127,14 @@ public abstract class Personagem {
         isVivo = vivo;
     }
 
+    public boolean isDefendendo() {
+        return isDefendendo;
+    }
+
+    public void setDefendendo(boolean defendendo) {
+        isDefendendo = defendendo;
+    }
+
     public List<Habilidade> getMenuHabilidades() {
         return menuHabilidades;
     }
@@ -141,9 +168,10 @@ public abstract class Personagem {
      */
     public void receberDano(int danoRecebido) {
         setVida((getVida() - danoRecebido));
-        if (getVida() == 0) {
+        if (getVida() == 0) { // Se a vida chegou em 0, é porque morreu.
             setVivo(false);
         }
+        setDefendendo(false); // Se tomou dano, muda o estado de isDefendendo para false.
     }
 
     /**
@@ -168,5 +196,19 @@ public abstract class Personagem {
      */
     public void aprenderHabilidade(Habilidade novaHabilidade) {
         menuHabilidades.add(novaHabilidade);
+    }
+
+    public int curarVida(int quantidade){
+        int vidaAntes = getVida();
+        int novaVida = Math.min(vidaAntes + quantidade, getVidaMaxima());
+        setVida(novaVida);
+        return novaVida - vidaAntes;
+    }
+
+    public int curarMana(int quantidade){
+        int manaAntes = getMana();
+        int novaMana = Math.min(manaAntes + quantidade, getManaMaxima());
+        setMana(novaMana);
+        return novaMana - manaAntes;
     }
 }

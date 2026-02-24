@@ -12,9 +12,11 @@ import br.com.rpg.model.entities.Personagem;
  * @param danoFinal Dano final do resultado (pode ser 0 se o alvo esquivar).
  * @param critico {@code true} se o atacante der crítico, do contrário, {@code false}.
  * @param esquivou {@code true} se o alvo esquivar, do contrário, {@code false}.
+ * @param defendeu {@code true} se o alvo defendeu antes de ser atacado, do contrário, {@code false}.
  */
 public record CalculoDano(
         int danoFinal,
         boolean critico,
-        boolean esquivou
+        boolean esquivou,
+        boolean defendeu
 ) {}

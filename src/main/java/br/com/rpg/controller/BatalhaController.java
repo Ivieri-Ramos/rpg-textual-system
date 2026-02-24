@@ -9,6 +9,7 @@ import br.com.rpg.view.BatalhaView;
 import br.com.rpg.view.ListagemView;
 import br.com.rpg.view.MensagemView;
 import br.com.rpg.view.Teclado;
+import br.com.rpg.view.utils.ConsoleUtils;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class BatalhaController {
     private final MensagemView avisoView = new MensagemView();
     private final ListagemView listaView = new ListagemView();
     private final Teclado input = new Teclado();
+    private int numeroTurnos = 0;
 
     /**
      * Contém a lógica de batalha, fica em loop até que alguma entidade morra.
@@ -37,8 +39,12 @@ public class BatalhaController {
     public void iniciarBatalha(Heroi jogador, Inimigo oponente) {
         while (jogador.isVivo() && oponente.isVivo()) {
             turnoJogador(jogador, oponente);
+            if (!oponente.isVivo()) {
+                break;
+            }
             turnoInimigo(oponente, jogador);
             // TODO: Futuramente aplicar efeitos, como sangramento, queimadura, atordoar, etc.
+            this.numeroTurnos++;
         }
     }
 
@@ -50,10 +56,10 @@ public class BatalhaController {
      * @param alvo Necessário apenas quando é atacado e ter suas informações analisadas.
      */
     private void turnoJogador(Heroi jogador, Inimigo alvo) {
-        // TODO: Pedir ação do jogador, como defender, fugir, etc.
+        // TODO: Pedir ação do jogador, fugir.
         while (true) {
             batalhaView.mostrarOpcoesBatalhaJogador();
-            int opEscolhida = input.lerInteiro("Selecione alguma opção acima:", 1, 5);
+            int opEscolhida = input.lerInteiro("Selecione alguma opção acima:", 1, 6);
             switch (opEscolhida) {
                 case 1 -> {
                     Habilidade habUsar = retornarHabilidadeJogador(jogador.getMenuHabilidades(), jogador.getMana());
@@ -62,22 +68,27 @@ public class BatalhaController {
                     }
                     ResultadoAtaque imprimir = fachada.personagemAtacar(jogador, alvo,  habUsar);
                     batalhaView.mostrarResultadoAtaque(imprimir);
+                    ConsoleUtils.aguardarSegundos(1);
                 }
                 case 2 -> {
-                    //TODO: Criar estado onde o Personagem possa se defender.
+                    jogador.setDefendendo(true);
+                    batalhaView.jogadorDefendeu();
+                    ConsoleUtils.aguardarSegundos(1);
                 }
                 case 3 -> {
                     //TODO: Criar sistema de itens, onde possua itens de cura, ataque, etc.
                 }
                 case 4 -> {
-                    /*
-                    TODO: Criar um menu onde possa ver as informações do inimigo
-                        (vida e habilidades aprendidas), mas sem amostrar informações como
-                        dano, mana, pois tem que deixar difícil para o jogador, mas certas
-                        informações só aparecerem após o primeiro turno.
-                    */
+                    batalhaView.imprimirInfoInimigo(alvo.gerarRelatorio(this.numeroTurnos));
+                    input.aguardarEnter();
+                    continue; // Não consome um turno.
                 }
                 case 5 -> {
+                    batalhaView.mostrarInfoCompletaHeroi(jogador);
+                    input.aguardarEnter();
+                    continue; // Como não é uma ação de atacar, ou defender, não custa turnos.
+                }
+                case 6 -> {
                     /*
                     TODO: Criar um sistema que permita o jogador fugir,
                         perdendo a capacidade de ganhar XP, ouro, etc. Mas
@@ -97,7 +108,7 @@ public class BatalhaController {
      * {@link BatalhaController#turnoJogador(Heroi, Inimigo) turnoJogador}.
      * @param listaHab Acessa as habilidades do jogador.
      * @param mana Mana atual do jogador.
-     * @return Uma habilidade do jogador ou {@code null} caso digite 0 para voltar.
+     * @return Uma habilidade do jogador ou {@code null} caso ele digite 0 para voltar.
      */
     private Habilidade retornarHabilidadeJogador(List<Habilidade> listaHab, int mana) {
         int qtdHabilidades = listaHab.size();
