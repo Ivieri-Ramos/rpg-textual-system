@@ -111,4 +111,8 @@ public final class CatalogoEquipamentos {
         }
         return novoEquipamento;
     }
+
+    public static Equipamentos getEquipamento(String nomeChave) {
+        return mapaEquipamentos.get(nomeChave);
+    }
 }
