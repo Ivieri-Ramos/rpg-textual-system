@@ -5,9 +5,11 @@ import br.com.rpg.model.entities.Heroi;
 import br.com.rpg.model.entities.Inimigo;
 import br.com.rpg.model.entities.Personagem;
 import br.com.rpg.model.enums.TipoElemento;
+import br.com.rpg.model.services.results.CalculoDano;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * Classe responsável por armazenar as habilidades contidas no jogo.
@@ -19,7 +21,7 @@ import java.util.Map;
  * {@link Inimigo} terá poderes pré-definidos.
  */
 public final class CatalogoHabilidades {
-    private static final Map<String, Habilidade> mapaHabilidades = new HashMap<>();
+    private static final Map<String, Supplier<Habilidade>> mapaHabilidades = new HashMap<>();
 
     static {
         iniciarCatalogo();
@@ -32,8 +34,30 @@ public final class CatalogoHabilidades {
      * as habilidades criadas possam ser usadas.
      */
     public static void iniciarCatalogo() {
-        mapaHabilidades.put("ATAQUE_NORMAL", new Habilidade("Ataque Normal", 0, 1.0, TipoElemento.NEUTRO));
-        mapaHabilidades.put("ATAQUE_FORTE", new Habilidade("Ataque Forte", 10, 1.2, TipoElemento.NEUTRO));
+        mapaHabilidades.put("ATAQUE_NORMAL", () -> new Habilidade
+                ("Ataque Normal", 0, TipoElemento.NEUTRO,
+                    ((atacante, alvo, calculadora) -> {
+                        CalculoDano resultado = calculadora.calcularDano(atacante, alvo, 1.0);
+                        alvo.receberDano(resultado.danoFinal());
+                        return ResultadoHabilidade.ataqueOfensivo("Ataque Normal", resultado);
+                })));
+
+        mapaHabilidades.put("ATAQUE_FORTE", () -> new Habilidade
+                ("Ataque Forte", 10, TipoElemento.NEUTRO,
+                    (atacante, alvo, calculadora) -> {
+                        CalculoDano resultado = calculadora.calcularDano(atacante, alvo, 1.5);
+                        alvo.receberDano(resultado.danoFinal());
+                        return ResultadoHabilidade.ataqueOfensivo("Ataque Forte", resultado);
+                }));
+        mapaHabilidades.put("ATAQUE_VAMPIRICO", () -> new Habilidade
+                ("Ataque Vampírico", 15, TipoElemento.NEUTRO,
+                    ((atacante, alvo, calculadora) -> {
+                        CalculoDano resultado = calculadora.calcularDano(atacante, alvo, 1.0);
+                        alvo.receberDano(resultado.danoFinal());
+                        int vidaCurar = (resultado.danoFinal() / 2);
+                        atacante.curarVida(vidaCurar);
+                        return new ResultadoHabilidade("Ataque Forte", vidaCurar, resultado);
+                })));
     }
 
     /**
@@ -43,10 +67,10 @@ public final class CatalogoHabilidades {
      * caso a {@code chave} seja inválida.
      */
     public static Habilidade enviarHabilidade(String chave) {
-        Habilidade novaHabilidade = mapaHabilidades.get(chave);
+        Supplier<Habilidade> novaHabilidade = mapaHabilidades.get(chave);
         if (novaHabilidade == null) {
             throw new HabilidadeNaoEncontradaException(chave);
         }
-        return novaHabilidade;
+        return novaHabilidade.get();
     }
 }

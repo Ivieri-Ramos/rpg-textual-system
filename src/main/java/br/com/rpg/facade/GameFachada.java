@@ -3,6 +3,7 @@ package br.com.rpg.facade;
 import br.com.rpg.model.dto.ResultadoAtaque;
 import br.com.rpg.model.habilidade.Habilidade;
 import br.com.rpg.model.entities.Personagem;
+import br.com.rpg.model.habilidade.ResultadoHabilidade;
 import br.com.rpg.model.services.BatalhaService;
 import br.com.rpg.model.services.results.CalculoDano;
 
@@ -28,16 +29,15 @@ public class GameFachada {
      */
     public ResultadoAtaque personagemAtacar(Personagem atacante, Personagem alvo, Habilidade habUsar) {
         atacante.consumirMana(habUsar.custoMana());
-        CalculoDano resultado = calculadoraBatalha.calcularDano(atacante, alvo, habUsar);
-        alvo.receberDano(resultado.danoFinal());
+        ResultadoHabilidade resultado = habUsar.executar(atacante, alvo, calculadoraBatalha);
         return new ResultadoAtaque(
                 atacante.getNome(),
                 alvo.getNome(),
                 habUsar.nome(),
-                resultado.danoFinal(),
-                resultado.esquivou(),
-                resultado.critico(),
-                resultado.defendeu(),
+                resultado.relatorioDano().danoFinal(),
+                resultado.relatorioDano().esquivou(),
+                resultado.relatorioDano().critico(),
+                resultado.relatorioDano().defendeu(),
                 !alvo.isVivo()
         );
     }

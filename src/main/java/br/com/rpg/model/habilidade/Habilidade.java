@@ -4,6 +4,8 @@ import br.com.rpg.model.entities.Heroi;
 import br.com.rpg.model.entities.Inimigo;
 import br.com.rpg.model.entities.Personagem;
 import br.com.rpg.model.enums.TipoElemento;
+import br.com.rpg.model.services.BatalhaService;
+import br.com.rpg.model.services.results.CalculoDano;
 
 /**
  * Record Habilidade que armazena atributos dos poderes no jogo.
@@ -14,7 +16,16 @@ import br.com.rpg.model.enums.TipoElemento;
  *
  * @param nome      Identificação única.
  * @param custoMana Quantidade de mana usada para conjurar a habilidade (pode ser 0 em ataques comuns).
- * @param razaoDano Aumenta ou diminui o {@link Personagem#getDano()}.
  * @param elemento  Incrementa o poder da habilidade.
+ * @param aplicador Interface que armazena o contâiner que terá a lógica de cada habilidade.
  */
-public record Habilidade(String nome, int custoMana, double razaoDano, TipoElemento elemento) {}
+public record Habilidade(
+        String nome,
+        int custoMana,
+        TipoElemento elemento,
+        IAcaoHabilidade aplicador) {
+
+    public ResultadoHabilidade executar(Personagem atacante, Personagem alvo, BatalhaService calculadora) {
+        return aplicador.executar(atacante, alvo, calculadora);
+    }
+}

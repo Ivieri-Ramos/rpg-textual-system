@@ -18,17 +18,17 @@ public class BatalhaService {
      * consiga um crítico, o dano é aumentado.
      * @param atacante {@link Personagem} que executa a habilidade escolhida.
      * @param alvo {@link Personagem} que recebe o dano.
-     * @param ataque Poder escolhido que pode aplicar efeitos ou incrementar o dano total.
+     * @param razaoDano O quanto será incrementado o dano total do ataque.
      * @return Um Record que armazena o {@code danoTotal} (que pode ser 0) e se houve {@code critico}, {@code esquiva} ou {@code defesa}.
      */
-    public CalculoDano calcularDano(Personagem atacante, Personagem alvo, Habilidade ataque) {
+    public CalculoDano calcularDano(Personagem atacante, Personagem alvo, double razaoDano) {
         // Testa a esquiva do alvo (não pode se esquivar caso esteja defendendo), se for bem-sucedida o alvo não recebe dano.
         if (Dado.testarSorte(alvo.getChanceEsq()) && !alvo.isDefendendo()) {
             return new CalculoDano(0, false, true, false);
         }
         boolean critico = false;
         boolean alvoDefendeu = false;
-        double danoAtaque = atacante.getDano() * ataque.razaoDano();
+        double danoAtaque = atacante.getDano() * razaoDano;
         double danoTotal = danoAtaque - ((alvo.getDefesa() / 100.0) * danoAtaque);
         if (alvo.isDefendendo()) { // Se o alvo estiver defendendo, recebe metade do dano.
             danoTotal *= 0.5;
