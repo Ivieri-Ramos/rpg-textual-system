@@ -5,6 +5,7 @@ import br.com.rpg.model.habilidade.Habilidade;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Herdada por {@link Heroi} e {@link Inimigo}.
@@ -24,7 +25,7 @@ public abstract class Personagem {
     private double chanceEsq;
     private boolean isVivo = true;
     private boolean isDefendendo = false;
-    private final List<Habilidade> menuHabilidades = new ArrayList<>();
+    private final List<Habilidade> menuHabilidades;
     /**
      * Construtor padrão de Personagem.
      * <p>
@@ -38,7 +39,8 @@ public abstract class Personagem {
      * @param chanceCrit Probabilidade (0-100) para que o dano da entidade aumente.
      * @param chanceEsq Probabilidade (0-100) para que a entidade esquive e anule completamente o dano.
      */
-    public Personagem(String nome, int vida, int dano, int mana, double defesa, double chanceCrit, double chanceEsq) {
+    public Personagem(String nome, int vida, int dano, int mana, double defesa,
+                      double chanceCrit, double chanceEsq, List<String> chaveHabilidades) {
         this.nome = nome;
         this.vida = vida;
         this.vidaMaxima = vida;
@@ -48,6 +50,9 @@ public abstract class Personagem {
         this.defesa = defesa;
         this.chanceCrit = chanceCrit;
         this.chanceEsq = chanceEsq;
+        this.menuHabilidades = chaveHabilidades.stream()
+                .map(CatalogoHabilidades::enviarHabilidade)
+                .collect(Collectors.toList());
     }
 
     public String getNome() {
@@ -139,7 +144,7 @@ public abstract class Personagem {
     }
 
     public List<Habilidade> getMenuHabilidades() {
-        return menuHabilidades;
+        return List.copyOf(menuHabilidades);
     }
 
     @Override
@@ -185,6 +190,11 @@ public abstract class Personagem {
         menuHabilidades.add(novaHabilidade);
     }
 
+    /**
+     * Cura a vida da entidade, sem curar mais vida do que suporta (não passa do limite).
+     * @param quantidade Vida que será curada.
+     * @return Quanto de vida foi curada (pode ser 0 se a vida já estivesse no máximo).
+     */
     public int curarVida(int quantidade){
         int vidaAntes = getVida();
         int novaVida = Math.min(vidaAntes + quantidade, getVidaMaxima());
@@ -192,6 +202,11 @@ public abstract class Personagem {
         return novaVida - vidaAntes;
     }
 
+    /**
+     * Cura a mana da entidade, sem curar mais do que suporta (não pode passar o limite).
+     * @param quantidade Mana que será curada.
+     * @return Quanto de mana foi curado (pode ser 0 se a mana já estivesse no máximo).
+     */
     public int curarMana(int quantidade){
         int manaAntes = getMana();
         int novaMana = Math.min(manaAntes + quantidade, getManaMaxima());

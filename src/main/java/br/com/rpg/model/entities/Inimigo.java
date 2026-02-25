@@ -27,7 +27,7 @@ public class Inimigo extends Personagem {
     public Inimigo(String nome, ClasseInimigo tipoClasse) {
         super(nome, tipoClasse.getVidaBase(), tipoClasse.getDanoBase(), tipoClasse.getManaBase(),
                 tipoClasse.getDefesaBase(), tipoClasse.getChanceCritBase(),
-                tipoClasse.getChanceEsqBase());
+                tipoClasse.getChanceEsqBase(), tipoClasse.getChaveHabilidades());
     }
 
     /**
