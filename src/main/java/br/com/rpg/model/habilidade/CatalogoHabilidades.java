@@ -21,6 +21,7 @@ import java.util.function.Supplier;
  * {@link Inimigo} terá poderes pré-definidos.
  */
 public final class CatalogoHabilidades {
+    // O Supplier gera uma nova habilidade na memória, portanto, cada Personagem terá sua própria Habilidade.
     private static final Map<String, Supplier<Habilidade>> mapaHabilidades = new HashMap<>();
 
     static {
@@ -28,7 +29,7 @@ public final class CatalogoHabilidades {
     }
 
     /**
-     * Método que instancia com todas as habilidades criadas.
+     * Método que instancia e cria todas as habilidades usadas no programa.
      * <p>
      * <b>Importante:</b> É necessário chamar esse método uma vez para que
      * as habilidades criadas possam ser usadas.
@@ -36,34 +37,34 @@ public final class CatalogoHabilidades {
     public static void iniciarCatalogo() {
         mapaHabilidades.put("ATAQUE_NORMAL", () -> new Habilidade(
                 "Ataque Normal", 0, TipoElemento.NEUTRO,
-                    (habUsada, atacante, alvo, calculadora) -> {
-                        CalculoDano resultado = calculadora.calcularDano(atacante, alvo, 1.0);
+                    (habUsada, conjurador, alvo, calculadora) -> {
+                        CalculoDano resultado = calculadora.calcularDano(conjurador, alvo, 1.0);
                         alvo.receberDano(resultado.danoFinal());
                         return ResultadoHabilidade.poderOfensivo(habUsada.nome(), resultado);
                 })
         );
         mapaHabilidades.put("ATAQUE_FORTE", () -> new Habilidade(
                 "Ataque Forte", 10, TipoElemento.NEUTRO,
-                (habUsada, atacante, alvo, calculadora) -> {
-                        CalculoDano resultado = calculadora.calcularDano(atacante, alvo, 1.5);
+                (habUsada, conjurador, alvo, calculadora) -> {
+                        CalculoDano resultado = calculadora.calcularDano(conjurador, alvo, 1.5);
                         alvo.receberDano(resultado.danoFinal());
                         return ResultadoHabilidade.poderOfensivo(habUsada.nome(), resultado);
                 })
         );
         mapaHabilidades.put("ATAQUE_VAMPIRICO", () -> new Habilidade(
                 "Ataque Vampírico", 15, TipoElemento.NEUTRO,
-                    (habUsada, atacante, alvo, calculadora) -> {
-                        CalculoDano resultado = calculadora.calcularDano(atacante, alvo, 1.0);
+                    (habUsada, conjurador, alvo, calculadora) -> {
+                        CalculoDano resultado = calculadora.calcularDano(conjurador, alvo, 1.0);
                         alvo.receberDano(resultado.danoFinal());
-                        int vidaCurar = (resultado.danoFinal() / 2);
-                        atacante.curarVida(vidaCurar);
+                        int vidaCurar = (resultado.danoFinal() / 2); // Metade do dano causado retorna como cura.
+                        conjurador.curarVida(vidaCurar);
                         return new ResultadoHabilidade(habUsada.nome(), vidaCurar, resultado);
                 })
         );
         mapaHabilidades.put("CURA_MENOR", () -> new Habilidade(
            "Cura menor", 10, TipoElemento.NEUTRO,
-                (habUsada, atacante, alvo, calculadora) -> {
-                    int vidaCurar = atacante.curarVida(25);
+                (habUsada, conjurador, alvo, calculadora) -> {
+                    int vidaCurar = conjurador.curarVida(25);
                     return ResultadoHabilidade.poderDefensivo(habUsada.nome(), vidaCurar);
                 })
         );
