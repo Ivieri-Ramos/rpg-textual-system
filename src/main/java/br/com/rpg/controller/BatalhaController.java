@@ -1,7 +1,7 @@
 package br.com.rpg.controller;
 
 import br.com.rpg.facade.GameFachada;
-import br.com.rpg.model.dto.ResultadoAtaque;
+import br.com.rpg.model.dto.ResultadoTurno;
 import br.com.rpg.model.habilidade.Habilidade;
 import br.com.rpg.model.entities.Heroi;
 import br.com.rpg.model.entities.Inimigo;
@@ -66,8 +66,8 @@ public class BatalhaController {
                     if (habUsar == null) {
                         continue;
                     }
-                    ResultadoAtaque imprimir = fachada.personagemAtacar(jogador, alvo,  habUsar);
-                    batalhaView.mostrarResultadoAtaque(imprimir);
+                    ResultadoTurno imprimir = fachada.personagemAtacar(jogador, alvo,  habUsar);
+                    batalhaView.mostrarResultadoTurno(imprimir);
                     ConsoleUtils.aguardarSegundos(1);
                 }
                 case 2 -> {
@@ -121,6 +121,7 @@ public class BatalhaController {
             int indice = usarHabilidade - 1; // Menos um pois está acessando o índice de um vetor.
             if (listaHab.get(indice).custoMana() > mana) { // Se não tiver mana suficiente, cancela o uso da habilidade.
                 avisoView.mostrarMensagemErro("Você não possui mana para usar essa habilidade!");
+                ConsoleUtils.aguardarSegundos(2);
                 continue;
             }
             return listaHab.get(indice);
@@ -139,9 +140,10 @@ public class BatalhaController {
         Habilidade habUsar = oponente.retornarHabilidade();
         if (habUsar == null) {
             avisoView.mostrarMensagemAviso("O inimigo não possui mana");
+            ConsoleUtils.aguardarSegundos(2);
             return;
         }
-        ResultadoAtaque imprimir = fachada.personagemAtacar(oponente, alvo, habUsar);
-        batalhaView.mostrarResultadoAtaque(imprimir);
+        ResultadoTurno imprimir = fachada.personagemAtacar(oponente, alvo, habUsar);
+        batalhaView.mostrarResultadoTurno(imprimir);
     }
 }

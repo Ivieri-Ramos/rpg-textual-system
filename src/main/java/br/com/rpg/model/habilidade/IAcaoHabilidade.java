@@ -5,5 +5,5 @@ import br.com.rpg.model.services.BatalhaService;
 
 @FunctionalInterface
 public interface IAcaoHabilidade {
-    ResultadoHabilidade executar(Personagem atacante, Personagem alvo, BatalhaService calculadora);
+    ResultadoHabilidade executar(Habilidade habUsada, Personagem atacante, Personagem alvo, BatalhaService calculadora);
 }

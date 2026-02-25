@@ -23,7 +23,6 @@ public class MensagemView {
     public void mostrarMensagemErro(String mensagem){
         System.out.println();
         System.out.println(VERMELHO + "ERRO: " + mensagem + RESET);
-        ConsoleUtils.aguardarSegundos(2);
     }
 
     /**
@@ -35,7 +34,6 @@ public class MensagemView {
     public void mostrarMensagemAviso(String mensagem){
         System.out.println();
         System.out.println(AMARELO + "AVISO: " + mensagem + RESET);
-        ConsoleUtils.aguardarSegundos(2);
     }
 
     /**
@@ -47,6 +45,5 @@ public class MensagemView {
     public void mostrarMensagemSucesso(String mensagem){
         System.out.println();
         System.out.println(VERDE + "SUCESSO: " + mensagem + RESET);
-        ConsoleUtils.aguardarSegundos(2);
     }
 }

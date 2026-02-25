@@ -1,9 +1,10 @@
 package br.com.rpg.view;
 
 import br.com.rpg.model.dto.RelatorioInfoInimigo;
-import br.com.rpg.model.dto.ResultadoAtaque;
+import br.com.rpg.model.dto.ResultadoTurno;
 import br.com.rpg.model.entities.Heroi;
 import br.com.rpg.model.entities.Inimigo;
+import br.com.rpg.model.services.results.CalculoDano;
 import br.com.rpg.view.utils.ConsoleUtils;
 
 /**
@@ -44,36 +45,45 @@ public class BatalhaView {
     }
 
     /**
-     * Imprime um {@link ResultadoAtaque} no terminal usando {@link StringBuilder}.
+     * Imprime um {@link ResultadoTurno} no terminal usando {@link StringBuilder}.
      * @param result Informação a ser impressa.
      */
-    public void mostrarResultadoAtaque(ResultadoAtaque result) {
+    public void mostrarResultadoTurno(ResultadoTurno result) {
         StringBuilder imprimir = new StringBuilder();
-        imprimir.append(result.nomeAtacante());
-        imprimir.append(" usou ");
-        imprimir.append(result.nomeHabilidade());
-        imprimir.append(" contra ");
-        imprimir.append(result.nomeAlvo());
-        imprimir.append(" ");
-        if (result.esquivou()) {
-            imprimir.append("mas ele esquivou.");
+        CalculoDano relatorioDano = result.relatorio().relatorioDano();
+        imprimir.append(result.nomeAtacante())
+                .append(" usou ")
+                .append(result.relatorio().nomeHab()); // Cria a frase comum a todas as habilidades
+        if (relatorioDano != null) { // Quando é usado habilidades ofensivas ou híbridas
+            imprimir.append(" contra ")
+                    .append(result.nomeAlvo())
+                    .append(" ");
+            if (relatorioDano.esquivou()) {
+                imprimir.append("mas ele esquivou");
+            } else {
+                if (relatorioDano.defendeu()) {
+                    imprimir.append("mas ele defendeu, ");
+                }
+                imprimir.append("causando ")
+                        .append(relatorioDano.danoFinal())
+                        .append(" de dano");
+                if (relatorioDano.critico()) {
+                    imprimir.append(" e ainda deu crítico");
+                }
+            }
+        }
+
+        if (result.relatorio().deltaVidaRecebida() > 0) { // Se for maior que zero, é porque o atacante se curou
+            imprimir.append(", curando ")
+                    .append(result.relatorio().deltaVidaRecebida())
+                    .append(" de vida no processo");
+        }
+
+        if (result.alvoMorreu()) { // Se o alvo morreu, imprime, do contrário, termina com '!'.
+            imprimir.append(", matando seu oponente!");
         }
         else {
-            if (result.defendeu()) {
-                imprimir.append("mas ele defendeu, ");
-            }
-            imprimir.append("causando ");
-            imprimir.append(result.danoCausado());
-            imprimir.append(" de dano");
-            if (result.critico()) {
-                imprimir.append(" e ainda deu crítico");
-            }
-            if (result.alvoMorreu()) {
-                imprimir.append(" matando-o!");
-            }
-            else {
-                imprimir.append("!");
-            }
+            imprimir.append("!");
         }
         imprimirCaixaDialogo(imprimir.toString());
     }
@@ -108,14 +118,14 @@ public class BatalhaView {
      */
     public void imprimirCaixaDialogo(String texto) {
         System.out.println();
-        int tamTexto = 90;
+        int tamTexto = 120;
         int nmrChar = texto.length(); // Quantidade de caracteres presentes na String.
-        int espacosRestantes = Math.max(0, tamTexto - nmrChar); // Previne caso a String possua mais caracteres que o máximo.
-        System.out.println("┌────────────────────────────────────────────────────────────────────────────────────────────┐");
+        int espacosRestantes = Math.max(0, (tamTexto - nmrChar)); // Previne caso a String possua mais caracteres que o máximo.
+        System.out.printf("┌%s┐%n", "─".repeat(122)); // Imprime 120 vezes o caractere '─'.
         System.out.print("│ ");
         ConsoleUtils.digitarLento(texto);
         System.out.printf("%" + espacosRestantes + "s │%n", " ");
-        System.out.println("└────────────────────────────────────────────────────────────────────────────────────────────┘");
+        System.out.printf("└%120s┘%n", "─".repeat(122));
         System.out.println();
     }
 }

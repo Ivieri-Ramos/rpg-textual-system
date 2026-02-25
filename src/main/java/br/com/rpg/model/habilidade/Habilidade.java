@@ -26,6 +26,6 @@ public record Habilidade(
         IAcaoHabilidade aplicador) {
 
     public ResultadoHabilidade executar(Personagem atacante, Personagem alvo, BatalhaService calculadora) {
-        return aplicador.executar(atacante, alvo, calculadora);
+        return aplicador.executar(this, atacante, alvo, calculadora);
     }
 }

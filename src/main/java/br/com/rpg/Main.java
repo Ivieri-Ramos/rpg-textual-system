@@ -19,7 +19,9 @@ public class Main {
         meuHeroi.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("ATAQUE_NORMAL"));
         meuHeroi.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("ATAQUE_FORTE"));
         meuHeroi.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("ATAQUE_VAMPIRICO"));
+        meuHeroi.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("CURA_MENOR"));
         meuInimigo.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("ATAQUE_NORMAL"));
+        meuInimigo.receberDano(50);
         // meuInimigo.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("ATAQUE_FORTE"));
         jogo.iniciarBatalha(meuHeroi, meuInimigo);
         input.fecharTeclado();

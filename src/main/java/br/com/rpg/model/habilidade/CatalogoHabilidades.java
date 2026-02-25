@@ -34,30 +34,39 @@ public final class CatalogoHabilidades {
      * as habilidades criadas possam ser usadas.
      */
     public static void iniciarCatalogo() {
-        mapaHabilidades.put("ATAQUE_NORMAL", () -> new Habilidade
-                ("Ataque Normal", 0, TipoElemento.NEUTRO,
-                    ((atacante, alvo, calculadora) -> {
+        mapaHabilidades.put("ATAQUE_NORMAL", () -> new Habilidade(
+                "Ataque Normal", 0, TipoElemento.NEUTRO,
+                    (habUsada, atacante, alvo, calculadora) -> {
                         CalculoDano resultado = calculadora.calcularDano(atacante, alvo, 1.0);
                         alvo.receberDano(resultado.danoFinal());
-                        return ResultadoHabilidade.ataqueOfensivo("Ataque Normal", resultado);
-                })));
-
-        mapaHabilidades.put("ATAQUE_FORTE", () -> new Habilidade
-                ("Ataque Forte", 10, TipoElemento.NEUTRO,
-                    (atacante, alvo, calculadora) -> {
+                        return ResultadoHabilidade.poderOfensivo(habUsada.nome(), resultado);
+                })
+        );
+        mapaHabilidades.put("ATAQUE_FORTE", () -> new Habilidade(
+                "Ataque Forte", 10, TipoElemento.NEUTRO,
+                (habUsada, atacante, alvo, calculadora) -> {
                         CalculoDano resultado = calculadora.calcularDano(atacante, alvo, 1.5);
                         alvo.receberDano(resultado.danoFinal());
-                        return ResultadoHabilidade.ataqueOfensivo("Ataque Forte", resultado);
-                }));
-        mapaHabilidades.put("ATAQUE_VAMPIRICO", () -> new Habilidade
-                ("Ataque Vampírico", 15, TipoElemento.NEUTRO,
-                    ((atacante, alvo, calculadora) -> {
+                        return ResultadoHabilidade.poderOfensivo(habUsada.nome(), resultado);
+                })
+        );
+        mapaHabilidades.put("ATAQUE_VAMPIRICO", () -> new Habilidade(
+                "Ataque Vampírico", 15, TipoElemento.NEUTRO,
+                    (habUsada, atacante, alvo, calculadora) -> {
                         CalculoDano resultado = calculadora.calcularDano(atacante, alvo, 1.0);
                         alvo.receberDano(resultado.danoFinal());
                         int vidaCurar = (resultado.danoFinal() / 2);
                         atacante.curarVida(vidaCurar);
-                        return new ResultadoHabilidade("Ataque Forte", vidaCurar, resultado);
-                })));
+                        return new ResultadoHabilidade(habUsada.nome(), vidaCurar, resultado);
+                })
+        );
+        mapaHabilidades.put("CURA_MENOR", () -> new Habilidade(
+           "Cura menor", 10, TipoElemento.NEUTRO,
+                (habUsada, atacante, alvo, calculadora) -> {
+                    int vidaCurar = atacante.curarVida(25);
+                    return ResultadoHabilidade.poderDefensivo(habUsada.nome(), vidaCurar);
+                })
+        );
     }
 
     /**
