@@ -20,6 +20,26 @@ public class Inventario {
         return false;
     }
 
+    public List<Equipamentos> getListEquipamentos(){
+        List<Equipamentos> listEquipamentos = new ArrayList<>();
+        for(Item item : getItems()){
+            if(item instanceof Equipamentos){
+                listEquipamentos.add((Equipamentos) item);
+            }
+        }
+        return  listEquipamentos;
+    }
+
+    public List<Consumivel> getListConsumiveis(){
+        List<Consumivel> listConsumiveis = new ArrayList<>();
+        for(Item item : getItems()){
+            if(item instanceof Consumivel){
+                listConsumiveis.add((Consumivel) item);
+            }
+        }
+        return listConsumiveis;
+    }
+
     public void removerItem(Item item){
         items.remove(item);
     }
