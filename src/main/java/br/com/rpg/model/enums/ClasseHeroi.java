@@ -37,6 +37,7 @@ public enum ClasseHeroi {
     private final double defesaBase;
     private final double chanceCritBase;
     private final double chanceEsqBase;
+    
 
     /**
      * Construtor das constantes do Enum.

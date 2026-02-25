@@ -15,7 +15,6 @@ public class SistemaXP {
     private int xpAtual;
     private int xpMaximo;
     private int nivel;
-    private AplicadorBonus aplicadorBonus;
 
     /**
      * Construtor do SistemaXP.
@@ -23,8 +22,7 @@ public class SistemaXP {
      *
      * @param aplicadorBonus O aplicador de bônus responsável por aplicar os efeitos
      */
-    public SistemaXP(AplicadorBonus aplicadorBonus) {
-        this.aplicadorBonus = aplicadorBonus;
+    public SistemaXP() {
         this.nivel = 1;
         this.xpAtual = 0;
         this.xpMaximo = CalculadoraXP.calcularXpParaNivel(this.nivel);
@@ -34,22 +32,24 @@ public class SistemaXP {
      * Adiciona XP ao personagem e verifica se houve level up.
      *
      * @param xpGanho A quantidade de XP a adicionar
+     * @return A quantidade de níveis ganhos
      */
-    public void adicionarXp(int xpGanho) {
+    public int adicionarXp(int xpGanho) {
         if (xpGanho < 0) {
             throw new IllegalArgumentException("XP ganho não pode ser negativo");
         }
 
         this.xpAtual += xpGanho;
+        int upou = 0;
 
         while (this.xpAtual >= this.xpMaximo) {
             subirDeNivel();
+            upou++;
         }
+        
+        return upou;
     }
 
-    /**
-     * Aumenta o nível do personagem e aplica os bônus através do {@link AplicadorBonus}.
-     */
     private void subirDeNivel() {
         this.xpAtual -= this.xpMaximo;
         this.nivel++;
@@ -57,24 +57,8 @@ public class SistemaXP {
         // Atualiza o XP máximo para o novo nível
         this.xpMaximo = CalculadoraXP.calcularXpParaNivel(this.nivel);
 
-        // Notifica o aplicador de bônus para aplicar os efeitos
-        ResultadoBonus resultado = criarResultadoBonus();
-        aplicadorBonus.aplicarBonus(resultado);
     }
 
-    /**
-     * Cria um {@link ResultadoBonus} com as informações do level up.
-     * Os bônus são calculados pela classe {@link BonusLevelUp}.
-     *
-     * @return O resultado do bonus a ser aplicado
-     */
-    private ResultadoBonus criarResultadoBonus() {
-        // Nota: Os valores reais de dano e vida virão do aplicador de bônus
-        // Este método apenas cria o objeto com 0s, pois o aplicador terá acesso aos valores reais
-        return new ResultadoBonus(0, 0, this.nivel);
-    }
-
-    // Getters
     public int getXpAtual() {
         return xpAtual;
     }
