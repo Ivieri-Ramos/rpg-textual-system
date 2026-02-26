@@ -1,15 +1,14 @@
 package br.com.rpg.model.mundo;
 
-import br.com.rpg.model.habilidade.CatalogoHabilidades;
-
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Cidade {
     private final String nome;
     private final String descricao;
+    private final List<Masmorra> masmorrasProximas = new ArrayList<>();
 
-    public Cidade(String nome, String descricao, List<String> chaveMasmorras) {
+    public Cidade(String nome, String descricao) {
         this.nome = nome;
         this.descricao = descricao;
     }
@@ -20,5 +19,13 @@ public class Cidade {
 
     public String getDescricao() {
         return descricao;
+    }
+
+    public List<Masmorra> getMasmorrasProximas() {
+        return List.copyOf(masmorrasProximas);
+    }
+
+    public void adicionarMasmorra(Masmorra novaMasmorra) {
+        masmorrasProximas.add(novaMasmorra);
     }
 }
