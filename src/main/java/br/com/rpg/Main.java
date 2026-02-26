@@ -1,34 +1,36 @@
 package br.com.rpg;
 
 import br.com.rpg.controller.BatalhaController;
-import br.com.rpg.model.entities.CatalogoHabilidades;
+import br.com.rpg.model.habilidade.CatalogoHabilidades;
 import br.com.rpg.model.entities.Heroi;
 import br.com.rpg.model.entities.Inimigo;
 import br.com.rpg.model.enums.ClasseHeroi;
 import br.com.rpg.model.enums.ClasseInimigo;
-import br.com.rpg.model.item.Equipamentos;
-import br.com.rpg.model.item.Inventario;
-import br.com.rpg.model.item.Item;
 import br.com.rpg.view.Teclado;
-import br.com.rpg.model.item.CatalogoEquipamentos;
-import br.com.rpg.model.item.Equipamentos;
-
-import static br.com.rpg.model.item.CatalogoEquipamentos.*;
 
 public class Main {
 
     public static void main(String[] args) {
         Teclado input = new Teclado();
-        // Esse bloco de inicializações é apenas para testes, será futuramente retirado isso.
-        Inventario testeInv = new Inventario(20);
-        Item drop = CatalogoEquipamentos.getEquipamento("ARMADURA DE COURO");
-        testeInv.adicionarItem(drop);
-        testeInv.adicionarItem(drop);
-        testeInv.getItems().forEach(item -> System.out.println(item.getNome()));
-        testeInv.removerItem(drop);
-        testeInv.getItems().forEach(item -> System.out.println(item.getNome()));
-        drop = CatalogoEquipamentos.getEquipamento("CAPA ELUSIVA");
-        testeInv.adicionarItem(drop);
-        testeInv.getItems().forEach(item -> System.out.println(item.getNome()));
+        try {
+            // Esse bloco de inicializações é apenas para testes, será futuramente retirado isso.
+            BatalhaController jogo = new BatalhaController();
+            Heroi meuHeroi = new Heroi("Ivieri", ClasseHeroi.GUERREIRO);
+            Inimigo meuInimigo = new Inimigo("Orc", ClasseInimigo.ORC);
+            meuHeroi.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("ATAQUE_VAMPIRICO"));
+            meuHeroi.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("CURA_MENOR"));
+            meuInimigo.receberDano(50);
+            // meuInimigo.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("ATAQUE_FORTE"));
+            jogo.iniciarBatalha(meuHeroi, meuInimigo);
+        }
+        catch (Exception e) {
+            System.err.println("========================================================================================================");
+            System.err.println(e.getMessage());
+            System.err.println("========================================================================================================");
+            e.printStackTrace();
+        }
+        finally {
+            input.fecharTeclado();
+        }
     }
 }

@@ -1,10 +1,10 @@
 package br.com.rpg.facade;
 
-import br.com.rpg.model.dto.ResultadoAtaque;
-import br.com.rpg.model.entities.Habilidade;
+import br.com.rpg.model.dto.ResultadoTurno;
+import br.com.rpg.model.habilidade.Habilidade;
 import br.com.rpg.model.entities.Personagem;
+import br.com.rpg.model.habilidade.ResultadoHabilidade;
 import br.com.rpg.model.services.BatalhaService;
-import br.com.rpg.model.services.results.CalculoDano;
 
 /**
  * Realiza a lógica adicional pedida pelo {@link br.com.rpg.controller.BatalhaController BatalhaController},
@@ -21,23 +21,18 @@ public class GameFachada {
      * <p>
      * Consome mana do {@code atacante} e retira vida de {@code alvo}, chamando métodos próprios
      * das entidades.
-     * @param atacante Entidade que executa o ataque, pode ter sua mana consumida.
+     * @param conjurador Entidade que executa o ataque, pode ter sua mana consumida.
      * @param alvo Entidade que recebe o ataque, pode ter sua vida diminuída.
-     * @param habUsar Ataque usado pelo {@code atacante}.
-     * @return Um relatório completo do ataque que será imprimido posteriormente.
+     * @param habUsar Poder usado pelo {@code atacante}, pode ser ofensiva ou não.
+     * @return Um relatório completo do ataque que será impresso posteriormente.
      */
-    public ResultadoAtaque personagemAtacar(Personagem atacante, Personagem alvo, Habilidade habUsar) {
-        atacante.consumirMana(habUsar.custoMana());
-        CalculoDano resultado = calculadoraBatalha.calcularDano(atacante, alvo, habUsar);
-        alvo.receberDano(resultado.danoFinal());
-        return new ResultadoAtaque(
-                atacante.getNome(),
+    public ResultadoTurno personagemAtacar(Personagem conjurador, Personagem alvo, Habilidade habUsar) {
+        conjurador.consumirMana(habUsar.custoMana());
+        ResultadoHabilidade resultado = habUsar.executar(conjurador, alvo, calculadoraBatalha);
+        return new ResultadoTurno(
+                conjurador.getNome(),
                 alvo.getNome(),
-                habUsar.nome(),
-                resultado.danoFinal(),
-                resultado.esquivou(),
-                resultado.critico(),
-                resultado.defendeu(),
+                resultado,
                 !alvo.isVivo()
         );
     }
