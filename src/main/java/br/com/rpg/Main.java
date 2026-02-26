@@ -12,6 +12,8 @@ import br.com.rpg.model.item.Item;
 import br.com.rpg.view.Teclado;
 import br.com.rpg.model.item.CatalogoEquipamentos;
 import br.com.rpg.model.item.Equipamentos;
+import br.com.rpg.model.item.SetEquipamentos;
+import br.com.rpg.model.enums.TipoEquipamento;
 
 import static br.com.rpg.model.item.CatalogoEquipamentos.*;
 
@@ -20,15 +22,34 @@ public class Main {
     public static void main(String[] args) {
         Teclado input = new Teclado();
         // Esse bloco de inicializações é apenas para testes, será futuramente retirado isso.
-        Inventario testeInv = new Inventario(20);
-        Item drop = CatalogoEquipamentos.getEquipamento("ARMADURA DE COURO");
-        testeInv.adicionarItem(drop);
-        testeInv.adicionarItem(drop);
-        testeInv.getItems().forEach(item -> System.out.println(item.getNome()));
-        testeInv.removerItem(drop);
-        testeInv.getItems().forEach(item -> System.out.println(item.getNome()));
-        drop = CatalogoEquipamentos.getEquipamento("CAPA ELUSIVA");
-        testeInv.adicionarItem(drop);
-        testeInv.getItems().forEach(item -> System.out.println(item.getNome()));
+        SetEquipamentos set = new SetEquipamentos();
+        Inventario inventario = new Inventario(10);
+
+        inventario.adicionarItem(CatalogoEquipamentos.getEquipamento("ARMADURA DE COURO"));
+        inventario.adicionarItem(CatalogoEquipamentos.getEquipamento("ESPADA CURTA"));
+        inventario.adicionarItem(CatalogoEquipamentos.getEquipamento("MANTO DA SAÚDE"));
+        inventario.adicionarItem(CatalogoEquipamentos.getEquipamento("CAPA ELUSIVA"));
+
+        System.out.println("=== TESTE DE EQUIPAMENTO ===");
+
+        set.equipar(inventario, 0);
+        set.equipar(inventario, 0);
+        set.equipar(inventario, 0);
+        set.equipar(inventario, 0);
+
+        imprimirStatus(set);
+
+        System.out.println("\n--- DESEQUIPANDO CAPA ---");
+        set.desequipar(inventario, TipoEquipamento.CAPA);
+
+        imprimirStatus(set);
+    }
+
+    private static void imprimirStatus(SetEquipamentos set) {
+        System.out.println("\nStatus Atual:");
+        System.out.println("Vida: " + set.getBonusVidaTotal());
+        System.out.println("Esquiva: " + set.getBonusEsqTotal());
+        set.getSlots().forEach((slot, eqp) ->
+                System.out.println(slot + " -> " + eqp.getNome()));
     }
 }
