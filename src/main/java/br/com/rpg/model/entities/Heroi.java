@@ -2,7 +2,9 @@ package br.com.rpg.model.entities;
 
 import br.com.rpg.model.enums.ClasseHeroi;
 
-    /**
+import java.util.List;
+
+/**
      * Classe que será usada pelo jogador para controlar o fluxo do jogo.
      * <p>
      */
@@ -22,7 +24,8 @@ public class Heroi extends Personagem {
     public Heroi(String nome, ClasseHeroi tipoClasse) {
         super(nome, tipoClasse.getVidaBase(), tipoClasse.getDanoBase(),
                 tipoClasse.getManaBase(), tipoClasse.getDefesaBase(),
-                tipoClasse.getChanceCritBase(), tipoClasse.getChanceEsqBase());
+                tipoClasse.getChanceCritBase(), tipoClasse.getChanceEsqBase(),
+                tipoClasse.getChaveHabilidades());
     }
 
     @Override

@@ -1,6 +1,6 @@
 package br.com.rpg.view;
 
-import br.com.rpg.model.entities.Habilidade;
+import br.com.rpg.model.habilidade.Habilidade;
 
 import java.util.List;
 
