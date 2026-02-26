@@ -12,15 +12,25 @@ public class Main {
 
     public static void main(String[] args) {
         Teclado input = new Teclado();
-        // Esse bloco de inicializações é apenas para testes, será futuramente retirado isso.
-        BatalhaController jogo  = new BatalhaController();
-        Heroi meuHeroi = new Heroi("Ivieri", ClasseHeroi.GUERREIRO);
-        Inimigo meuInimigo = new Inimigo("Orc", ClasseInimigo.ORC);
-        meuHeroi.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("ATAQUE_VAMPIRICO"));
-        meuHeroi.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("CURA_MENOR"));
-        meuInimigo.receberDano(50);
-        // meuInimigo.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("ATAQUE_FORTE"));
-        jogo.iniciarBatalha(meuHeroi, meuInimigo);
-        input.fecharTeclado();
+        try {
+            // Esse bloco de inicializações é apenas para testes, será futuramente retirado isso.
+            BatalhaController jogo = new BatalhaController();
+            Heroi meuHeroi = new Heroi("Ivieri", ClasseHeroi.GUERREIRO);
+            Inimigo meuInimigo = new Inimigo("Orc", ClasseInimigo.ORC);
+            meuHeroi.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("ATAQUE_VAMPIRICO"));
+            meuHeroi.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("CURA_MENOR"));
+            meuInimigo.receberDano(50);
+            // meuInimigo.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("ATAQUE_FORTE"));
+            jogo.iniciarBatalha(meuHeroi, meuInimigo);
+        }
+        catch (Exception e) {
+            System.err.println("========================================================================================================");
+            System.err.println(e.getMessage());
+            System.err.println("========================================================================================================");
+            e.printStackTrace();
+        }
+        finally {
+            input.fecharTeclado();
+        }
     }
 }
