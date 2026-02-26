@@ -23,9 +23,9 @@ public class SetEquipamentos {
         limparBonus();
     }
 
-    public int equipar(Inventario inventario, int indice) {
+    public boolean equipar(Inventario inventario, int indice) {
         List<Equipamentos> listaFiltrada = inventario.getListEquipamentos();
-        if (indice < 0 || indice >= listaFiltrada.size()) return -1;
+        if (indice < 0 || indice >= listaFiltrada.size()) return false;
 
         Equipamentos itemParaEquipar = listaFiltrada.get(indice);
         TipoEquipamento tipo = itemParaEquipar.getTipoEqp();
@@ -54,7 +54,7 @@ public class SetEquipamentos {
         }
 
         atualizarBonusTotais();
-        return 1;
+        return true;
     }
 
     public Equipamentos desequipar(Inventario inventario, TipoEquipamento tipo) {
