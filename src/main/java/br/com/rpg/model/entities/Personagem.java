@@ -1,9 +1,9 @@
 package br.com.rpg.model.entities;
 
+import br.com.rpg.model.entities.inimigo.Inimigo;
 import br.com.rpg.model.habilidade.CatalogoHabilidades;
 import br.com.rpg.model.habilidade.Habilidade;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  */
 public abstract class Personagem {
 
-    private final String nome;
+    private String nome;
     private int vida;
     private int vidaMaxima;
     private int dano;
@@ -57,6 +57,10 @@ public abstract class Personagem {
 
     public String getNome() {
         return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public int getVida() {

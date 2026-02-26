@@ -1,18 +1,14 @@
 package br.com.rpg;
 
 import br.com.rpg.controller.BatalhaController;
+import br.com.rpg.model.entities.inimigo.CatalogoInimigo;
+import br.com.rpg.model.entities.inimigo.RankInimigo;
 import br.com.rpg.model.habilidade.CatalogoHabilidades;
 import br.com.rpg.model.entities.Heroi;
-import br.com.rpg.model.entities.Inimigo;
+import br.com.rpg.model.entities.inimigo.Inimigo;
 import br.com.rpg.model.enums.ClasseHeroi;
-import br.com.rpg.model.enums.ClasseInimigo;
+import br.com.rpg.model.entities.inimigo.ClasseInimigo;
 import br.com.rpg.view.Teclado;
-import br.com.rpg.model.item.CatalogoEquipamentos;
-import br.com.rpg.model.item.Equipamentos;
-import br.com.rpg.model.item.SetEquipamentos;
-import br.com.rpg.model.enums.TipoEquipamento;
-
-import static br.com.rpg.model.item.CatalogoEquipamentos.*;
 
 public class Main {
 
@@ -22,7 +18,7 @@ public class Main {
             // Esse bloco de inicializações é apenas para testes, será futuramente retirado isso.
             BatalhaController jogo = new BatalhaController();
             Heroi meuHeroi = new Heroi("Ivieri", ClasseHeroi.GUERREIRO);
-            Inimigo meuInimigo = new Inimigo("Orc", ClasseInimigo.ORC);
+            Inimigo meuInimigo = CatalogoInimigo.enviarInimigo("ORC_COMUM", RankInimigo.CHEFE);
             meuHeroi.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("ATAQUE_VAMPIRICO"));
             meuHeroi.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("CURA_MENOR"));
             meuInimigo.receberDano(50);

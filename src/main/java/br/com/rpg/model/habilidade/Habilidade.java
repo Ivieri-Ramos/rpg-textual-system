@@ -1,11 +1,10 @@
 package br.com.rpg.model.habilidade;
 
 import br.com.rpg.model.entities.Heroi;
-import br.com.rpg.model.entities.Inimigo;
+import br.com.rpg.model.entities.inimigo.Inimigo;
 import br.com.rpg.model.entities.Personagem;
 import br.com.rpg.model.enums.TipoElemento;
 import br.com.rpg.model.services.BatalhaService;
-import br.com.rpg.model.services.results.CalculoDano;
 
 /**
  * Armazena atributos dos poderes no jogo, além da sua própria lógica.
