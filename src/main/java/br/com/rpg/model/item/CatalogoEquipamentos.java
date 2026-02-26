@@ -14,29 +14,29 @@ public final class CatalogoEquipamentos {
     }
 
     public static void iniciarCatalogoEqp() {
-        mapaEquipamentos.put("ARMADURA DE COURO", new Equipamentos(
+        mapaEquipamentos.put("ARMADURA_DE_COURO", new Equipamentos(
                 "Armadura de couro",
                 "Armadura leve feita de couro",
                 1,
-                TipoEquipamento.ARMARUDA,
+                TipoEquipamento.ARMADURA,
                 0,
                 0,
                 0,
                 5.0,
                 0.0,
                 10.0));
-        mapaEquipamentos.put("ARMADURA COMPLETA", new Equipamentos(
+        mapaEquipamentos.put("ARMADURA_COMPLETA", new Equipamentos(
                 "Armadura Completa",
                 "Armadura pesada que com muita defesa",
                 10,
-                TipoEquipamento.ARMARUDA,
+                TipoEquipamento.ARMADURA,
                 0,
                 0,
                 0,
                 15.0,
                 0.0,
                 -5.0));
-        mapaEquipamentos.put("ESPADA CURTA", new Equipamentos(
+        mapaEquipamentos.put("ESPADA_CURTA", new Equipamentos(
                 "Espada Curta",
                 "Espada simples",
                 1,
@@ -47,7 +47,7 @@ public final class CatalogoEquipamentos {
                 0.0,
                 0.0,
                 0.0));
-        mapaEquipamentos.put("MACHADO GRANDE", new Equipamentos(
+        mapaEquipamentos.put("MACHADO_GRANDE", new Equipamentos(
                 "Machado Grande",
                 "Poderoso Machado com alto dano, reduz a esquiva",
                 10,
@@ -58,7 +58,7 @@ public final class CatalogoEquipamentos {
                 0.0,
                 0.0,
                 -10.0));
-        mapaEquipamentos.put("ESCUDO DE APARAR", new Equipamentos(
+        mapaEquipamentos.put("ESCUDO_DE_APARAR", new Equipamentos(
                 "Escudo de Aparar",
                 "Pequeno escudo usado para aparar golpe. Aumenta um pouco da armadura e esquiva",
                 5,
@@ -69,7 +69,7 @@ public final class CatalogoEquipamentos {
                 5.0,
                 0.0,
                 7.5));
-        mapaEquipamentos.put("ESCUDO GRANDE", new Equipamentos(
+        mapaEquipamentos.put("ESCUDO_GRANDE", new Equipamentos(
                 "Escudo Grande",
                 "Escudo grande o suficiente para bloquear todos os tipos de golpe. Reduz a esquiva",
                 5,
@@ -80,7 +80,7 @@ public final class CatalogoEquipamentos {
                 25.0,
                 0.0,
                 -5.0));
-        mapaEquipamentos.put("MANTO DA SAÚDE", new Equipamentos(
+        mapaEquipamentos.put("MANTO_DA_SAUDE", new Equipamentos(
                 "Manto da Saúde",
                 "Esse manto foi imbuído em poções de cura!",
                 50,
@@ -91,7 +91,7 @@ public final class CatalogoEquipamentos {
                 0.0,
                 0.0,
                 0.0));
-        mapaEquipamentos.put("CAPA ELUSIVA", new Equipamentos(
+        mapaEquipamentos.put("CAPA_ELUSIVA", new Equipamentos(
                 "Capa elusiva",
                 "Quando equipado, deixa o usuário praticamente invisível, mas ao custo sua vida",
                 250,

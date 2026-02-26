@@ -7,6 +7,12 @@ import br.com.rpg.model.entities.Inimigo;
 import br.com.rpg.model.enums.ClasseHeroi;
 import br.com.rpg.model.enums.ClasseInimigo;
 import br.com.rpg.view.Teclado;
+import br.com.rpg.model.item.CatalogoEquipamentos;
+import br.com.rpg.model.item.Equipamentos;
+import br.com.rpg.model.item.SetEquipamentos;
+import br.com.rpg.model.enums.TipoEquipamento;
+
+import static br.com.rpg.model.item.CatalogoEquipamentos.*;
 
 public class Main {
 
