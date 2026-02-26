@@ -1,7 +1,8 @@
 package br.com.rpg.model.entities;
 
 import br.com.rpg.model.enums.ClasseHeroi;
-import br.com.rpg.model.item.Inventario;
+
+import java.util.List;
 
 /**
      * Classe que será usada pelo jogador para controlar o fluxo do jogo.
@@ -9,7 +10,6 @@ import br.com.rpg.model.item.Inventario;
      */
 
 public class Heroi extends Personagem {
-    private final Inventario inventario;
 
     /**
      * Construtor especializado de Heroi que define
@@ -24,8 +24,8 @@ public class Heroi extends Personagem {
     public Heroi(String nome, ClasseHeroi tipoClasse) {
         super(nome, tipoClasse.getVidaBase(), tipoClasse.getDanoBase(),
                 tipoClasse.getManaBase(), tipoClasse.getDefesaBase(),
-                tipoClasse.getChanceCritBase(), tipoClasse.getChanceEsqBase());
-        this.inventario = new Inventario(20);
+                tipoClasse.getChanceCritBase(), tipoClasse.getChanceEsqBase(),
+                tipoClasse.getChaveHabilidades());
     }
 
     @Override
@@ -34,7 +34,4 @@ public class Heroi extends Personagem {
                 super.toString();
     }
 
-    public Inventario getInventario() {
-        return inventario;
-    }
 }
