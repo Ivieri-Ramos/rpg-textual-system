@@ -11,7 +11,7 @@ import br.com.rpg.model.item.Item;
  * @param capacidadeTotal Limite máximo do inventário.
  */
 public record InventarioAtual(
-        List<Item> itens,
+        List<? extends Item> itens,
         int ocupados,
         int capacidadeTotal
 ) {}
