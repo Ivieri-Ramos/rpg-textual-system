@@ -45,6 +45,6 @@ public class Inventario {
     }
 
     public List<Item> getItems() {
-        return items;
+        return List.copyOf(items);
     }
 }

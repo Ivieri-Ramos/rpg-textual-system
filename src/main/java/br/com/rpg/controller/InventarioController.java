@@ -1,5 +1,6 @@
 package br.com.rpg.controller;
 
+import br.com.rpg.facade.InventarioFachada;
 import br.com.rpg.model.dto.InventarioAtual;
 import br.com.rpg.model.entities.Heroi;
 import br.com.rpg.model.item.Consumivel;
@@ -12,110 +13,132 @@ import br.com.rpg.view.Teclado;
 import java.util.List;
 
 /**
- * Classe responśavel por gerenciar todas as interações do jogador com o inventário.
- * O método {@link #processarInventario(Heroi)} é o ponto de partida
+ * Controla as interações do jogador com o inventário em um loop interno.
+ * <p>
+ * Gerencia a exibição, filtragem e ações sobre itens até que o jogador escolha sair
+ * ou uma ação que consuma o turno seja realizada.
  */
-
 public class InventarioController {
 
-    private final InventarioView inventarioView = new InventarioView();
+    private final InventarioView view = new InventarioView();
     private final Teclado input = new Teclado();
+    private final InventarioFachada fachada = new InventarioFachada();
 
     /**
-     *Enum para informar o resultado da interação com inventário.
+     * Enum para informar o resultado da interação com inventário.
+     * Diz se o turno do jogador foi consumido.
      */
-
     public enum ResultadoInventario {
-        ITEM_CONSUMIDO,
-        EQUIPADO,
-        NENHUMA_ACAO,
-        VAZIO
+        ITEM_CONSUMIDO, EQUIPADO, NENHUMA_ACAO, VAZIO
     }
 
     /**
-     * Método que processa a interação completa do jogador com o inventário.
-     * <p>
-     * Mostra menu de filtro, exibe itens e processa escolha do jogador.
-     * @param jogador Instância do herói cujo inventário será manipulado.
-     * @return Resultado da ação para o BatalhaController decidir sobre o turno
+     * Processa a interação completa com o inventário do herói.
+     * Mantém um loop interno até que o jogador escolha voltar ou consuma um item.
+     *
+     * @param jogador O herói que terá acesso ao inventário
+     * @return O resultado da ação no inventário
      */
-
     public ResultadoInventario processarInventario(Heroi jogador) {
         Inventario inventario = jogador.getInventario();
 
         if (inventario.getItems().isEmpty()) {
-            InventarioAtual dto = criarDTO(inventario);
-            inventarioView.mostrarInventario(dto);
+            exibirInventarioVazio(inventario);
             input.aguardarEnter();
             return ResultadoInventario.VAZIO;
         }
 
-        System.out.println("\n[1] Ver todos os itens");
-        System.out.println("[2] Ver apenas consumíveis");
-        System.out.println("[3] Ver apenas equipamentos");
-        System.out.println("[0] Voltar");
+        while (true) {
+            view.mostrarMenuFiltro();
+            int filtro = input.lerInteiro("Escolha uma opção:", 0, 3);
 
-        int filtro = input.lerInteiro("Escolha uma opção:", 0, 3);
+            if (filtro == 0) {
+                return ResultadoInventario.NENHUMA_ACAO;
+            }
 
-        List<? extends Item> itensFiltrados = switch (filtro) {
+            List<? extends Item> itens = filtrarItens(inventario, filtro);
+            if (itens.isEmpty()) {
+                System.out.println("Nenhum item encontrado");
+                continue;
+            }
+
+            exibirItens(filtro, itens);
+            ResultadoInventario resultado = processarEscolha(jogador, itens);
+
+            if (resultado == ResultadoInventario.ITEM_CONSUMIDO) {
+                return resultado;
+            }
+        }
+    }
+
+    /**
+     * Exibe o inventário quando está vazio.
+     * @param inventario O inventário que vai ser exibido
+     */
+    private void exibirInventarioVazio(Inventario inventario) {
+        List<Item> itens = inventario.getItems();
+        InventarioAtual dto = new InventarioAtual(itens, itens.size(), 20);
+        view.mostrarInventarioConsumiveis(dto);
+    }
+
+    /**
+     * Filtra os itens do inventário com base na escolha do jogador.
+     *
+     * @param inventario O inventário a ser filtrado
+     * @param filtro O tipo de filtro (1=todos, 2=consumíveis, 3=equipamentos)
+     * @return Lista de itens filtrados
+     */
+    private List<? extends Item> filtrarItens(Inventario inventario, int filtro) {
+        return switch (filtro) {
             case 1 -> inventario.getItems();
             case 2 -> inventario.getListConsumiveis();
             case 3 -> inventario.getListEquipamentos();
             default -> List.of();
         };
+    }
 
-        if (itensFiltrados.isEmpty()) {
-            return ResultadoInventario.NENHUMA_ACAO;
-        }
-
-        InventarioAtual dto = new InventarioAtual(
-                List.copyOf(itensFiltrados),
-                itensFiltrados.size(),
-                20
-        );
+    /**
+     * Exibe os itens filtrados na view.
+     *
+     * @param filtro O tipo de filtro aplicado
+     * @param itens Lista de itens que vai ser exibida
+     */
+    private void exibirItens(int filtro, List<? extends Item> itens) {
+        InventarioAtual dto = new InventarioAtual(itens, itens.size(), 20);
 
         switch (filtro) {
-            case 1 -> inventarioView.mostrarInventario(dto);
-            case 2 -> inventarioView.mostrarInventarioConsumiveis(dto);
-            case 3 -> inventarioView.mostrarInventarioEquipamentos(dto);
-            default -> {}
+            case 1 -> view.mostrarInventario(dto);
+            case 2 -> view.mostrarInventarioConsumiveis(dto);
+            case 3 -> view.mostrarInventarioEquipamentos(dto);
         }
+    }
 
-        int escolha = input.lerInteiro("Selecione o item (0 para cancelar):", 0, itensFiltrados.size());
+    /**
+     * Processa a escolha do item pelo jogador.
+     *
+     * @param jogador O herói
+     * @param itens Lista de itens disponíveis para escolha
+     * @return O resultado da ação sobre o item
+     */
+    private ResultadoInventario processarEscolha(Heroi jogador, List<? extends Item> itens) {
+        int escolha = input.lerInteiro("Selecione o item (0 para voltar):", 0, itens.size());
 
         if (escolha == 0) {
             return ResultadoInventario.NENHUMA_ACAO;
         }
 
-        Item itemSelecionado = itensFiltrados.get(escolha - 1);
+        Item item = itens.get(escolha - 1);
 
-        if (itemSelecionado instanceof Consumivel consumivel) {
-            var resultado = consumivel.usar(jogador);
-            inventario.removerItem(itemSelecionado);
-            inventarioView.mostrarMensagemUsouItem(resultado.mensagem());
+        if (item instanceof Consumivel consumivel) {
+            var resultado = fachada.consumirItem(jogador, consumivel);
+            view.mostrarMensagemUsouItem(resultado.mensagem());
             return ResultadoInventario.ITEM_CONSUMIDO;
-
-        } else if (itemSelecionado instanceof Equipamentos equipamento) {
-            inventarioView.mostrarMensagemUsouItem("");
-            //TODO: Implementar equipar aqui
-            return ResultadoInventario.NENHUMA_ACAO;
+        } else if (item instanceof Equipamentos) {
+            boolean equipou = fachada.equiparItem(jogador, escolha - 1);
+            // TODO: Sistema de mensagens de equipamento
+            return equipou ? ResultadoInventario.EQUIPADO : ResultadoInventario.NENHUMA_ACAO;
         }
 
         return ResultadoInventario.NENHUMA_ACAO;
     }
-
-    /**
-     * Método que cria uma instância de InventarioAtual a partir do inventário real do herói.
-     * @param inventario O inventário fonte dos dados
-     * @return DTO que vai ser transmitido para a View
-     */
-
-    private InventarioAtual criarDTO(Inventario inventario) {
-        return new InventarioAtual(
-                List.copyOf(inventario.getItems()),
-                inventario.getItems().size(),
-                20
-        );
-    }
-
 }

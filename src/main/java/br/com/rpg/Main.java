@@ -3,7 +3,6 @@ package br.com.rpg;
 import br.com.rpg.controller.BatalhaController;
 import br.com.rpg.controller.InventarioController;
 import br.com.rpg.model.dto.InventarioAtual;
-import br.com.rpg.model.entities.CatalogoHabilidades;
 import br.com.rpg.model.entities.Heroi;
 import br.com.rpg.model.entities.Inimigo;
 import br.com.rpg.model.enums.ClasseHeroi;
@@ -27,12 +26,12 @@ public class Main {
     public static void main(String[] args) {
         // Esse bloco de inicializações é apenas para testes, será futuramente retirado isso.
         CatalogoConsumiveis.iniciarCatalogo();
+        CatalogoEquipamentos.iniciarCatalogoEqp();
         Heroi jogador = new Heroi("Teste", ClasseHeroi.GUERREIRO);
 
         jogador.getInventario().adicionarItem(CatalogoConsumiveis.enviarConsumivel("POCAO_CURA_MENOR"));
         jogador.getInventario().adicionarItem(CatalogoConsumiveis.enviarConsumivel("POCAO_CURA_MEDIA"));
         jogador.getInventario().adicionarItem(CatalogoConsumiveis.enviarConsumivel("POCAO_MANA"));
-        jogador.getInventario().adicionarItem(CatalogoConsumiveis.enviarConsumivel("ANTIDOTO"));
 
         InventarioController controller = new InventarioController();
         Teclado input = new Teclado();
