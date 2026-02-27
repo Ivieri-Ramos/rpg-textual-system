@@ -1,7 +1,6 @@
 package br.com.rpg.model.item;
 
-import br.com.rpg.model.item.Consumivel;
-import br.com.rpg.model.entities.Heroi;
+import br.com.rpg.model.entities.heroi.Heroi;
 import br.com.rpg.model.dto.ResultadoUsoItem;
 import br.com.rpg.exceptions.ConsumivelNaoEncontradoException;
 import br.com.rpg.model.enums.TipoConsumivel;

@@ -1,8 +1,6 @@
-package br.com.rpg.model.entities;
+package br.com.rpg.model.entities.heroi;
 
-import br.com.rpg.model.enums.ClasseHeroi;
-
-import java.util.List;
+import br.com.rpg.model.entities.Personagem;
 
 /**
      * Classe que será usada pelo jogador para controlar o fluxo do jogo.

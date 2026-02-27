@@ -4,7 +4,7 @@ import br.com.rpg.facade.GameFachada;
 import br.com.rpg.model.dto.ResultadoBatalha;
 import br.com.rpg.model.dto.ResultadoTurno;
 import br.com.rpg.model.habilidade.Habilidade;
-import br.com.rpg.model.entities.Heroi;
+import br.com.rpg.model.entities.heroi.Heroi;
 import br.com.rpg.model.entities.inimigo.Inimigo;
 import br.com.rpg.view.BatalhaView;
 import br.com.rpg.view.ListagemView;

@@ -1,6 +1,6 @@
 package br.com.rpg.controller;
 
-import br.com.rpg.model.entities.Heroi;
+import br.com.rpg.model.entities.heroi.Heroi;
 import br.com.rpg.model.mundo.Cidade;
 import br.com.rpg.view.ExploracaoView;
 import br.com.rpg.view.Teclado;

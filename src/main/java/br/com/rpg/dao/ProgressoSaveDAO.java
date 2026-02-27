@@ -8,7 +8,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class ProgressoSaveDAO {
-    private final String NOME_ARQUIVO = "save.json";
+    private final String NOME_DIRETORIO = "storage";
+    private final String NOME_ARQUIVO = NOME_DIRETORIO + "/save.json";
     private final ObjectMapper mapper = new ObjectMapper();
 
     public ProgressoSaveDAO() {
@@ -21,6 +22,10 @@ public class ProgressoSaveDAO {
      */
     public void salvarProgresso(ProgressoSaveDTO dto) {
         try {
+            File diretorio = new File(NOME_DIRETORIO);
+            if (!diretorio.exists()) { // Cria a pasta 'storage' se ela não existia antes.
+                diretorio.mkdirs();
+            }
             File arquivo = new File(NOME_ARQUIVO);
             mapper.writeValue(arquivo, dto);
         } catch (IOException e) {

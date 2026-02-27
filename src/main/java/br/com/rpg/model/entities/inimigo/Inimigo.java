@@ -1,7 +1,7 @@
 package br.com.rpg.model.entities.inimigo;
 
 import br.com.rpg.model.dto.RelatorioInfoInimigo;
-import br.com.rpg.model.entities.Heroi;
+import br.com.rpg.model.entities.heroi.Heroi;
 import br.com.rpg.model.entities.Personagem;
 import br.com.rpg.model.habilidade.Habilidade;
 import br.com.rpg.util.Dado;

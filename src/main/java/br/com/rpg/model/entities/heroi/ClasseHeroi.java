@@ -1,6 +1,5 @@
-package br.com.rpg.model.enums;
+package br.com.rpg.model.entities.heroi;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

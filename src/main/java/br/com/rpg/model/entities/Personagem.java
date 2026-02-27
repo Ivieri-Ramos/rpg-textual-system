@@ -1,5 +1,6 @@
 package br.com.rpg.model.entities;
 
+import br.com.rpg.model.entities.heroi.Heroi;
 import br.com.rpg.model.entities.inimigo.Inimigo;
 import br.com.rpg.model.habilidade.CatalogoHabilidades;
 import br.com.rpg.model.habilidade.Habilidade;
