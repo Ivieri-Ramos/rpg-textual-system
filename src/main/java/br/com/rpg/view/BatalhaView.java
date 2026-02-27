@@ -85,14 +85,14 @@ public class BatalhaView {
         else {
             imprimir.append("!");
         }
-        imprimirCaixaDialogo(imprimir.toString());
+        ConsoleUtils.imprimirCaixaDialogo(imprimir.toString());
     }
 
     /**
      * Imprime uma mensagem no console avisando ao jogador que ele se defendeu.
      */
     public void jogadorDefendeu() {
-        imprimirCaixaDialogo("Você armou sua defesa, o próximo ataque causa metade do dano!");
+        ConsoleUtils.imprimirCaixaDialogo("Você armou sua defesa, o próximo ataque causa metade do dano!");
     }
 
     /**
@@ -110,22 +110,5 @@ public class BatalhaView {
             System.out.printf("│ > %-39s │%n", nomeHabAtual);
         }
         System.out.println("└───────────────────────────────────────────┘");
-    }
-
-    /**
-     * Imprime uma String no terminal formatada em uma caixa de diálogo.
-     * @param texto Mensagem a ser impressa.
-     */
-    public void imprimirCaixaDialogo(String texto) {
-        System.out.println();
-        int tamTexto = 120;
-        int nmrChar = texto.length(); // Quantidade de caracteres presentes na String.
-        int espacosRestantes = Math.max(0, (tamTexto - nmrChar)); // Previne caso a String possua mais caracteres que o máximo.
-        System.out.printf("┌%s┐%n", "─".repeat(122)); // Imprime 120 vezes o caractere '─'.
-        System.out.print("│ ");
-        ConsoleUtils.digitarLento(texto);
-        System.out.printf("%" + espacosRestantes + "s │%n", " ");
-        System.out.printf("└%120s┘%n", "─".repeat(122));
-        System.out.println();
     }
 }

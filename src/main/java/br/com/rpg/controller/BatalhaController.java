@@ -1,6 +1,7 @@
 package br.com.rpg.controller;
 
 import br.com.rpg.facade.GameFachada;
+import br.com.rpg.model.dto.ResultadoBatalha;
 import br.com.rpg.model.dto.ResultadoTurno;
 import br.com.rpg.model.habilidade.Habilidade;
 import br.com.rpg.model.entities.Heroi;
@@ -36,16 +37,17 @@ public class BatalhaController {
      * @param jogador Entidade controlada pelo usuário.
      * @param oponente Entidade controlada por um algoritmo.
      */
-    public void iniciarBatalha(Heroi jogador, Inimigo oponente) {
+    public ResultadoBatalha iniciarBatalha(Heroi jogador, Inimigo oponente) {
         while (jogador.isVivo() && oponente.isVivo()) {
             turnoJogador(jogador, oponente);
             if (!oponente.isVivo()) {
-                break;
+                return ResultadoBatalha.ganhou(oponente.getNome());
             }
             turnoInimigo(oponente, jogador);
             // TODO: Futuramente aplicar efeitos, como sangramento, queimadura, atordoar, etc.
             this.numeroTurnos++;
         }
+        return ResultadoBatalha.morreu(oponente.getNome());
     }
 
     /**
