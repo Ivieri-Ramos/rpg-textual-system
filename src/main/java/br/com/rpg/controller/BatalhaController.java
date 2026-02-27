@@ -133,7 +133,7 @@ public class BatalhaController {
     /**
      * Recebe uma habilidade de {@link Inimigo} e a usa contra {@link Heroi}.
      * <p>
-     * Primeiro recebe a habilidade, e depois valida se pode usar, caso sim,
+     * Primeiro recebe a habilidade, e depois valida se pode usar, caso, sim,
      * chama a {@code fachada} para atualizar as entidades e então imprimir o resultado.
      * @param oponente Entidade atacante.
      * @param alvo Entidade que recebe o ataque.

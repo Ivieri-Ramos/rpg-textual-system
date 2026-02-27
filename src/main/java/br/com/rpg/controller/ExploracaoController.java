@@ -5,6 +5,10 @@ import br.com.rpg.model.mundo.Cidade;
 import br.com.rpg.view.ExploracaoView;
 import br.com.rpg.view.Teclado;
 
+/**
+ * Comanda o fluxo principal do jogo, é ela que chama outras classes
+ * do tipo controller que comandam o resto do fluxo do jogo.
+ */
 public class ExploracaoController {
     private final ExploracaoView viewExploracao = new ExploracaoView();
     private final Teclado input = new Teclado();
@@ -14,6 +18,11 @@ public class ExploracaoController {
         this.cidadeAtual = cidadeAtual;
     }
 
+    /**
+     * Método principal do jogo, ele que delega para todos os outros controllers,
+     * ou seja, ele que comanda o fluxo do jogo
+     * @param jogador O usuário que irá agir dentre os outros métodos.
+     */
     public void centroJogo(Heroi jogador) {
         while (true) {
             viewExploracao.imprimirMenuCidade(this.cidadeAtual);

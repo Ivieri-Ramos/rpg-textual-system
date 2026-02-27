@@ -12,6 +12,7 @@ import br.com.rpg.model.entities.inimigo.ClasseInimigo;
 import br.com.rpg.model.mundo.Cidade;
 import br.com.rpg.model.mundo.MundoBuilder;
 import br.com.rpg.view.Teclado;
+import br.com.rpg.view.utils.ConsoleUtils;
 
 public class Main {
 

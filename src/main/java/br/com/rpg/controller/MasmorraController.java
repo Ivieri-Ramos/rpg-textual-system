@@ -7,21 +7,24 @@ import br.com.rpg.model.mundo.Masmorra;
 import br.com.rpg.view.MasmorraView;
 import br.com.rpg.view.utils.ConsoleUtils;
 
+/**
+ * Controla o fluxo da masmorra, chamando frequentemente o
+ * {@link BatalhaController} para realizar a lógica de batalha.
+ */
 public class MasmorraController {
     private final MasmorraView viewPrincipal = new MasmorraView();
-
+    private final BatalhaController batalha = new BatalhaController();;
     /**
      * Inicia a masmorra, começando da primeira camada, até que o jogador chegue na última.
      * @param jogador A entidade controlada pelo usuário.
      */
     public void jogarMasmorra(Masmorra masmorraAtual, Heroi jogador) {
-        BatalhaController batalha = new BatalhaController();
         for (int andarAtual = 1; andarAtual <= masmorraAtual.getTotalAndares(); andarAtual++) {
             Inimigo novoInimigo = masmorraAtual.gerarInimigo(andarAtual);
-            viewPrincipal.imprimirMensagemInicioBatalha(novoInimigo.getNome());
+            this.viewPrincipal.imprimirMensagemInicioBatalha(novoInimigo.getNome());
             ConsoleUtils.aguardarSegundos(1);
-            ResultadoBatalha result = batalha.iniciarBatalha(jogador, novoInimigo);
-            viewPrincipal.imprimirResultadoBatalha(result);
+            ResultadoBatalha result = this.batalha.iniciarBatalha(jogador, novoInimigo);
+            this.viewPrincipal.imprimirResultadoBatalha(result);
         }
     }
 }

@@ -6,6 +6,10 @@ import br.com.rpg.view.utils.ConsoleUtils;
 
 public class MasmorraView {
 
+    /**
+     * Imprime o resultado da batalha ao usuário.
+     * @param result DTO que representa o resultado da batalha.
+     */
     public void imprimirResultadoBatalha(ResultadoBatalha result) {
         DesfechoBatalha resultado = result.resultado();
         String nomeInimigo = result.nomeInimigo();
@@ -16,6 +20,10 @@ public class MasmorraView {
         }
     }
 
+    /**
+     * Imprime avisando qual inimigo o jogador irá enfrentar.
+     * @param nomeInimigo O nome do inimigo que será impresso.
+     */
     public void imprimirMensagemInicioBatalha(String nomeInimigo) {
         ConsoleUtils.imprimirCaixaDialogo("Você encontrou " + nomeInimigo + " prepare-se para um luta árdua!");
     }
