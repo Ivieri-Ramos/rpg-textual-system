@@ -48,5 +48,5 @@ Thumbs.db
 ehthumbs.db
 $RECYCLE.BIN/
 
-### Saves do Jogo (Testes Locais) ###
-*.csv
+### Ignora a pasta Storage o que estiver nela ###
+/storage/
