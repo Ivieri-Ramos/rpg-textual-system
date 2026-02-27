@@ -52,7 +52,7 @@ public final class CatalogoConsumiveis{
                 15, TipoConsumivel.MANA,
                 heroi -> {
                     int restaurado = heroi.curarMana(50);
-                    return ResultadoUsoItem.sucesso("Você recuperou " + restaurado + "MP", 0, 0);
+                    return ResultadoUsoItem.sucesso("Você recuperou " + restaurado + " MP", 0, 0);
                 }
         ));
 

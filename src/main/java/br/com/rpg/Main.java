@@ -1,42 +1,55 @@
 package br.com.rpg;
 
 import br.com.rpg.controller.BatalhaController;
-import br.com.rpg.model.habilidade.CatalogoHabilidades;
+import br.com.rpg.controller.InventarioController;
+import br.com.rpg.model.dto.InventarioAtual;
 import br.com.rpg.model.entities.Heroi;
 import br.com.rpg.model.entities.Inimigo;
 import br.com.rpg.model.enums.ClasseHeroi;
 import br.com.rpg.model.enums.ClasseInimigo;
+import br.com.rpg.model.item.Equipamentos;
+import br.com.rpg.model.item.Inventario;
+import br.com.rpg.model.item.Item;
+import br.com.rpg.view.InventarioView;
 import br.com.rpg.view.Teclado;
 import br.com.rpg.model.item.CatalogoEquipamentos;
 import br.com.rpg.model.item.Equipamentos;
-import br.com.rpg.model.item.SetEquipamentos;
-import br.com.rpg.model.enums.TipoEquipamento;
+import br.com.rpg.model.item.CatalogoConsumiveis;
+import br.com.rpg.model.item.Consumivel;
+
+import java.util.List;
 
 import static br.com.rpg.model.item.CatalogoEquipamentos.*;
 
 public class Main {
 
     public static void main(String[] args) {
+        // Esse bloco de inicializações é apenas para testes, será futuramente retirado isso.
+        CatalogoConsumiveis.iniciarCatalogo();
+        CatalogoEquipamentos.iniciarCatalogoEqp();
+        Heroi jogador = new Heroi("Teste", ClasseHeroi.GUERREIRO);
+
+        jogador.getInventario().adicionarItem(CatalogoConsumiveis.enviarConsumivel("POCAO_CURA_MENOR"));
+        jogador.getInventario().adicionarItem(CatalogoConsumiveis.enviarConsumivel("POCAO_CURA_MEDIA"));
+        jogador.getInventario().adicionarItem(CatalogoConsumiveis.enviarConsumivel("POCAO_MANA"));
+
+        InventarioController controller = new InventarioController();
         Teclado input = new Teclado();
-        try {
-            // Esse bloco de inicializações é apenas para testes, será futuramente retirado isso.
-            BatalhaController jogo = new BatalhaController();
-            Heroi meuHeroi = new Heroi("Ivieri", ClasseHeroi.GUERREIRO);
-            Inimigo meuInimigo = new Inimigo("Orc", ClasseInimigo.ORC);
-            meuHeroi.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("ATAQUE_VAMPIRICO"));
-            meuHeroi.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("CURA_MENOR"));
-            meuInimigo.receberDano(50);
-            // meuInimigo.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("ATAQUE_FORTE"));
-            jogo.iniciarBatalha(meuHeroi, meuInimigo);
+
+        while (true) {
+            System.out.println("[1] Abrir Inventário");
+            System.out.println("[0] Sair");
+
+            int opcao = input.lerInteiro(">", 0, 1);
+            if (opcao == 0) break;
+
+            InventarioController.ResultadoInventario resultado = controller.processarInventario(jogador);
+
+            System.out.println("\nResultado: " + resultado);
+            System.out.println("HP: " + jogador.getVida() + "/" + jogador.getVidaMaxima());
+            System.out.println("Mana: " + jogador.getMana());
+            System.out.println("Itens restantes: " + jogador.getInventario().getItems().size());
         }
-        catch (Exception e) {
-            System.err.println("========================================================================================================");
-            System.err.println(e.getMessage());
-            System.err.println("========================================================================================================");
-            e.printStackTrace();
-        }
-        finally {
-            input.fecharTeclado();
-        }
+        input.fecharTeclado();
     }
 }
