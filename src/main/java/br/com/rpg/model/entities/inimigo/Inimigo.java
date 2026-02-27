@@ -1,7 +1,8 @@
-package br.com.rpg.model.entities;
+package br.com.rpg.model.entities.inimigo;
 
 import br.com.rpg.model.dto.RelatorioInfoInimigo;
-import br.com.rpg.model.enums.ClasseInimigo;
+import br.com.rpg.model.entities.Heroi;
+import br.com.rpg.model.entities.Personagem;
 import br.com.rpg.model.habilidade.Habilidade;
 import br.com.rpg.util.Dado;
 
@@ -22,12 +23,10 @@ public class Inimigo extends Personagem {
      * e define os atributos-base (vida, dano, chanceCrit, etc.) usados pelo construtor
      * em {@link Personagem}, para criar a entidade Inimigo.
      * @param nome Nome identificador do inimigo.
-     * @param tipoClasse Tipos de classes pré-definidas ({@code GOBLIN}, {@code ORC}, etc.) que atribui valores base.
      */
-    public Inimigo(String nome, ClasseInimigo tipoClasse) {
-        super(nome, tipoClasse.getVidaBase(), tipoClasse.getDanoBase(), tipoClasse.getManaBase(),
-                tipoClasse.getDefesaBase(), tipoClasse.getChanceCritBase(),
-                tipoClasse.getChanceEsqBase(), tipoClasse.getChaveHabilidades());
+    public Inimigo(String nome, int vida, int dano, int mana, double defesa,
+                   double chanceCrit, double chanceEsq, List<String> chaveHabilidades) {
+        super(nome, vida, dano, mana, defesa, chanceCrit, chanceEsq, chaveHabilidades);
     }
 
     /**

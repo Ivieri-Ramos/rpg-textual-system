@@ -1,18 +1,18 @@
 package br.com.rpg;
 
 import br.com.rpg.controller.BatalhaController;
+import br.com.rpg.controller.ExploracaoController;
+import br.com.rpg.model.entities.inimigo.CatalogoInimigo;
+import br.com.rpg.model.entities.inimigo.RankInimigo;
 import br.com.rpg.model.habilidade.CatalogoHabilidades;
 import br.com.rpg.model.entities.Heroi;
-import br.com.rpg.model.entities.Inimigo;
+import br.com.rpg.model.entities.inimigo.Inimigo;
 import br.com.rpg.model.enums.ClasseHeroi;
-import br.com.rpg.model.enums.ClasseInimigo;
+import br.com.rpg.model.entities.inimigo.ClasseInimigo;
+import br.com.rpg.model.mundo.Cidade;
+import br.com.rpg.model.mundo.MundoBuilder;
 import br.com.rpg.view.Teclado;
-import br.com.rpg.model.item.CatalogoEquipamentos;
-import br.com.rpg.model.item.Equipamentos;
-import br.com.rpg.model.item.SetEquipamentos;
-import br.com.rpg.model.enums.TipoEquipamento;
-
-import static br.com.rpg.model.item.CatalogoEquipamentos.*;
+import br.com.rpg.view.utils.ConsoleUtils;
 
 public class Main {
 
@@ -20,14 +20,14 @@ public class Main {
         Teclado input = new Teclado();
         try {
             // Esse bloco de inicializações é apenas para testes, será futuramente retirado isso.
-            BatalhaController jogo = new BatalhaController();
+            MundoBuilder construtor = new MundoBuilder();
             Heroi meuHeroi = new Heroi("Ivieri", ClasseHeroi.GUERREIRO);
-            Inimigo meuInimigo = new Inimigo("Orc", ClasseInimigo.ORC);
             meuHeroi.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("ATAQUE_VAMPIRICO"));
             meuHeroi.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("CURA_MENOR"));
-            meuInimigo.receberDano(50);
             // meuInimigo.aprenderHabilidade(CatalogoHabilidades.enviarHabilidade("ATAQUE_FORTE"));
-            jogo.iniciarBatalha(meuHeroi, meuInimigo);
+            Cidade cidadeInicial = construtor.gerarCidadePrincipal();
+            ExploracaoController jogo = new ExploracaoController(cidadeInicial);
+            jogo.centroJogo(meuHeroi);
         }
         catch (Exception e) {
             System.err.println("========================================================================================================");

@@ -1,9 +1,11 @@
 package br.com.rpg.model.dto;
 
+import br.com.rpg.model.entities.inimigo.Inimigo;
+
 import java.util.List;
 
 /**
- * Armazena informações de {@link br.com.rpg.model.entities.Inimigo Inimigo} para
+ * Armazena informações de {@link Inimigo Inimigo} para
  * ser impresso em {@link br.com.rpg.view.BatalhaView#imprimirInfoInimigo imprimirInfoInimigo}
  * quando requisitado pelo usuário durante uma batalha.
  * @param nome Identificação do Inimigo.

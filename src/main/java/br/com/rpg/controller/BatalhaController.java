@@ -1,10 +1,11 @@
 package br.com.rpg.controller;
 
 import br.com.rpg.facade.GameFachada;
+import br.com.rpg.model.dto.ResultadoBatalha;
 import br.com.rpg.model.dto.ResultadoTurno;
 import br.com.rpg.model.habilidade.Habilidade;
 import br.com.rpg.model.entities.Heroi;
-import br.com.rpg.model.entities.Inimigo;
+import br.com.rpg.model.entities.inimigo.Inimigo;
 import br.com.rpg.view.BatalhaView;
 import br.com.rpg.view.ListagemView;
 import br.com.rpg.view.MensagemView;
@@ -36,16 +37,17 @@ public class BatalhaController {
      * @param jogador Entidade controlada pelo usuário.
      * @param oponente Entidade controlada por um algoritmo.
      */
-    public void iniciarBatalha(Heroi jogador, Inimigo oponente) {
+    public ResultadoBatalha iniciarBatalha(Heroi jogador, Inimigo oponente) {
         while (jogador.isVivo() && oponente.isVivo()) {
             turnoJogador(jogador, oponente);
             if (!oponente.isVivo()) {
-                break;
+                return ResultadoBatalha.ganhou(oponente.getNome());
             }
             turnoInimigo(oponente, jogador);
             // TODO: Futuramente aplicar efeitos, como sangramento, queimadura, atordoar, etc.
             this.numeroTurnos++;
         }
+        return ResultadoBatalha.morreu(oponente.getNome());
     }
 
     /**
@@ -131,7 +133,7 @@ public class BatalhaController {
     /**
      * Recebe uma habilidade de {@link Inimigo} e a usa contra {@link Heroi}.
      * <p>
-     * Primeiro recebe a habilidade, e depois valida se pode usar, caso sim,
+     * Primeiro recebe a habilidade, e depois valida se pode usar, caso, sim,
      * chama a {@code fachada} para atualizar as entidades e então imprimir o resultado.
      * @param oponente Entidade atacante.
      * @param alvo Entidade que recebe o ataque.
