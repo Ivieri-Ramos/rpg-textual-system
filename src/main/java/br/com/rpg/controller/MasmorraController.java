@@ -1,7 +1,7 @@
 package br.com.rpg.controller;
 
 import br.com.rpg.model.dto.ResultadoBatalha;
-import br.com.rpg.model.entities.Heroi;
+import br.com.rpg.model.entities.heroi.Heroi;
 import br.com.rpg.model.entities.inimigo.Inimigo;
 import br.com.rpg.model.mundo.Masmorra;
 import br.com.rpg.view.MasmorraView;

@@ -2,7 +2,7 @@ package br.com.rpg.view;
 
 import br.com.rpg.model.dto.RelatorioInfoInimigo;
 import br.com.rpg.model.dto.ResultadoTurno;
-import br.com.rpg.model.entities.Heroi;
+import br.com.rpg.model.entities.heroi.Heroi;
 import br.com.rpg.model.entities.inimigo.Inimigo;
 import br.com.rpg.model.services.results.CalculoDano;
 import br.com.rpg.view.utils.ConsoleUtils;

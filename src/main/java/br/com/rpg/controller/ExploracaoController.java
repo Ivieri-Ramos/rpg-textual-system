@@ -1,7 +1,8 @@
 package br.com.rpg.controller;
 
-import br.com.rpg.model.entities.Heroi;
+import br.com.rpg.model.entities.heroi.Heroi;
 import br.com.rpg.model.mundo.Cidade;
+import br.com.rpg.model.services.SaveService;
 import br.com.rpg.view.ExploracaoView;
 import br.com.rpg.view.Teclado;
 
@@ -13,6 +14,7 @@ public class ExploracaoController {
     private final ExploracaoView viewExploracao = new ExploracaoView();
     private final Teclado input = new Teclado();
     private final Cidade cidadeAtual;
+    private final SaveService salvador = new SaveService();
 
     public ExploracaoController(Cidade cidadeAtual) {
         this.cidadeAtual = cidadeAtual;
@@ -44,8 +46,9 @@ public class ExploracaoController {
                     MasmorraController masmorraAtual = new MasmorraController();
                     masmorraAtual.jogarMasmorra(this.cidadeAtual.getMasmorrasProximas().get(3), jogador);
                 }
-                case 5 -> {} // Sistema de salvamento
-                case 6 -> { // Sistema de salvamento e sair
+                case 5 -> salvador.salvarJogo(jogador);
+                case 6 -> {
+                    salvador.salvarJogo(jogador);
                     return;
                 }
             }

@@ -1,7 +1,7 @@
 package br.com.rpg.model.habilidade;
 
 import br.com.rpg.exceptions.HabilidadeNaoEncontradaException;
-import br.com.rpg.model.entities.Heroi;
+import br.com.rpg.model.entities.heroi.Heroi;
 import br.com.rpg.model.entities.inimigo.Inimigo;
 import br.com.rpg.model.entities.Personagem;
 import br.com.rpg.model.enums.TipoElemento;
@@ -24,6 +24,10 @@ public final class CatalogoHabilidades {
     // O Supplier gera uma nova habilidade na memória, portanto, cada Personagem terá sua própria Habilidade.
     private static final Map<String, Supplier<Habilidade>> mapaHabilidades = new HashMap<>();
 
+    private static void registrar(String chave, String nome, int custoMana, TipoElemento elemento, IAcaoHabilidade aplicador) {
+        mapaHabilidades.put(chave, () -> new Habilidade(chave, nome, custoMana, elemento, aplicador));
+    }
+
     static {
         iniciarCatalogo();
     }
@@ -35,38 +39,34 @@ public final class CatalogoHabilidades {
      * as habilidades criadas possam ser usadas.
      */
     public static void iniciarCatalogo() {
-        mapaHabilidades.put("ATAQUE_NORMAL", () -> new Habilidade(
-                "Ataque Normal", 0, TipoElemento.NEUTRO,
+        registrar("ATAQUE_NORMAL", "Ataque Normal", 0, TipoElemento.NEUTRO,
                     (habUsada, conjurador, alvo, calculadora) -> {
                         CalculoDano resultado = calculadora.calcularDano(conjurador, alvo, 1.0);
                         alvo.receberDano(resultado.danoFinal());
                         return ResultadoHabilidade.poderOfensivo(habUsada.nome(), resultado);
-                })
+                }
         );
-        mapaHabilidades.put("ATAQUE_FORTE", () -> new Habilidade(
-                "Ataque Forte", 10, TipoElemento.NEUTRO,
+        registrar("ATAQUE_FORTE", "Ataque Forte", 10, TipoElemento.NEUTRO,
                 (habUsada, conjurador, alvo, calculadora) -> {
                         CalculoDano resultado = calculadora.calcularDano(conjurador, alvo, 1.5);
                         alvo.receberDano(resultado.danoFinal());
                         return ResultadoHabilidade.poderOfensivo(habUsada.nome(), resultado);
-                })
+                }
         );
-        mapaHabilidades.put("ATAQUE_VAMPIRICO", () -> new Habilidade(
-                "Ataque Vampírico", 15, TipoElemento.NEUTRO,
+        registrar("ATAQUE_VAMPIRICO", "Ataque Vampírico", 15, TipoElemento.NEUTRO,
                     (habUsada, conjurador, alvo, calculadora) -> {
                         CalculoDano resultado = calculadora.calcularDano(conjurador, alvo, 1.0);
                         alvo.receberDano(resultado.danoFinal());
                         int vidaCurar = (resultado.danoFinal() / 2); // Metade do dano causado retorna como cura.
                         conjurador.curarVida(vidaCurar);
                         return new ResultadoHabilidade(habUsada.nome(), vidaCurar, resultado);
-                })
+                }
         );
-        mapaHabilidades.put("CURA_MENOR", () -> new Habilidade(
-           "Cura menor", 10, TipoElemento.NEUTRO,
+        registrar("CURA_MENOR", "Cura menor", 10, TipoElemento.NEUTRO,
                 (habUsada, conjurador, alvo, calculadora) -> {
                     int vidaCurar = conjurador.curarVida(25);
                     return ResultadoHabilidade.poderDefensivo(habUsada.nome(), vidaCurar);
-                })
+                }
         );
     }
 
