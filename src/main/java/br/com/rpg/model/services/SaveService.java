@@ -30,11 +30,24 @@ public class SaveService {
         ));
     }
 
-    public void carregarJogo(Heroi jogador) {
+    /**
+     * Cria um novo {@link Heroi} a partir de um save existente (se existir).
+     * @param jogador Heroi que será criado.
+     */
+    public Heroi carregarJogo() {
         ProgressoSaveDTO saveDTO = saveDAO.carregarProgresso();
         if (saveDTO == null) { // Quando o jogador não tem save (novo jogo ou corrompeu).
-            return;
+            return null;
         }
-        jogador = new Heroi();
+        return new Heroi(
+                saveDTO.nomeHeroi(),
+                saveDTO.vidaMaxima(),
+                saveDTO.dano(),
+                saveDTO.manaMaxima(),
+                saveDTO.defesa(),
+                saveDTO.chanceCrit(),
+                saveDTO.chanceEsq(),
+                saveDTO.chaveHabilidades()
+        );
     }
 }
