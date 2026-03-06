@@ -3,6 +3,8 @@ package br.com.rpg.controller;
 import br.com.rpg.model.core.SessaoJogo;
 import br.com.rpg.model.entities.heroi.CatalogoHeroi;
 import br.com.rpg.model.entities.heroi.Heroi;
+import br.com.rpg.model.mundo.Cidade;
+import br.com.rpg.model.mundo.MundoBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -81,6 +83,10 @@ public class CriarNovoPersonagemFX implements Initializable {
         String nomeFormatado = nome.substring(0, 1).toUpperCase() + nome.substring(1).toLowerCase();
         String chaveHeroi = dicionarioClasses.get(classe);
         Heroi jogador = CatalogoHeroi.enviarHeroi(chaveHeroi, nomeFormatado);
+        MundoBuilder construtor = new MundoBuilder();
+        Cidade cidadeJogo = construtor.gerarCidadePrincipal();
         SessaoJogo.getInstancia().setHeroiJogo(jogador);
+        SessaoJogo.getInstancia().setCidadeJogo(cidadeJogo);
+        // TODO: Mandar para o menu cidade.
     }
 }

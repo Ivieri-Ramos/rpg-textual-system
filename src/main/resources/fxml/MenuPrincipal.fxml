@@ -18,7 +18,7 @@
          <VBox.margin>
             <Insets />
          </VBox.margin></Button>
-      <Button mnemonicParsing="false" text="Carregar Jogo Salvo" />
+      <Button mnemonicParsing="false" onAction="#onBotaoCarregarJogoSalvoClick" text="Carregar Jogo Salvo" />
       <Button mnemonicParsing="false" onAction="#onBotaoSairJogoClick" text="Sair do Jogo" />
     </VBox>
 </AnchorPane>
