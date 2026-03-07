@@ -15,9 +15,9 @@
             <Font name="Arial" size="12.0" />
          </font>
       </Label>
-      <TextField fx:id="campoNomeHeroi" promptText="Digite o nome do seu herói" />
-      <ComboBox fx:id="comboClasse" prefWidth="150.0" promptText="Selecione sua classe" />
+      <TextField fx:id="campoNomeHeroiTextField" promptText="Digite o nome do seu herói" />
+      <ComboBox fx:id="comboClasseComboBox" prefWidth="150.0" promptText="Selecione sua classe" />
       <Button mnemonicParsing="false" onAction="#onBotaoConfirmarClick" text="Confirmar" />
-      <Label fx:id="mensagemErro" textFill="RED" />
+      <Label fx:id="mensagemErroLabel" textFill="RED" />
    </VBox>
 </AnchorPane>

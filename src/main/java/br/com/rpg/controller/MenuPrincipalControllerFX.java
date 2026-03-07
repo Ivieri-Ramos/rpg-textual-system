@@ -1,6 +1,5 @@
 package br.com.rpg.controller;
 
-import br.com.rpg.dao.ProgressoSaveDAO;
 import br.com.rpg.model.core.SessaoJogo;
 import br.com.rpg.model.entities.heroi.Heroi;
 import br.com.rpg.model.mundo.Cidade;
@@ -17,12 +16,12 @@ public class MenuPrincipalControllerFX {
      * direciona o usuário para criar um novo herói.
      */
     @FXML
-    protected void onBotaoNovoJogoClick(){
+    private void onBotaoNovoJogoClick(){
         GerenciadorTela.trocarTela("CriarNovoPersonagem");
     }
 
     @FXML
-    protected void onBotaoCarregarJogoSalvoClick(){
+    private void onBotaoCarregarJogoSalvoClick(){
         SaveService carregarSave = new SaveService();
         Heroi jogador = carregarSave.carregarJogo();
         if (jogador != null) {
@@ -30,7 +29,7 @@ public class MenuPrincipalControllerFX {
             Cidade cidadeJogo = construtor.gerarCidadePrincipal();
             SessaoJogo.getInstancia().setHeroiJogo(jogador);
             SessaoJogo.getInstancia().setCidadeJogo(cidadeJogo);
-            // TODO: ir para menu cidade
+            GerenciadorTela.trocarTela("MenuCidade");
         }
         else {
             Alert alerta = new Alert(Alert.AlertType.WARNING);
@@ -42,7 +41,7 @@ public class MenuPrincipalControllerFX {
     }
 
     @FXML
-    protected void onBotaoSairJogoClick() {
+    private void onBotaoSairJogoClick() {
         Platform.exit();
     }
 }
