@@ -2,20 +2,15 @@ package br.com.rpg;
 
 import br.com.rpg.view.GerenciadorTela;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
-import java.net.URL;
 
 public class MainApp extends Application {
 
     @Override
     public void start(Stage palcoPrincipal){
         try {
+            Font.loadFont(getClass().getResourceAsStream("/fonts/fonte_rpg.ttf"), 10);
             GerenciadorTela.setPalcoInicial(palcoPrincipal);
             GerenciadorTela.trocarTela("MenuPrincipal");
             palcoPrincipal.setTitle("RPG");
