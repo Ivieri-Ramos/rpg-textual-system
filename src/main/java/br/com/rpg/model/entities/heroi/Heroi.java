@@ -1,6 +1,8 @@
 package br.com.rpg.model.entities.heroi;
 
 import br.com.rpg.model.entities.Personagem;
+import br.com.rpg.model.item.Inventario;
+import br.com.rpg.model.item.SetEquipamentos;
 
 import java.util.List;
 
@@ -10,6 +12,8 @@ import java.util.List;
      */
 
 public class Heroi extends Personagem {
+    private final Inventario inventario;
+    private final SetEquipamentos setEquipamentos;
 
     /**
      * Construtor especializado de Heroi que define
@@ -29,12 +33,22 @@ public class Heroi extends Personagem {
     public Heroi(String nome, int vida, int dano, int mana, double defesa, double chanceCrit,
                  double chanceEsq, List<String> chaveHabilidades) {
         super(nome, vida, dano, mana, defesa, chanceCrit, chanceEsq, chaveHabilidades);
+        this.inventario = new Inventario(20);
+        this.setEquipamentos = new SetEquipamentos();
     }
 
     @Override
     public String toString() {
         return "Heroi{" +
                 super.toString();
+    }
+
+    public Inventario getInventario() {
+        return inventario;
+    }
+
+    public SetEquipamentos getSetEquipamentos() {
+        return setEquipamentos;
     }
 
 }

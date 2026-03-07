@@ -2,7 +2,7 @@ package br.com.rpg.controller;
 
 import br.com.rpg.facade.InventarioFachada;
 import br.com.rpg.model.dto.InventarioAtual;
-import br.com.rpg.model.entities.Heroi;
+import br.com.rpg.model.entities.heroi.Heroi;
 import br.com.rpg.model.item.Consumivel;
 import br.com.rpg.model.item.Equipamentos;
 import br.com.rpg.model.item.Inventario;
