@@ -9,11 +9,11 @@ import br.com.rpg.view.utils.ConsoleUtils;
 
 /**
  * Controla o fluxo da masmorra, chamando frequentemente o
- * {@link BatalhaController} para realizar a lógica de batalha.
+ * {@link BatalhaControllerOriginal} para realizar a lógica de batalha.
  */
 public class MasmorraController {
     private final MasmorraView viewPrincipal = new MasmorraView();
-    private final BatalhaController batalha = new BatalhaController();;
+    private final BatalhaControllerOriginal batalha = new BatalhaControllerOriginal();;
     /**
      * Inicia a masmorra, começando da primeira camada, até que o jogador chegue na última.
      * @param jogador A entidade controlada pelo usuário.

@@ -18,16 +18,21 @@ public class MenuMasmorrasControllerFX {
     @FXML
     private void initialize() {
         List<Masmorra> masmorras = SessaoJogo.getInstancia().getCidadeJogo().getMasmorrasProximas();
+        int i = 0;
         for (Masmorra masmorra : masmorras) {
             Button novoButton = new Button();
             novoButton.setText(masmorra.getNome());
             novoButton.setPrefWidth(200);
             novoButton.setPrefHeight(40);
             novoButton.setFont(Font.font("Berry Rotunda", 14));
+            int finalI = i;
             novoButton.setOnAction(e -> {
-               // TODO: Controller que sirva para cada tipo de Masmorra
+               SessaoJogo.getInstancia().setMasmorraAtual(
+                       SessaoJogo.getInstancia().getCidadeJogo().getMasmorrasProximas().get(finalI));
+               GerenciadorTela.trocarTela("Batalha");
             });
             this.caixaMasmorrasVBox.getChildren().add(novoButton);
+            i++;
         }
     }
 
