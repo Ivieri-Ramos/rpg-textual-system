@@ -8,9 +8,6 @@ import br.com.rpg.model.entities.inimigo.Inimigo;
 import br.com.rpg.model.habilidade.Habilidade;
 import br.com.rpg.view.GeradorNarrativa;
 import br.com.rpg.view.GerenciadorTela;
-import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -19,7 +16,6 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.util.Duration;
 
 public class BatalhaController {
 
@@ -66,10 +62,12 @@ public class BatalhaController {
             novaHabilidadeButton.setFont(Font.font("Berry Rotunda", 12));
             int finalI = i;
             novaHabilidadeButton.setOnAction(e -> {
-                ResultadoTurno result = batalha.personagemAtacar(jogador, oponente, jogador.getMenuHabilidades().get(finalI));
                 caixaMenuHabilidadesVBox.setVisible(false);
                 caixaAcoesVBox.setVisible(true);
-                fimTurnoHeroi(GeradorNarrativa.traduzirResultadoTurno(result));
+                gerenciarRodada(() -> {
+                    ResultadoTurno result = batalha.personagemAtacar(jogador, oponente, jogador.getMenuHabilidades().get(finalI));
+                    narrarTurno(GeradorNarrativa.traduzirResultadoTurno(result));
+                });
             });
             i++;
             caixaHabilidadesVBox.getChildren().add(novaHabilidadeButton);
@@ -85,8 +83,10 @@ public class BatalhaController {
 
     @FXML
     private void onBotaoDefenderClick() {
-        jogador.setDefendendo(true);
-        fimTurnoHeroi("Armou sua defesa");
+        gerenciarRodada(() -> {
+            jogador.setDefendendo(true);
+            narrarTurno("Você armou sua defesa!");
+        });
     }
 
     @FXML
@@ -109,48 +109,55 @@ public class BatalhaController {
         vidaInimigoProgressBar.setStyle("-fx-accent: red;");
     }
 
+    /*
     private void fimTurnoHeroi(String mensagem) {
-        //narrarTurno(mensagem, this::executarTurnoInimigo);
+        new Thread(() -> narrarTurno(mensagem)).start();
         atualizarInterface();
         if (!oponente.isVivo()) {
             jogadorVenceu();
         }
-        executarTurnoInimigo();
-    }
-
-    private void executarTurnoInimigo() {
-        ResultadoTurno result = batalha.personagemAtacar(oponente, jogador, oponente.retornarHabilidade());
-        // narrarTurno(GeradorNarrativa.traduzirResultadoTurno(result), () -> caixaAcoesVBox.setDisable(false));
-        atualizarInterface();
-        if (!jogador.isVivo()) {
-            jogadorPerdeu();
-        }
-    }
-    /*
-    private void narrarTurno(String mensagem, Runnable acaoFinal) {
-        mensagemTurnoTextArea.setText("");
-        mensagemTurnoTextArea.setVisible(true);
-        final int[] indiceChar = {0};
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100), e -> {
-            mensagemTurnoTextArea.appendText(String.valueOf(mensagem.charAt(indiceChar[0])));
-            indiceChar[0]++;
-        }));
-        timeline.setCycleCount(mensagem.length());
-        timeline.setOnFinished(event -> {
-            PauseTransition pausa = new PauseTransition(Duration.seconds(1));
-            pausa.setOnFinished(e -> {
-                if (acaoFinal != null) acaoFinal.run();
-                mensagemTurnoTextArea.setVisible(false);
-                caixaAcoesVBox.setVisible(true);
-            });
-            pausa.play();
-        });
-        timeline.play();
     }
     */
 
+    private void executarTurnoInimigo() {
+        ResultadoTurno result = batalha.personagemAtacar(oponente, jogador, oponente.retornarHabilidade());
+        narrarTurno(GeradorNarrativa.traduzirResultadoTurno(result));
+        Platform.runLater(this::atualizarInterface);
+    }
+
+    private void gerenciarRodada(Runnable acaoJogador) {
+        caixaAcoesVBox.setVisible(false);
+        Thread threadRodada = new Thread(() -> {
+            acaoJogador.run();
+            Platform.runLater(this::atualizarInterface);
+            if (!oponente.isVivo()) {
+                Platform.runLater(this::jogadorVenceu);
+                return;
+            }
+            executarTurnoInimigo();
+            if (!jogador.isVivo()) {
+                Platform.runLater(this::jogadorPerdeu);
+                return;
+            }
+            Platform.runLater(() -> caixaAcoesVBox.setVisible(true));
+        });
+        threadRodada.setDaemon(true);
+        threadRodada.start();
+    }
+
+    private void narrarTurno(String mensagem) {
+        mensagemTurnoTextArea.setText("");
+        mensagemTurnoTextArea.setVisible(true);
+        for (char c : mensagem.toCharArray()) {
+            Platform.runLater(() -> mensagemTurnoTextArea.appendText(String.valueOf(c)));
+            try {Thread.sleep(50); } catch (InterruptedException ignored) {}
+        }
+        try {Thread.sleep(1000); } catch (InterruptedException ignored) {}
+        mensagemTurnoTextArea.setVisible(false);
+    }
+
     private void jogadorVenceu() {
-        jogador.venceu();
+        jogador.venceuBatalha();
         if (sessaoJogo.getStatusMasmorra().getAndarAtual() == sessaoJogo.getStatusMasmorra().getMasmorraAtual().getTotalAndares()) {
             GerenciadorTela.trocarTela("MenuCidade");
         }

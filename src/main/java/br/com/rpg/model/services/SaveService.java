@@ -32,7 +32,6 @@ public class SaveService {
 
     /**
      * Cria um novo {@link Heroi} a partir de um save existente (se existir).
-     * @param jogador Heroi que será criado.
      */
     public Heroi carregarJogo() {
         ProgressoSaveDTO saveDTO = saveDAO.carregarProgresso();

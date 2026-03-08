@@ -21,6 +21,7 @@ public class MenuCidadeControllerFX {
     @FXML
     private void initialize() {
         Heroi jogador = SessaoJogo.getInstancia().getHeroiJogo();
+        jogador.retornouCidade();
         Cidade cidadeAtual = SessaoJogo.getInstancia().getCidadeJogo();
         nomeCidadeLabel.setText(cidadeAtual.getNome());
         nomeHeroiLabel.setText(jogador.getNome());
