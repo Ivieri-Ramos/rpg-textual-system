@@ -20,6 +20,11 @@ public class ProgressoSaveCsv implements ISerializarArquivos {
                 .withArrayElementSeparator(";");
     }
 
+    /**
+     * Salva o progresso de jogo em um arquivo .csv a partir de um DTO contendo
+     * as informações do usuário.
+     * @param dados Informações que serão salvas.
+     */
     @Override
     public void salvarProgresso(ProgressoSaveDTO dados) {
         try {
@@ -35,6 +40,11 @@ public class ProgressoSaveCsv implements ISerializarArquivos {
         }
     }
 
+    /**
+     * Carrega o jogo de um arquivo .csv se existir, ou retorna {@code null}
+     * caso não exista.
+     * @return informações carregadas do arquivo.
+     */
     @Override
     public ProgressoSaveDTO carregarProgresso() {
         File arquivo = new File(NOME_ARQUIVO);
