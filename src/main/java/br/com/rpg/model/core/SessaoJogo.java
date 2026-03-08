@@ -8,8 +8,7 @@ public final class SessaoJogo {
     private final static SessaoJogo instancia = new SessaoJogo();
     private Heroi heroiJogo;
     private Cidade cidadeJogo;
-    private Masmorra masmorraAtual;
-    private int andarAtual = 1;
+    private final EstadoMasmorra statusMasmorra = new EstadoMasmorra();
 
     private SessaoJogo() {}
 
@@ -33,20 +32,7 @@ public final class SessaoJogo {
         this.cidadeJogo = cidadeJogo;
     }
 
-    public Masmorra getMasmorraAtual() {
-        return masmorraAtual;
-    }
-
-    public void setMasmorraAtual(Masmorra masmorraAtual) {
-        this.andarAtual = 1;
-        this.masmorraAtual = masmorraAtual;
-    }
-
-    public int getAndarAtual() {
-        return andarAtual;
-    }
-
-    public void incrementarAndar() {
-        this.andarAtual++;
+    public EstadoMasmorra getStatusMasmorra() {
+        return statusMasmorra;
     }
 }

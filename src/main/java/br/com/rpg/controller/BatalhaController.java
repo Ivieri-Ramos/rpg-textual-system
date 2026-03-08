@@ -7,9 +7,11 @@ import br.com.rpg.model.entities.heroi.Heroi;
 import br.com.rpg.model.entities.inimigo.Inimigo;
 import br.com.rpg.model.habilidade.Habilidade;
 import br.com.rpg.view.GeradorNarrativa;
+import br.com.rpg.view.GerenciadorTela;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -56,7 +58,7 @@ public class BatalhaController {
     @FXML
     private void initialize(){
         this.jogador = sessaoJogo.getHeroiJogo();
-        this.oponente = sessaoJogo.getMasmorraAtual().gerarInimigo(sessaoJogo.getAndarAtual());
+        this.oponente = sessaoJogo.getStatusMasmorra().getMasmorraAtual().gerarInimigo(sessaoJogo.getStatusMasmorra().getAndarAtual());
         int i = 0;
         for (Habilidade habAtual: jogador.getMenuHabilidades()) {
             Button novaHabilidadeButton = new Button();
@@ -111,7 +113,7 @@ public class BatalhaController {
         //narrarTurno(mensagem, this::executarTurnoInimigo);
         atualizarInterface();
         if (!oponente.isVivo()) {
-            // TODO: tela de vitória
+            jogadorVenceu();
         }
         executarTurnoInimigo();
     }
@@ -121,7 +123,7 @@ public class BatalhaController {
         // narrarTurno(GeradorNarrativa.traduzirResultadoTurno(result), () -> caixaAcoesVBox.setDisable(false));
         atualizarInterface();
         if (!jogador.isVivo()) {
-            // TODO: tela de derrota (sai do jogo).
+            jogadorPerdeu();
         }
     }
     /*
@@ -146,4 +148,19 @@ public class BatalhaController {
         timeline.play();
     }
     */
+
+    private void jogadorVenceu() {
+        jogador.venceu();
+        if (sessaoJogo.getStatusMasmorra().getAndarAtual() == sessaoJogo.getStatusMasmorra().getMasmorraAtual().getTotalAndares()) {
+            GerenciadorTela.trocarTela("MenuCidade");
+        }
+        else {
+            GerenciadorTela.trocarTela("Batalha");
+        }
+        sessaoJogo.getStatusMasmorra().incrementarAndar();
+    }
+
+    private void jogadorPerdeu() {
+        Platform.exit();
+    }
 }

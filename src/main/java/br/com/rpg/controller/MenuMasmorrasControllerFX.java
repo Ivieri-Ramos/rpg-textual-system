@@ -27,7 +27,7 @@ public class MenuMasmorrasControllerFX {
             novoButton.setFont(Font.font("Berry Rotunda", 14));
             int finalI = i;
             novoButton.setOnAction(e -> {
-               SessaoJogo.getInstancia().setMasmorraAtual(
+               SessaoJogo.getInstancia().getStatusMasmorra().setMasmorraAtual(
                        SessaoJogo.getInstancia().getCidadeJogo().getMasmorrasProximas().get(finalI));
                GerenciadorTela.trocarTela("Batalha");
             });
