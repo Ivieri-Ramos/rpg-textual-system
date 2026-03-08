@@ -1,5 +1,6 @@
 package br.com.rpg.facade;
 
+import br.com.rpg.controller.BatalhaControllerOriginal;
 import br.com.rpg.model.dto.ResultadoTurno;
 import br.com.rpg.model.habilidade.Habilidade;
 import br.com.rpg.model.entities.Personagem;
@@ -7,7 +8,7 @@ import br.com.rpg.model.habilidade.ResultadoHabilidade;
 import br.com.rpg.model.services.BatalhaService;
 
 /**
- * Realiza a lógica adicional pedida pelo {@link br.com.rpg.controller.BatalhaController BatalhaController},
+ * Realiza a lógica adicional pedida pelo {@link BatalhaControllerOriginal BatalhaController},
  * chamando métodos que alterem o estado das entidades, enquanto o controller
  * fica responsável por receber I/O (input e output).
  */

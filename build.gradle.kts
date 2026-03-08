@@ -1,6 +1,7 @@
 plugins {
     id("java")
     id("application")
+    id("org.openjfx.javafxplugin") version "0.1.0"
 }
 
 group = "br.com.ivieri"
@@ -12,12 +13,17 @@ java {
     }
 }
 
+javafx {
+    version = "21.0.2"
+    modules = listOf("javafx.controls", "javafx.fxml")
+}
+
 repositories {
     mavenCentral()
 }
 
 application {
-    mainClass.set("br.com.rpg.Main")
+    mainClass.set("br.com.rpg.MainApp")
 }
 
 dependencies {
@@ -25,6 +31,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
+
 }
 
 tasks.test {
