@@ -1,151 +1,211 @@
 package br.com.rpg.controller;
 
 import br.com.rpg.facade.GameFachada;
-import br.com.rpg.model.dto.ResultadoBatalha;
+import br.com.rpg.model.core.SessaoJogo;
 import br.com.rpg.model.dto.ResultadoTurno;
-import br.com.rpg.model.habilidade.Habilidade;
 import br.com.rpg.model.entities.heroi.Heroi;
 import br.com.rpg.model.entities.inimigo.Inimigo;
-import br.com.rpg.view.BatalhaView;
-import br.com.rpg.view.ListagemView;
-import br.com.rpg.view.MensagemView;
-import br.com.rpg.view.Teclado;
-import br.com.rpg.view.utils.ConsoleUtils;
+import br.com.rpg.model.habilidade.Habilidade;
+import br.com.rpg.view.GeradorNarrativa;
+import br.com.rpg.view.GerenciadorTela;
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
-import java.util.List;
-
-/**
- * Classe responsável no controle do fluxo de batalha.
- * <p>
- * Possui métodos que gerenciam o turno do jogador e do inimigo dentro de
- * {@link BatalhaController#iniciarBatalha(Heroi, Inimigo) iniciarBatalha},
- * recebendo o input do usuário e chamando classes no pacote {@link br.com.rpg.view view}
- */
 public class BatalhaController {
 
-    private final GameFachada fachada = new GameFachada();
-    private final BatalhaView batalhaView = new BatalhaView();
-    private final MensagemView avisoView = new MensagemView();
-    private final ListagemView listaView = new ListagemView();
-    private final Teclado input = new Teclado();
-    private int numeroTurnos = 0;
+    @FXML
+    private Label nomeHeroiLabel;
+    @FXML
+    private Label vidaHeroiLabel;
+    @FXML
+    private ProgressBar vidaHeroiProgressBar;
+    @FXML
+    private Label manaHeroiLabel;
+    @FXML
+    private ProgressBar manaHeroiProgressBar;
+
+    @FXML
+    private Label nomeInimigoLabel;
+    @FXML
+    private Label vidaInimigoLabel;
+    @FXML
+    private ProgressBar vidaInimigoProgressBar;
 
     /**
-     * Contém a lógica de batalha, fica em loop até que alguma entidade morra.
-     * <p>
-     * Usa métodos auxiliares para controlar as ações do jogador e do oponente.
-     * @param jogador Entidade controlada pelo usuário.
-     * @param oponente Entidade controlada por um algoritmo.
+     * Armazena as ações principais como {@code Habilidades}, {@code Defender}.
      */
-    public ResultadoBatalha iniciarBatalha(Heroi jogador, Inimigo oponente) {
-        while (jogador.isVivo() && oponente.isVivo()) {
-            turnoJogador(jogador, oponente);
+    @FXML
+    private VBox caixaAcoesVBox;
+    /**
+     * Armazena o VBox {@code caixaMenuHabilidadesVBox} e o botão {@code Voltar}.
+     */
+    @FXML
+    private VBox caixaHabilidadesVBox;
+    /**
+     * Armazena o menu que possui todas as habilidades disponíveis ao jogador.
+     */
+    @FXML
+    private VBox caixaMenuHabilidadesVBox;
+    /**
+     * Imprime um "log" que representa a ação de um Personagem em um turno.
+     */
+    @FXML
+    private TextArea mensagemTurnoTextArea;
+
+    private Heroi jogador;
+    private Inimigo oponente;
+    private final SessaoJogo sessaoJogo = SessaoJogo.getInstancia();
+    private final GameFachada batalha = new GameFachada();
+
+    /**
+     * Inicializa todas as habilidades disponíveis para o jogador usar e a interface.
+     */
+    @FXML
+    private void initialize(){
+        this.jogador = sessaoJogo.getHeroiJogo();
+        this.oponente = sessaoJogo.getStatusMasmorra().getMasmorraAtual().gerarInimigo(sessaoJogo.getStatusMasmorra().getAndarAtual());
+        for (Habilidade habAtual: jogador.getMenuHabilidades()) {
+            Button novaHabilidadeButton = new Button();
+            // Configura cada botão
+            novaHabilidadeButton.setText(habAtual.nome());
+            novaHabilidadeButton.setFont(Font.font("Berry Rotunda", 12));
+            novaHabilidadeButton.setOnAction(e -> {
+                // Quando o jogador selecionar, irá realizar essa lógica
+                caixaMenuHabilidadesVBox.setVisible(false);
+                caixaAcoesVBox.setVisible(true);
+                gerenciarRodada(() -> { // Usa a habilidade em questão, e gasta seu turno
+                    ResultadoTurno result = batalha.personagemAtacar(jogador, oponente, habAtual);
+                    narrarTurno(GeradorNarrativa.traduzirResultadoTurno(result));
+                });
+            });
+            caixaHabilidadesVBox.getChildren().add(novaHabilidadeButton);
+        }
+        atualizarInterface();
+    }
+
+    /**
+     * Torna o {@code caixaAcoesVBox} invisível e o {@code caixaMenuHabilidadesVBox} visível.
+     */
+    @FXML
+    private void onBotaoHabilidadesClick() {
+        caixaAcoesVBox.setVisible(false);
+        caixaMenuHabilidadesVBox.setVisible(true);
+    }
+
+    /**
+     * Realiza a açõa de defender para o jogador, custando seu turno.
+     */
+    @FXML
+    private void onBotaoDefenderClick() {
+        gerenciarRodada(() -> {
+            jogador.setDefendendo(true);
+            narrarTurno("Você armou sua defesa, o próximo dano será reduzido pela metade!");
+        });
+    }
+
+    /**
+     * Torna o {@code caixaMenuHabilidadesVBox} invisível e o {@code CaixaAcoesVBox} visível.
+     */
+    @FXML
+    private void onBotaoVoltarHabilidadeClick() {
+        caixaMenuHabilidadesVBox.setVisible(false);
+        caixaAcoesVBox.setVisible(true);
+    }
+
+    /**
+     * Atualiza a interface gráfica com as novas informações atualizadas, ou seja,
+     * o estado atual do {@code jogador} e do {@code oponente}.
+     */
+    private void atualizarInterface() {
+        nomeHeroiLabel.setText(jogador.getNome());
+        vidaHeroiLabel.setText(String.valueOf(jogador.getVida()));
+        vidaHeroiProgressBar.setProgress((double) jogador.getVida() / jogador.getVidaMaxima());
+        vidaHeroiProgressBar.setStyle("-fx-accent: red;");
+        manaHeroiLabel.setText(String.valueOf(jogador.getMana()));
+        manaHeroiProgressBar.setProgress((double) jogador.getMana() / jogador.getManaMaxima());
+        manaHeroiProgressBar.setStyle("-fx-accent: blue;");
+        nomeInimigoLabel.setText(oponente.getNome());
+        vidaInimigoLabel.setText(String.valueOf(oponente.getVida()));
+        vidaInimigoProgressBar.setProgress((double) oponente.getVida() / oponente.getVidaMaxima());
+        vidaInimigoProgressBar.setStyle("-fx-accent: red;");
+    }
+
+    /**
+     * Realiza a lógica de turno do {@code oponente}, ou seja, ele ataca.
+     */
+    private void executarTurnoInimigo() {
+        ResultadoTurno result = batalha.personagemAtacar(oponente, jogador, oponente.retornarHabilidade());
+        narrarTurno(GeradorNarrativa.traduzirResultadoTurno(result));
+        Platform.runLater(this::atualizarInterface);
+    }
+
+    /**
+     * Gerencia o fluxo da rodada, onde o {@code jogador} age primeiro e
+     * depois o {@code oponente}.
+     * @param acaoJogador Ação escolhida pelo usuário, pode ser atacar, defender.
+     */
+    private void gerenciarRodada(Runnable acaoJogador) {
+        caixaAcoesVBox.setVisible(false);
+        Thread threadRodada = new Thread(() -> {
+            acaoJogador.run();
+            Platform.runLater(this::atualizarInterface);
             if (!oponente.isVivo()) {
-                return ResultadoBatalha.ganhou(oponente.getNome());
+                Platform.runLater(this::jogadorVenceu);
+                return;
             }
-            turnoInimigo(oponente, jogador);
-            // TODO: Futuramente aplicar efeitos, como sangramento, queimadura, atordoar, etc.
-            this.numeroTurnos++;
-        }
-        return ResultadoBatalha.morreu(oponente.getNome());
+            executarTurnoInimigo();
+            if (!jogador.isVivo()) {
+                Platform.runLater(this::jogadorPerdeu);
+                return;
+            }
+            Platform.runLater(() -> caixaAcoesVBox.setVisible(true));
+        });
+        threadRodada.setDaemon(true);
+        threadRodada.start();
     }
 
     /**
-     * Contém a lógica de processar as ações do jogador durante a batalha.
-     * <p>
-     * Fica em loop até que o jogador realize uma ação válida, como se defender, atacar, etc.
-     * @param jogador Entidade principal, todas as ações dependem dele.
-     * @param alvo Necessário apenas quando é atacado e ter suas informações analisadas.
+     * Personaliza o {@code mensagemTurnoTextArea} a partir do resultado do turno em
+     * uma {@link Thread} secundária.
+     * @param mensagem Mensagem que será impressa.
      */
-    private void turnoJogador(Heroi jogador, Inimigo alvo) {
-        // TODO: Pedir ação do jogador, fugir.
-        while (true) {
-            batalhaView.mostrarOpcoesBatalhaJogador();
-            int opEscolhida = input.lerInteiro("Selecione alguma opção acima:", 1, 6);
-            switch (opEscolhida) {
-                case 1 -> {
-                    Habilidade habUsar = retornarHabilidadeJogador(jogador.getMenuHabilidades(), jogador.getMana());
-                    if (habUsar == null) {
-                        continue;
-                    }
-                    ResultadoTurno imprimir = fachada.personagemAtacar(jogador, alvo,  habUsar);
-                    batalhaView.mostrarResultadoTurno(imprimir);
-                    ConsoleUtils.aguardarSegundos(1);
-                }
-                case 2 -> {
-                    jogador.setDefendendo(true);
-                    batalhaView.jogadorDefendeu();
-                    ConsoleUtils.aguardarSegundos(1);
-                }
-                case 3 -> {
-                    //TODO: Criar sistema de itens, onde possua itens de cura, ataque, etc.
-                }
-                case 4 -> {
-                    batalhaView.imprimirInfoInimigo(alvo.gerarRelatorio(this.numeroTurnos));
-                    input.aguardarEnter();
-                    continue; // Não consome um turno.
-                }
-                case 5 -> {
-                    batalhaView.mostrarInfoCompletaHeroi(jogador);
-                    input.aguardarEnter();
-                    continue; // Como não é uma ação de atacar, ou defender, não custa turnos.
-                }
-                case 6 -> {
-                    /*
-                    TODO: Criar um sistema que permita o jogador fugir,
-                        perdendo a capacidade de ganhar XP, ouro, etc. Mas
-                        escapando de certos inimigos, de preferência,
-                        calculando em relação a vida do inimigo e a própria (chanceEsq também), para dificultar
-                        quando tentasse fugir se tivesse pouca vida.
-                     */
-
-                }
-            }
-            return; // Só chega no return se alguma operação nos cases tenha tido sucesso.
+    private void narrarTurno(String mensagem) {
+        mensagemTurnoTextArea.setText("");
+        mensagemTurnoTextArea.setVisible(true);
+        for (char c : mensagem.toCharArray()) {
+            Platform.runLater(() -> mensagemTurnoTextArea.appendText(String.valueOf(c)));
+            try {Thread.sleep(50); } catch (InterruptedException ignored) {}
         }
+        try {Thread.sleep(1000); } catch (InterruptedException ignored) {}
+        mensagemTurnoTextArea.setVisible(false);
     }
 
     /**
-     * Sintetiza a lógica de pedir uma habilidade do jogador em
-     * {@link BatalhaController#turnoJogador(Heroi, Inimigo) turnoJogador}.
-     * @param listaHab Acessa as habilidades do jogador.
-     * @param mana Mana atual do jogador.
-     * @return Uma habilidade do jogador ou {@code null} caso ele digite 0 para voltar.
+     * Só executa se o {@code oponente} morrer, verificando se existe um próximo andar,
+     * além de recuperar um pouco os atributos do {@code jogador}.
      */
-    private Habilidade retornarHabilidadeJogador(List<Habilidade> listaHab, int mana) {
-        int qtdHabilidades = listaHab.size();
-        while (true) {
-            listaView.mostrarHabilidades(listaHab, mana);
-            int usarHabilidade = input.lerInteiro("Selecione qual habilidade usar, ou digite 0 para voltar: ", 0, qtdHabilidades);
-            if (usarHabilidade == 0) { // Se o jogador digitou '0', retorna null para depois voltar para o menu normal.
-                return null;
-            }
-            int indice = usarHabilidade - 1; // Menos um pois está acessando o índice de um vetor.
-            if (listaHab.get(indice).custoMana() > mana) { // Se não tiver mana suficiente, cancela o uso da habilidade.
-                avisoView.mostrarMensagemErro("Você não possui mana para usar essa habilidade!");
-                ConsoleUtils.aguardarSegundos(2);
-                continue;
-            }
-            return listaHab.get(indice);
+    private void jogadorVenceu() {
+        jogador.venceuBatalha();
+        if (sessaoJogo.getStatusMasmorra().getAndarAtual() == sessaoJogo.getStatusMasmorra().getMasmorraAtual().getTotalAndares()) {
+            // Se chegou ao fim da Masmorra, manda de volta para a cidade
+            GerenciadorTela.trocarTela("MenuCidade");
         }
+        else { // Do contrário, vai para o próximo andar
+            GerenciadorTela.trocarTela("Batalha");
+        }
+        sessaoJogo.getStatusMasmorra().incrementarAndar();
     }
 
     /**
-     * Recebe uma habilidade de {@link Inimigo} e a usa contra {@link Heroi}.
-     * <p>
-     * Primeiro recebe a habilidade, e depois valida se pode usar, caso, sim,
-     * chama a {@code fachada} para atualizar as entidades e então imprimir o resultado.
-     * @param oponente Entidade atacante.
-     * @param alvo Entidade que recebe o ataque.
+     * Fecha o jogo, pois se o {@code jogador} morreu, é fim de jogo automático.
      */
-    private void turnoInimigo(Inimigo oponente, Heroi alvo) {
-        Habilidade habUsar = oponente.retornarHabilidade();
-        if (habUsar == null) {
-            avisoView.mostrarMensagemAviso("O inimigo não possui mana");
-            ConsoleUtils.aguardarSegundos(2);
-            return;
-        }
-        ResultadoTurno imprimir = fachada.personagemAtacar(oponente, alvo, habUsar);
-        batalhaView.mostrarResultadoTurno(imprimir);
+    private void jogadorPerdeu() {
+        Platform.exit();
     }
 }

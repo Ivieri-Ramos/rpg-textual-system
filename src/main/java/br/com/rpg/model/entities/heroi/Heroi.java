@@ -37,4 +37,18 @@ public class Heroi extends Personagem {
                 super.toString();
     }
 
+    /**
+     * Quando o jogador vencer uma batalha, recupera 25% dos seus atributos.
+     */
+    public void venceuBatalha() {
+        int vidaCurar = (int) Math.floor(getVidaMaxima() * 0.25);
+        int manaCurar = (int) Math.floor(getManaMaxima() * 0.25);
+        curarVida(vidaCurar);
+        curarMana(manaCurar);
+    }
+
+    public void retornouCidade() {
+        curarVida(getVidaMaxima());
+        curarMana(getManaMaxima());
+    }
 }
