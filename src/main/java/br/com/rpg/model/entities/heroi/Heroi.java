@@ -1,0 +1,68 @@
+package br.com.rpg.model.entities.heroi;
+
+import br.com.rpg.model.entities.Personagem;
+import br.com.rpg.model.item.Inventario;
+import br.com.rpg.model.item.SetEquipamentos;
+
+import java.util.List;
+
+/**
+     * Classe que será usada pelo jogador para controlar o fluxo do jogo.
+     * <p>
+     */
+
+public class Heroi extends Personagem {
+    private final Inventario inventario;
+    private final SetEquipamentos setEquipamentos;
+
+    /**
+     * Construtor especializado de Heroi que define
+     * atributos-base a partir de tipos de classes pré-definidas.
+     * <p>
+     * Define os atributos-base (vida, dano, chanceCrit, etc.) usados pelo construtor
+     * em {@link Personagem}, para criar a entidade Heroi.
+     * @param nome Identificação do jogador única (não pode ser {@code null}).
+     * @param vida
+     * @param dano
+     * @param mana
+     * @param defesa
+     * @param chanceCrit
+     * @param chanceEsq
+     * @param chaveHabilidades
+     */
+    public Heroi(String nome, int vida, int dano, int mana, double defesa, double chanceCrit,
+                 double chanceEsq, List<String> chaveHabilidades) {
+        super(nome, vida, dano, mana, defesa, chanceCrit, chanceEsq, chaveHabilidades);
+        this.inventario = new Inventario(20);
+        this.setEquipamentos = new SetEquipamentos();
+    }
+
+    @Override
+    public String toString() {
+        return "Heroi{" +
+                super.toString();
+    }
+
+    public Inventario getInventario() {
+        return inventario;
+    }
+
+    public SetEquipamentos getSetEquipamentos() {
+        return setEquipamentos;
+    }
+
+    /**
+     * Quando o jogador vencer uma batalha, recupera 25% dos seus atributos.
+     */
+    public void venceuBatalha() {
+        int vidaCurar = (int) Math.floor(getVidaMaxima() * 0.25);
+        int manaCurar = (int) Math.floor(getManaMaxima() * 0.25);
+        curarVida(vidaCurar);
+        curarMana(manaCurar);
+    }
+
+    public void retornouCidade() {
+        curarVida(getVidaMaxima());
+        curarMana(getManaMaxima());
+    }
+}

@@ -1,7 +1,6 @@
 package br.com.rpg.model.item;
 
-import br.com.rpg.model.item.Consumivel;
-import br.com.rpg.model.entities.Heroi;
+import br.com.rpg.model.entities.heroi.Heroi;
 import br.com.rpg.model.dto.ResultadoUsoItem;
 import br.com.rpg.exceptions.ConsumivelNaoEncontradoException;
 import br.com.rpg.model.enums.TipoConsumivel;
@@ -52,7 +51,7 @@ public final class CatalogoConsumiveis{
                 15, TipoConsumivel.MANA,
                 heroi -> {
                     int restaurado = heroi.curarMana(50);
-                    return ResultadoUsoItem.sucesso("Você recuperou " + restaurado + "MP", 0, 0);
+                    return ResultadoUsoItem.sucesso("Você recuperou " + restaurado + " MP", 0, 0);
                 }
         ));
 

@@ -1,6 +1,6 @@
 package br.com.rpg.exceptions;
 
-import br.com.rpg.model.entities.CatalogoHabilidades;
+import br.com.rpg.model.habilidade.CatalogoHabilidades;
 
 /**
  * Classe Exception para caso o método {@link CatalogoHabilidades#enviarHabilidade(String)}
