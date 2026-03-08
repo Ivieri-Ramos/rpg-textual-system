@@ -1,6 +1,8 @@
 package br.com.rpg.model.services;
 
-import br.com.rpg.dao.ProgressoSaveDAO;
+import br.com.rpg.dao.ISerializarArquivos;
+import br.com.rpg.dao.ProgressoSaveCsv;
+import br.com.rpg.dao.ProgressoSaveJSON;
 import br.com.rpg.model.entities.heroi.Heroi;
 import br.com.rpg.model.habilidade.Habilidade;
 import br.com.rpg.model.save.ProgressoSaveDTO;
@@ -9,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SaveService {
-    private final ProgressoSaveDAO saveDAO = new ProgressoSaveDAO();
+    private final ISerializarArquivos saveDAO = new ProgressoSaveCsv();
 
     public SaveService() {}
 
