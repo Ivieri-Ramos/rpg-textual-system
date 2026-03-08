@@ -55,21 +55,18 @@ public class BatalhaController {
     private void initialize(){
         this.jogador = sessaoJogo.getHeroiJogo();
         this.oponente = sessaoJogo.getStatusMasmorra().getMasmorraAtual().gerarInimigo(sessaoJogo.getStatusMasmorra().getAndarAtual());
-        int i = 0;
         for (Habilidade habAtual: jogador.getMenuHabilidades()) {
             Button novaHabilidadeButton = new Button();
             novaHabilidadeButton.setText(habAtual.nome());
             novaHabilidadeButton.setFont(Font.font("Berry Rotunda", 12));
-            int finalI = i;
             novaHabilidadeButton.setOnAction(e -> {
                 caixaMenuHabilidadesVBox.setVisible(false);
                 caixaAcoesVBox.setVisible(true);
                 gerenciarRodada(() -> {
-                    ResultadoTurno result = batalha.personagemAtacar(jogador, oponente, jogador.getMenuHabilidades().get(finalI));
+                    ResultadoTurno result = batalha.personagemAtacar(jogador, oponente, habAtual);
                     narrarTurno(GeradorNarrativa.traduzirResultadoTurno(result));
                 });
             });
-            i++;
             caixaHabilidadesVBox.getChildren().add(novaHabilidadeButton);
         }
         atualizarInterface();
@@ -85,7 +82,7 @@ public class BatalhaController {
     private void onBotaoDefenderClick() {
         gerenciarRodada(() -> {
             jogador.setDefendendo(true);
-            narrarTurno("Você armou sua defesa!");
+            narrarTurno("Você armou sua defesa, o próximo dano será reduzido pela metade!");
         });
     }
 
@@ -108,16 +105,6 @@ public class BatalhaController {
         vidaInimigoProgressBar.setProgress((double) oponente.getVida() / oponente.getVidaMaxima());
         vidaInimigoProgressBar.setStyle("-fx-accent: red;");
     }
-
-    /*
-    private void fimTurnoHeroi(String mensagem) {
-        new Thread(() -> narrarTurno(mensagem)).start();
-        atualizarInterface();
-        if (!oponente.isVivo()) {
-            jogadorVenceu();
-        }
-    }
-    */
 
     private void executarTurnoInimigo() {
         ResultadoTurno result = batalha.personagemAtacar(oponente, jogador, oponente.retornarHabilidade());
