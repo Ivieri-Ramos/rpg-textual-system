@@ -7,12 +7,12 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import java.io.File;
 import java.io.IOException;
 
-public class ProgressoSaveDAO {
+public class ProgressoSaveJSON implements ISerializarArquivos {
     private final String NOME_DIRETORIO = "storage";
     private final String NOME_ARQUIVO = NOME_DIRETORIO + "/save.json";
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public ProgressoSaveDAO() {
+    public ProgressoSaveJSON() {
         this.mapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
 
@@ -20,6 +20,7 @@ public class ProgressoSaveDAO {
      * Salva o progresso atual do jogador, sendo esses os atributos do seu personagem.
      * @param dto Contém as informações a serem escritas no JSON.
      */
+    @Override
     public void salvarProgresso(ProgressoSaveDTO dto) {
         try {
             File diretorio = new File(NOME_DIRETORIO);
@@ -39,6 +40,7 @@ public class ProgressoSaveDAO {
      * carrega as informações existentes e escreve no DTO.
      * @return As informações do jogador escritas no JSON ou {@code null} caso o arquivo não exista ou esteja corrompido.
      */
+    @Override
     public ProgressoSaveDTO carregarProgresso() {
         File arquivo = new File(NOME_ARQUIVO);
         if (!arquivo.exists()) { // Se o arquivo não existe, é porque é um novo jogo.
