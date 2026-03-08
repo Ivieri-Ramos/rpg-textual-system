@@ -2,6 +2,10 @@ package br.com.rpg.model.core;
 
 import br.com.rpg.model.mundo.Masmorra;
 
+/**
+ * Representa o status de uma {@link Masmorra} do jogo, possuindo ela
+ * como atributo e o andar atual.
+ */
 public class EstadoMasmorra {
 
     private Masmorra masmorraAtual;

@@ -2,9 +2,14 @@ package br.com.rpg.model.core;
 
 import br.com.rpg.model.entities.heroi.Heroi;
 import br.com.rpg.model.mundo.Cidade;
-import br.com.rpg.model.mundo.Masmorra;
 
+/**
+ * Guarda as informações cruciais da execução do jogo,
+ * nesse caso, a {@link Cidade} que o usuário estava por último e
+ * o {@link Heroi} do jogador.
+ */
 public final class SessaoJogo {
+
     private final static SessaoJogo instancia = new SessaoJogo();
     private Heroi heroiJogo;
     private Cidade cidadeJogo;

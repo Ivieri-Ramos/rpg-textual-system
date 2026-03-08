@@ -28,9 +28,9 @@
                </font>
             </Button>
           </VBox>
-         <VBox fx:id="caixaMasmorrasVBox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" visible="false">
+         <VBox fx:id="caixaMasmorrasVBox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" visible="false">
             <children>
-               <VBox fx:id="caixaMenuMasmorrasVBox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" />
+               <VBox fx:id="caixaMenuMasmorrasVBox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0" />
                <Button mnemonicParsing="false" onAction="#onBotaoVoltarMasmorrasClick" text="Voltar" textAlignment="CENTER">
                   <font>
                      <Font name="Berry Rotunda Regular" size="14.0" />

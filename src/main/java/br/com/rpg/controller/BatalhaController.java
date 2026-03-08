@@ -37,12 +37,24 @@ public class BatalhaController {
     @FXML
     private ProgressBar vidaInimigoProgressBar;
 
+    /**
+     * Armazena as ações principais como {@code Habilidades}, {@code Defender}.
+     */
     @FXML
     private VBox caixaAcoesVBox;
+    /**
+     * Armazena o VBox {@code caixaMenuHabilidadesVBox} e o botão {@code Voltar}.
+     */
     @FXML
     private VBox caixaHabilidadesVBox;
+    /**
+     * Armazena o menu que possui todas as habilidades disponíveis ao jogador.
+     */
     @FXML
     private VBox caixaMenuHabilidadesVBox;
+    /**
+     * Imprime um "log" que representa a ação de um Personagem em um turno.
+     */
     @FXML
     private TextArea mensagemTurnoTextArea;
 
@@ -51,18 +63,23 @@ public class BatalhaController {
     private final SessaoJogo sessaoJogo = SessaoJogo.getInstancia();
     private final GameFachada batalha = new GameFachada();
 
+    /**
+     * Inicializa todas as habilidades disponíveis para o jogador usar e a interface.
+     */
     @FXML
     private void initialize(){
         this.jogador = sessaoJogo.getHeroiJogo();
         this.oponente = sessaoJogo.getStatusMasmorra().getMasmorraAtual().gerarInimigo(sessaoJogo.getStatusMasmorra().getAndarAtual());
         for (Habilidade habAtual: jogador.getMenuHabilidades()) {
             Button novaHabilidadeButton = new Button();
+            // Configura cada botão
             novaHabilidadeButton.setText(habAtual.nome());
             novaHabilidadeButton.setFont(Font.font("Berry Rotunda", 12));
             novaHabilidadeButton.setOnAction(e -> {
+                // Quando o jogador selecionar, irá realizar essa lógica
                 caixaMenuHabilidadesVBox.setVisible(false);
                 caixaAcoesVBox.setVisible(true);
-                gerenciarRodada(() -> {
+                gerenciarRodada(() -> { // Usa a habilidade em questão, e gasta seu turno
                     ResultadoTurno result = batalha.personagemAtacar(jogador, oponente, habAtual);
                     narrarTurno(GeradorNarrativa.traduzirResultadoTurno(result));
                 });
@@ -72,12 +89,18 @@ public class BatalhaController {
         atualizarInterface();
     }
 
+    /**
+     * Torna o {@code caixaAcoesVBox} invisível e o {@code caixaMenuHabilidadesVBox} visível.
+     */
     @FXML
     private void onBotaoHabilidadesClick() {
         caixaAcoesVBox.setVisible(false);
         caixaMenuHabilidadesVBox.setVisible(true);
     }
 
+    /**
+     * Realiza a açõa de defender para o jogador, custando seu turno.
+     */
     @FXML
     private void onBotaoDefenderClick() {
         gerenciarRodada(() -> {
@@ -86,12 +109,19 @@ public class BatalhaController {
         });
     }
 
+    /**
+     * Torna o {@code caixaMenuHabilidadesVBox} invisível e o {@code CaixaAcoesVBox} visível.
+     */
     @FXML
     private void onBotaoVoltarHabilidadeClick() {
         caixaMenuHabilidadesVBox.setVisible(false);
         caixaAcoesVBox.setVisible(true);
     }
 
+    /**
+     * Atualiza a interface gráfica com as novas informações atualizadas, ou seja,
+     * o estado atual do {@code jogador} e do {@code oponente}.
+     */
     private void atualizarInterface() {
         nomeHeroiLabel.setText(jogador.getNome());
         vidaHeroiLabel.setText(String.valueOf(jogador.getVida()));
@@ -106,12 +136,20 @@ public class BatalhaController {
         vidaInimigoProgressBar.setStyle("-fx-accent: red;");
     }
 
+    /**
+     * Realiza a lógica de turno do {@code oponente}, ou seja, ele ataca.
+     */
     private void executarTurnoInimigo() {
         ResultadoTurno result = batalha.personagemAtacar(oponente, jogador, oponente.retornarHabilidade());
         narrarTurno(GeradorNarrativa.traduzirResultadoTurno(result));
         Platform.runLater(this::atualizarInterface);
     }
 
+    /**
+     * Gerencia o fluxo da rodada, onde o {@code jogador} age primeiro e
+     * depois o {@code oponente}.
+     * @param acaoJogador Ação escolhida pelo usuário, pode ser atacar, defender.
+     */
     private void gerenciarRodada(Runnable acaoJogador) {
         caixaAcoesVBox.setVisible(false);
         Thread threadRodada = new Thread(() -> {
@@ -132,6 +170,11 @@ public class BatalhaController {
         threadRodada.start();
     }
 
+    /**
+     * Personaliza o {@code mensagemTurnoTextArea} a partir do resultado do turno em
+     * uma {@link Thread} secundária.
+     * @param mensagem Mensagem que será impressa.
+     */
     private void narrarTurno(String mensagem) {
         mensagemTurnoTextArea.setText("");
         mensagemTurnoTextArea.setVisible(true);
@@ -143,17 +186,25 @@ public class BatalhaController {
         mensagemTurnoTextArea.setVisible(false);
     }
 
+    /**
+     * Só executa se o {@code oponente} morrer, verificando se existe um próximo andar,
+     * além de recuperar um pouco os atributos do {@code jogador}.
+     */
     private void jogadorVenceu() {
         jogador.venceuBatalha();
         if (sessaoJogo.getStatusMasmorra().getAndarAtual() == sessaoJogo.getStatusMasmorra().getMasmorraAtual().getTotalAndares()) {
+            // Se chegou ao fim da Masmorra, manda de volta para a cidade
             GerenciadorTela.trocarTela("MenuCidade");
         }
-        else {
+        else { // Do contrário, vai para o próximo andar
             GerenciadorTela.trocarTela("Batalha");
         }
         sessaoJogo.getStatusMasmorra().incrementarAndar();
     }
 
+    /**
+     * Fecha o jogo, pois se o {@code jogador} morreu, é fim de jogo automático.
+     */
     private void jogadorPerdeu() {
         Platform.exit();
     }

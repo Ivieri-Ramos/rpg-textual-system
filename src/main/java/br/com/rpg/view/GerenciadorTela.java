@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 
+/**
+ * Realiza a lógica da tela atual da interface gráfica.
+ */
 public final class GerenciadorTela {
 
     private static Stage palcoAtual;

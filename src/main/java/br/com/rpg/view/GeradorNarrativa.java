@@ -3,10 +3,18 @@ package br.com.rpg.view;
 import br.com.rpg.model.dto.ResultadoTurno;
 import br.com.rpg.model.services.results.CalculoDano;
 
+/**
+ * Transforma DTOs crus em Strings que representam a informação completa.
+ */
 public final class GeradorNarrativa {
 
     private GeradorNarrativa() {}
 
+    /**
+     * Converte um {@link ResultadoTurno} em uma {@link String}.
+     * @param result DTO que será convertido.
+     * @return {@link String} que representa o que ocorreu.
+     */
     public static String traduzirResultadoTurno(ResultadoTurno result) {
         StringBuilder imprimir = new StringBuilder();
         CalculoDano relatorioDano = result.relatorio().relatorioDano();

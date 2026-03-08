@@ -55,28 +55,29 @@ public class CriarNovoPersonagemFX {
     private void onBotaoConfirmarClick() {
         String nome = this.campoNomeHeroiTextField.getText().trim();
         String classe = this.comboClasseComboBox.getValue();
-        if (classe == null) {
+        if (classe == null) { // Não selecionou uma classe
             this.mensagemErroLabel.setText("Selecione uma classe para o seu Herói!");
             return;
         }
-        if (nome.isEmpty()) {
+        if (nome.isEmpty()) { // Digitou enter
             this.mensagemErroLabel.setText("O nome não pode estar vazio!");
             return;
         }
-        if (nome.contains(" ")) {
+        if (nome.contains(" ")) { // Nome composto
             this.mensagemErroLabel.setText("O nome deve ser apenas uma palavra!");
             return;
         }
-        if (!nome.matches("^[a-zA-ZÀ-ÿ]+$")) {
+        if (!nome.matches("^[a-zA-ZÀ-ÿ]+$")) { // Caracteres não permitidos
             this.mensagemErroLabel.setText("O nome deve conter apenas letras!");
             return;
         }
-        if (nome.length() < 2 || nome.length() > 12) {
+        if (nome.length() < 2 || nome.length() > 12) { // Nome pequeno ou grande
             this.mensagemErroLabel.setText("O nome deve ter entre 2 e 12 letras!");
             return;
         }
         this.mensagemErroLabel.setText(""); // Retira a mensagem de erro (caso exista).
         String nomeFormatado = nome.substring(0, 1).toUpperCase() + nome.substring(1).toLowerCase();
+        // Realiza a lógica de criação de jogo.
         String chaveHeroi = dicionarioClasses.get(classe);
         Heroi jogador = CatalogoHeroi.enviarHeroi(chaveHeroi, nomeFormatado);
         MundoBuilder construtor = new MundoBuilder();
